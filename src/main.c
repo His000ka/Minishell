@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 15:35:27 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:53:27 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int main(void)
 		shelly.cmd = readline("MINISHELL> ");
 		if (!shelly.cmd)
 			shelly.loop = ft_error("Error launching shell");
-		printf("%s\n", shelly.cmd);
+		if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
+			shelly.loop = ft_error("Exiting minishell\n");
 		add_history(shelly.cmd);
-		//shelly.loop = ft_error("Error launching shell");
 		free(shelly.cmd);
 	}
 }
