@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/03 15:48:59 by fimazouz         ###   ########.fr       */
+/*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/09/03 16:13:24 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	ft_error(char *str)
+int	if_echo(char **str)
 {
-	if(!str)
-		return(0);
-	write(1, str, ft_strlen(str));
-	return(1);
+	if(strncmp(str[0], "echo", 4) == 0)
+		return(1);
+}
+
+void	ft_echo(char **str)
+{
+		
 }

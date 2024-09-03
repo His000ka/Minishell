@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:00:19 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 15:45:56 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/03 16:37:39 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 # include <unistd.h>
 # include <limits.h>
 # include "../libft/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 //token
 typedef struct s_token
@@ -39,4 +38,6 @@ typedef struct	s_shelly
 }	t_shelly;
 
 int	ft_error(char *str);
+void	ft_parse(t_shelly *shelly);
+
 #endif
