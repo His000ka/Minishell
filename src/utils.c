@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 16:20:26 by pitroin          ###   ########.fr       */
+/*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/09/03 15:27:44 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(void)
+int	ft_error(char *str)
 {
-	t_shelly	shelly;
-	while (1)
-	{
-		shelly.cmd = readline("bash> ");
-		if (!shelly.cmd)
-			shelly.loop = ft_error("Error launching shell");
-		parse()
-		free(shelly.cmd);
-	}
+	if(!str)
+		return(0);
+	write(1, str, ft_strlen(str));
+	return(1);
 }

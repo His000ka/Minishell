@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:00:19 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 15:14:12 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:45:56 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_token
 typedef struct	s_shelly
 {
 	char	*cmd;
-	int		work;
+	int		loop;
 }	t_shelly;
 
+int	ft_error(char *str);
 #endif
