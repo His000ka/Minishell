@@ -6,7 +6,7 @@
 #    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/09/03 11:59:55 by pitroin          ###   ########.fr        #
+#    Updated: 2024/09/03 14:40:36 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,20 @@ PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
 LIBFT = $(LIBFT_DIR)/libft.a
 
-# Fichiers source et objets
+# Readline inclusion and library paths
+READLINE_DIR = $(shell brew --prefix readline)
+INCLUDES += -I $(READLINE_DIR)/include
+LIBS = -L $(READLINE_DIR)/lib -lreadline -lhistory
+
+# Source and object files
 SRCS = src/main.c
 OBJS = ${SRCS:.c=.o}
 
-# Règles
+# Rules
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
