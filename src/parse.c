@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:07:44 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 17:33:20 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:14:20 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int	check_quote(t_shelly *shelly)
 void	ft_parse(t_shelly *shelly)
 {
 	if (check_quote(shelly) == 1)
-		ft_error("FAIL QUOTE\n");
+		ft_error("FAIL QUOTE\n", shelly);
 }

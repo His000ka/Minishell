@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:00:19 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/03 16:37:39 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:58:34 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+//variable environnement
+typedef struct s_env
+{
+	char	**envp;
+}	t_env;
 
 //token
 typedef struct s_token
@@ -35,9 +41,16 @@ typedef struct	s_shelly
 {
 	char	*cmd;
 	int		loop;
+	t_env	*env;
 }	t_shelly;
 
-int	ft_error(char *str);
+int		ft_error(char *str, t_shelly *shelly);
 void	ft_parse(t_shelly *shelly);
+//init
+int		init_shelly(char **envp, t_shelly *shelly);
+int		init_env(char **envp, t_env *env);
+
+//free
+void	free_envp(t_env *env);
 
 #endif
