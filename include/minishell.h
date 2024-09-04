@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:00:19 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/04 11:58:34 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/04 14:27:10 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ typedef struct s_token
 typedef struct	s_shelly
 {
 	char	*cmd;
+	char	**str;
 	int		loop;
 	t_env	*env;
+	t_token	*token;
 }	t_shelly;
 
 int		ft_error(char *str, t_shelly *shelly);
-void	ft_parse(t_shelly *shelly);
+int		ft_parse(t_shelly *shelly);
 //init
 int		init_shelly(char **envp, t_shelly *shelly);
 int		init_env(char **envp, t_env *env);
 
 //free
 void	free_envp(t_env *env);
+void	ft_free(t_shelly *shelly);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/04 12:18:21 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/04 15:44:47 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int main(int ac, char **av, char **envp)
 {
 	t_shelly	shelly;
 
-	shelly.loop = 0;
+	shelly.str = NULL;
 	(void)ac;
 	(void)av;
 	if (init_shelly(envp, &shelly) == 0)
 	{
+		shelly.loop = 0;
 		while (shelly.loop == 0)
 		{
 			shelly.cmd = readline("MINISHELL> ");
@@ -31,8 +32,8 @@ int main(int ac, char **av, char **envp)
 			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
 				shelly.loop += ft_error("Exiting shell", &shelly);
 			ft_parse(&shelly);
-			free(shelly.cmd);
+			ft_free(&shelly);
 		}
 	}
-	// system("leaks minishell");
+	system("leaks minishell");
 }

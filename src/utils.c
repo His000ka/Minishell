@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/04 12:26:36 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/04 14:16:37 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_error(char *str, t_shelly *shelly)
 		if (shelly->env->envp != NULL)
 			free_envp(shelly->env);
 		free(shelly->env);
+		shelly->env = NULL;
 	}
 	// if (shelly->cmd != NULL)
 	// {
