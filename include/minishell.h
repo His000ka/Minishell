@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:00:19 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/04 14:27:10 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:48:18 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# define INPUT		1	//"<"
+# define HEREDOC	2	//"<<"
+# define TRUNC		3	//">"
+# define APPEND		4	//">>"
+# define PIPE		5	//"|"
+# define CMD		6	//"|"
+# define ARG		7	//"|"
 
 //variable environnement
 typedef struct s_env
@@ -48,6 +56,7 @@ typedef struct	s_shelly
 
 int		ft_error(char *str, t_shelly *shelly);
 int		ft_parse(t_shelly *shelly);
+void	split_cmd(t_shelly *shelly);
 //init
 int		init_shelly(char **envp, t_shelly *shelly);
 int		init_env(char **envp, t_env *env);
@@ -55,5 +64,9 @@ int		init_env(char **envp, t_env *env);
 //free
 void	free_envp(t_env *env);
 void	ft_free(t_shelly *shelly);
+void	ft_free_token(t_token *t);
+
+//token
+int		is_pipe(char c);
 
 #endif

@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/05 11:52:35 by pitroin          ###   ########.fr       */
+/*   Created: 2024/09/05 11:55:34 by pitroin           #+#    #+#             */
+/*   Updated: 2024/09/05 12:41:34 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_error(char *str, t_shelly *shelly)
-{
-	if(!str)
-		return(0);
-	write(1, str, ft_strlen(str));
-	if (shelly->env != NULL)
-	{
-		if (shelly->env->envp != NULL)
-			free_envp(shelly->env);
-		free(shelly->env);
-		shelly->env = NULL;
-	}
-	// if (shelly->cmd != NULL)
-	// {
-	// 	free(shelly->cmd);
-	// 	shelly->cmd = NULL;
-	// }
-	return(1);
-}
+// int	is_pipe(char c)
+// {
+// 	if (c == 124)
+// 		return (PIPE);
+// 	return (-1);
+// }

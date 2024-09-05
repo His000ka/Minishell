@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/04 15:44:47 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:50:00 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ int main(int ac, char **av, char **envp)
 			ft_free(&shelly);
 		}
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 }
