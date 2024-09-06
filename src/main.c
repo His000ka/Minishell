@@ -26,11 +26,11 @@ int main(int ac, char **av, char **envp)
 		{
 			shelly.cmd = readline("MINISHELL> ");
 			if (!shelly.cmd)
-				shelly.loop += ft_error("Error launching shell", &shelly);
+				shelly.loop += ft_error("Error launching shell", 0, 0);
 			else
 				add_history(shelly.cmd);
 			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
-				shelly.loop += ft_error("Exiting shell", &shelly);
+				shelly.loop += ft_error("Exiting shell", 0, 0);
 			ft_parse(&shelly);
 			ft_free(&shelly);
 		}

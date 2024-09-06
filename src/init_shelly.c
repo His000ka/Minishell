@@ -38,9 +38,9 @@ int	init_shelly(char **envp, t_shelly *shelly)
 	check = 0;
 	shelly->env = malloc(sizeof(t_env));
 	if (!shelly->env)
-		return (ft_error("ERROR INIT\n", shelly));
+		return (ft_error("ERROR INIT\n", 0, 0));
 	check += init_env(envp, shelly->env);
 	if (check > 0)
-		ft_error("ERROR INIT\n", shelly);
+		ft_error("ERROR INIT\n", 0, 0);
 	return (check);
 }

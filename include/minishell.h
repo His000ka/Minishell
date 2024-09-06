@@ -55,7 +55,7 @@ typedef struct	s_shelly
 }	t_shelly;
 
 //utils
-int		ft_error(char *str, t_shelly *shelly);
+int	ft_error(char *str, char var, int nb);
 int		ft_is_good_char(int c);
 
 int		ft_parse(t_shelly *shelly);
@@ -68,6 +68,7 @@ int		init_env(char **envp, t_env *env);
 //check
 int	check_quote(t_shelly *shelly);
 int	check_last_elem(t_shelly *shelly);
+int	check_cmd(t_shelly *shelly);
 
 //free
 void	free_envp(t_env *env);

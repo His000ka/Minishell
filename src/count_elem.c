@@ -17,7 +17,7 @@ int	count_index(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i] == ' ')
+	while(str[i] == ' ' && str[i] != '\0')
 		i++;
 	if (str[i] == 34)
 		while (str[++i] != 34);
@@ -49,7 +49,7 @@ int	count_elem_4(t_shelly *shelly, int count)
 			}
 			i++;
 		}
-		while(shelly->cmd[i] == ' ')
+		while(shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
 			i++;
 	}
 	return (count);
@@ -78,7 +78,7 @@ int	count_elem_3(t_shelly *shelly, int count)
 			}
 			i++;
 		}
-		while(shelly->cmd[i] == ' ')
+		while(shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
 			i++;
 	}
 	return (count_elem_4(shelly, count));
@@ -89,10 +89,10 @@ int	count_elem_2(t_shelly *shelly, int count)
 	int	i;
 
 	i = 0;
-	while(shelly->cmd[i])
+	while(shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i]);
-		while (ft_isprint(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ')
+		while (ft_isprint(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ' && shelly->cmd[i] != '\0')
 		{
 			if (shelly->cmd[i] == '|' && ((shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] == ' ')
 					|| (shelly->cmd[i - 1] == ' ' && shelly->cmd[i + 1] != ' ')))
@@ -101,7 +101,7 @@ int	count_elem_2(t_shelly *shelly, int count)
 				count += 2;
 			i++;
 		}
-		while(shelly->cmd[i] == ' ')
+		while(shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
 			i++;
 	}
 	return (count_elem_3(shelly, count));
@@ -131,7 +131,7 @@ int	count_elem(t_shelly *shelly, int count)
 				i++;
 			count++;
 		}
-		while(shelly->cmd[i] == ' ')
+		while(shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
 			i++;
 	}
 	return (count_elem_2(shelly, count));

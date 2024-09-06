@@ -73,7 +73,7 @@ void	affiche_token(t_shelly *shelly)
 
 int	ft_parse(t_shelly *shelly)
 {
-	if (check_quote(shelly) == 1 || check_last_elem(shelly) == 1)
+	if (check_cmd(shelly) > 0)
 		return (1);
 	if (!shelly->cmd || ft_strlen(shelly->cmd) == 0)
 		return (1);

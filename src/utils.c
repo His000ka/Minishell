@@ -19,22 +19,41 @@ int	ft_is_good_char(int c)
 	return (0);
 }
 
-int	ft_error(char *str, t_shelly *shelly)
+int	ft_error(char *str, char var, int nb)
 {
-	if(!str)
-		return(0);
-	write(1, str, ft_strlen(str));
-	if (shelly->env != NULL)
+	int	i;
+
+	i = -1;
+	if (!str)
+		return (1);
+	while (str[++i])
 	{
-		if (shelly->env->envp != NULL)
-			free_envp(shelly->env);
-		free(shelly->env);
-		shelly->env = NULL;
+		if (str[i] == '\'' && str[i - 1] == '\'')
+		{
+			while (nb-- > 0)
+				write(1, &var, 1);
+		}
+		write(1, &str[i], 1);
 	}
-	// if (shelly->cmd != NULL)
-	// {
-	// 	free(shelly->cmd);
-	// 	shelly->cmd = NULL;
-	// }
-	return(1);
+	return (1);
 }
+
+// int	ft_error(char *str, t_shelly *shelly)
+// {
+// 	if(!str)
+// 		return(0);
+// 	write(1, str, ft_strlen(str));
+// 	// if (shelly->env != NULL)
+// 	// {
+// 	// 	if (shelly->env->envp != NULL)
+// 	// 		free_envp(shelly->env);
+// 	// 	free(shelly->env);
+// 	// 	shelly->env = NULL;
+// 	// }
+// 	// if (shelly->cmd != NULL)
+// 	// {
+// 	// 	free(shelly->cmd);
+// 	// 	shelly->cmd = NULL;
+// 	// }
+// 	return(1);
+// }
