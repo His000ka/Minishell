@@ -42,7 +42,7 @@ void	ft_free(t_shelly *shelly)
 {
 	int	i;
 
-	if (shelly->str)
+	if (shelly->str != NULL)
 	{
 		i = -1;
 		while (shelly->str[++i])
@@ -50,11 +50,12 @@ void	ft_free(t_shelly *shelly)
 		free(shelly->str);
 		shelly->str = NULL;
 	}
-	if (shelly->token && ft_strlen(shelly->cmd) > 0)
-	{
-		ft_free_token(shelly->token);
-		shelly->token = NULL;
-	}
+	//segfault si shelly->token n'existe pas ...
+	// if (shelly->token != NULL && ft_strlen(shelly->cmd) > 0)
+	// {
+	// 	ft_free_token(shelly->token);
+	// 	shelly->token = NULL;
+	// }
 	if (shelly->env != NULL)
 	{
 		if (shelly->env->envp != NULL)

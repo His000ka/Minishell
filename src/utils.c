@@ -12,6 +12,13 @@
 
 #include "../include/minishell.h"
 
+int	ft_is_good_char(int c)
+{
+	if (c > 32 && c <= 126 && c != 34 && c != 39)
+		return (1);
+	return (0);
+}
+
 int	ft_error(char *str, t_shelly *shelly)
 {
 	if(!str)

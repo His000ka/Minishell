@@ -35,5 +35,5 @@ int main(int ac, char **av, char **envp)
 			ft_free(&shelly);
 		}
 	}
-	// system("leaks minishell");
+	system("leaks minishell");
 }
