@@ -79,6 +79,10 @@ void	ft_free_token(t_token *t);
 int		is_pipe(char c);
 
 //count_elem
+int	count_index(char *str, int flag);
 int	count_elem(t_shelly *shelly, int count);
+
+//count_elem2
+int	is_quote(t_shelly *shelly, int flag);
 
 #endif
