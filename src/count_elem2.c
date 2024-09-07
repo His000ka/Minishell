@@ -47,7 +47,11 @@ int	is_good_char(char *str, int flag)
 	while (str[i] > 32 && str[i] <= 126
 		&& str[i] != 34 && str[i] != 39
 		&& str[i] != '\0')
+		{
+			if ((str[i] == '|' || str[i] == '<' || str[i] == '>') && flag == 2)
+				break;
 			i++;
+		}
 	if (flag == 0)
 		return (1);
 	return (i);
@@ -67,9 +71,9 @@ int	is_pipe(char *str, int  flag)
 			return (1);
 		if (check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 0 && flag == 0)
 			return (2);
+		if (flag == 1)
+			return (1);
 	}
-	if (flag == 1)
-		return (i);
 	return (0);
 }
 
@@ -93,9 +97,9 @@ int	is_trunc(char *str, int flag)
 				return (2);
 			return (1);
 		}
+		if (flag == 1)
+			return (1);
 	}
-	if (flag == 1)
-	 	return (i);
 	return (0);
 }
 
@@ -119,8 +123,8 @@ int	is_input(char *str, int flag)
 				return (2);
 			return (1);
 		}
+		if (flag == 1)
+			return (1);
 	}
-	if (flag == 1)
-	 	return (i);
 	return (0);
 }

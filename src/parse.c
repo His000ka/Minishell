@@ -46,26 +46,104 @@ char	*join_char(char *str, char c)
 	return (res);
 }
 
-int	size_elem(t_shelly *shelly, int j, int f)
+// int	size_elem(t_shelly *shelly, int j, int f)
+// {
+// 	int	i;
+// 	int	res;
+// 	int	count;
+
+// 	i = 0;
+// 	count = 0;
+// 	res = 0;
+// 	while (count <= j && shelly->cmd[i])
+// 	{
+// 		i += count_index(&shelly->cmd[i], 1);
+// 		if (shelly->cmd[i] == '\0')
+// 			return (res);
+// 		res = i + 1;
+// 		count += is_quote(&shelly->cmd[i], 0);
+// 		i += is_quote(&shelly->cmd[i], 2);
+// 		count += is_good_char(&shelly->cmd[i], 0);
+// 		i += is_good_char(&shelly->cmd[i], 2);
+// 		printf("%d\n", i);
+// 		if (j == count && f == 0)
+// 			return (i - res);
+// 		// if (shelly->cmd[i] != '\0' && count <= j)
+// 			i++;
+// 	}
+// 	return (res);
+// }
+
+int	index_elem(t_shelly *shelly, int j)
 {
 	int	i;
 	int	res;
 	int	count;
-
+	
 	i = 0;
 	count = 0;
-	res = 0;
-	while (count <= j && shelly->cmd[i])
+	while (count <= j)
 	{
 		i += count_index(&shelly->cmd[i], 1);
-		res = i + 1;
-		i += is_quote(&shelly->cmd[i], 2);
+		res = i;
 		count += is_quote(&shelly->cmd[i], 0);
-		if (j == count && f == 0)
-			return (i - res);
-		count++;
+		count += is_good_char(&shelly->cmd[i], 0);
+		count += is_pipe(&shelly->cmd[i], 0);
+		count += is_input(&shelly->cmd[i], 0);
+		count += is_trunc(&shelly->cmd[i], 0);
+		i += is_quote(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_pipe(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_input(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_trunc(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_good_char(&shelly->cmd[i], 2);
+		if (i == res)
+			i++;
 	}
+	if (is_quote(&shelly->cmd[res], 0) == 1)
+		return (res + 1);
 	return (res);
+}
+
+int	size_elem(t_shelly *shelly, int j)
+{
+	int	i;
+	int	res;
+	int	count;
+	
+	i = 0;
+	count = 0;
+	while (count <= j && shelly->cmd[i] != '\0')
+	{
+		i += count_index(&shelly->cmd[i], 1);
+		res = i;
+		count += is_quote(&shelly->cmd[i], 0);
+		count += is_good_char(&shelly->cmd[i], 0);
+		count += is_pipe(&shelly->cmd[i], 0);
+		count += is_input(&shelly->cmd[i], 0);
+		count += is_trunc(&shelly->cmd[i], 0);
+		i += is_quote(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_good_char(&shelly->cmd[i], 2);
+		if (i == res)
+			i += is_pipe(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_input(&shelly->cmd[i], 1);
+		if (i == res)
+			i += is_trunc(&shelly->cmd[i], 1);
+		if (i == res)
+			i++;
+	}
+	if (is_pipe(&shelly->cmd[res], 1) == 1 || is_input(&shelly->cmd[res], 1) == 1 || is_trunc(&shelly->cmd[res], 1) == 1)
+		return (1);
+	else if (is_quote(&shelly->cmd[res], 1) != 0)
+		return (i - res - 2);
+	else if (is_good_char(&shelly->cmd[res], 1) != 0)
+		return (i - res);
+	return (0);
 }
 
 void	add_elem(t_shelly *shelly, int count)
@@ -75,26 +153,32 @@ void	add_elem(t_shelly *shelly, int count)
 	int	i;
 	int	k;
 
-	j = -1;
-	while (++j <= count)
+	j = 0;
+	while (j < count && shelly->cmd[i] != '\0')
 	{
-		size = size_elem(shelly, j, 0);
+		size = size_elem(shelly, j);
+		printf("size: %d\n", size);
 		shelly->str[j] = malloc(sizeof(char) * (size + 1));
 		if (!shelly->str[j])
 			return ;
-		i = size_elem(shelly, j, 1);
-		k = -1;
-		while (++k < size)
+		i = index_elem(shelly, j);
+		printf("i: %d\n", i);
+		k = 0;
+		while (k < size && shelly->cmd[k + i] != '\0')
+		{
 			shelly->str[j][k] = shelly->cmd[k + i];
+			k++;
+		}
 		shelly->str[j][k] = '\0';
+		j++;
 	}
 	shelly->str[j] = NULL;
 	j = 0;
-	while (shelly->str[j++])
+	while (shelly->str[j])
 	{
 		printf("elem: >%s<\n", shelly->str[j]);
+		j++;
 	}
-	
 }
 
 void	split_command(t_shelly *shelly)
@@ -104,10 +188,10 @@ void	split_command(t_shelly *shelly)
 	count = 0;
 	count += count_elem(shelly, count);
 	printf("count : %d\n", count);
-	// shelly->str = malloc(sizeof(char *) * (count + 1));
-	// if (!shelly->str)
-	// 	return ;
-	// add_elem(shelly, count);
+	shelly->str = malloc(sizeof(char *) * (count + 1));
+	if (!shelly->str)
+		return ;
+	add_elem(shelly, count);
 }
 
 void	affiche_token(t_shelly *shelly)

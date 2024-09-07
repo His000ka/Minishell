@@ -44,9 +44,9 @@ void	ft_free(t_shelly *shelly)
 
 	if (shelly->str != NULL)
 	{
-		i = -1;
-		while (shelly->str[++i])
-			free(shelly->str[i]);
+		i = 0;
+		while (shelly->str[i])
+			free(shelly->str[i++]);
 		free(shelly->str);
 		shelly->str = NULL;
 	}
