@@ -86,11 +86,6 @@ int	index_elem(t_shelly *shelly, int j)
 	{
 		i += count_index(&shelly->cmd[i], 1);
 		res = i;
-		count += is_quote(&shelly->cmd[i], 0);
-		count += is_good_char(&shelly->cmd[i], 0);
-		count += is_pipe(&shelly->cmd[i], 0);
-		count += is_input(&shelly->cmd[i], 0);
-		count += is_trunc(&shelly->cmd[i], 0);
 		i += is_quote(&shelly->cmd[i], 1);
 		if (i == res)
 			i += is_pipe(&shelly->cmd[i], 1);
@@ -102,6 +97,8 @@ int	index_elem(t_shelly *shelly, int j)
 			i += is_good_char(&shelly->cmd[i], 2);
 		if (i == res)
 			i++;
+		else
+			count++;
 	}
 	if (is_quote(&shelly->cmd[res], 0) == 1)
 		return (res + 1);
@@ -120,11 +117,11 @@ int	size_elem(t_shelly *shelly, int j)
 	{
 		i += count_index(&shelly->cmd[i], 1);
 		res = i;
-		count += is_quote(&shelly->cmd[i], 0);
-		count += is_good_char(&shelly->cmd[i], 0);
-		count += is_pipe(&shelly->cmd[i], 0);
-		count += is_input(&shelly->cmd[i], 0);
-		count += is_trunc(&shelly->cmd[i], 0);
+		// count += is_quote(&shelly->cmd[i], 0);
+		// count += is_good_char(&shelly->cmd[i], 0);
+		// count += is_pipe(&shelly->cmd[i], 0);
+		// count += is_input(&shelly->cmd[i], 0);
+		// count += is_trunc(&shelly->cmd[i], 0);
 		i += is_quote(&shelly->cmd[i], 1);
 		if (i == res)
 			i += is_good_char(&shelly->cmd[i], 2);
@@ -136,6 +133,8 @@ int	size_elem(t_shelly *shelly, int j)
 			i += is_trunc(&shelly->cmd[i], 1);
 		if (i == res)
 			i++;
+		else
+			count++;
 	}
 	if (is_pipe(&shelly->cmd[res], 1) == 1 || is_input(&shelly->cmd[res], 1) == 1 || is_trunc(&shelly->cmd[res], 1) == 1)
 		return (1);
@@ -154,15 +153,15 @@ void	add_elem(t_shelly *shelly, int count)
 	int	k;
 
 	j = 0;
-	while (j < count && shelly->cmd[i] != '\0')
+	while (j < count)
 	{
 		size = size_elem(shelly, j);
-		printf("size: %d\n", size);
+		// printf("size: %d\n", size);
 		shelly->str[j] = malloc(sizeof(char) * (size + 1));
 		if (!shelly->str[j])
 			return ;
 		i = index_elem(shelly, j);
-		printf("i: %d\n", i);
+		// printf("i: %d\n", i);
 		k = 0;
 		while (k < size && shelly->cmd[k + i] != '\0')
 		{

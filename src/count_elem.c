@@ -48,12 +48,8 @@ int	count_elem_2(t_shelly *shelly, int count)
 	{
 		i += count_index(&shelly->cmd[i], 0);
 		count += is_pipe(&shelly->cmd[i], 0);
-		i += is_pipe(&shelly->cmd[i], 1);
 		count += is_trunc(&shelly->cmd[i], 0);
-		i += is_trunc(&shelly->cmd[i], 1);
 		count += is_input(&shelly->cmd[i], 0);
-		i += is_input(&shelly->cmd[i], 1);
-		if (shelly->cmd[i] != '\0')
 			i++;
 	}
 	return (count);
@@ -62,16 +58,21 @@ int	count_elem_2(t_shelly *shelly, int count)
 int	count_elem(t_shelly *shelly, int count)
 {
 	int	i;
+	int tmp;
 
 	i = 0;
 	while (shelly->cmd[i])
 	{
 		i += count_index(&shelly->cmd[i], 1);
-		count += is_quote(&shelly->cmd[i], 0);
+		tmp = i;
 		i += is_quote(&shelly->cmd[i], 1);
-		count += is_good_char(&shelly->cmd[i], 0);
-		i += is_good_char(&shelly->cmd[i], 1);
-		i += count_index(&shelly->cmd[i], 1);;
+		if (tmp == i)
+			i += is_good_char(&shelly->cmd[i], 1);
+		if (tmp == i)
+			i++;
+		else
+			count++;
 	}
+	// printf("count: %d\n", count);
 	return (count_elem_2(shelly, count));
 }
