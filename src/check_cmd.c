@@ -44,6 +44,8 @@ int	check_last_elem(t_shelly *shelly)
 	int	i;
 
 	i = -1;
+	if (ft_strlen(shelly->cmd) == 0)
+		return (1);
 	if (shelly->cmd[0] == '|')
 		return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[0], 1));
 	while (shelly->cmd[++i]);

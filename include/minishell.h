@@ -76,13 +76,18 @@ void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 
 //token
-int		is_pipe(char c);
+// int		is_pipe(char c);
 
 //count_elem
 int	count_index(char *str, int flag);
+int	check_char(char c);
 int	count_elem(t_shelly *shelly, int count);
 
 //count_elem2
-int	is_quote(t_shelly *shelly, int flag);
+int	is_quote(char *str, int flag);
+int	is_good_char(char *str, int flag);
+int	is_pipe(char *str, int  flag);
+int	is_trunc(char *str, int flag);
+int	is_input(char *str, int flag);
 
 #endif

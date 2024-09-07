@@ -13,17 +13,18 @@
 #include "../include/minishell.h"
 
 //f == 0 => count_elem()
-int	is_quote(t_shelly *shelly, int flag)
+int	is_quote(char *str, int flag)
 {
 	int	i;
 
 	i = 0;
-	if (shelly->cmd[i] == 34 || shelly->cmd[i] == 39)
+	if ((str[i] == 34 || str[i] == 39) && str[i] != '\0')
 	{
-		while (shelly->cmd[++i] != 34)
-			;
-		if (shelly->cmd[i] == 39)
-			while (shelly->cmd[++i] != 39)
+		if (str[i] == 34)
+			while (str[++i] != 34)
+				;
+		if (str[i] == 39)
+			while (str[++i] != 39)
 				;
 		if (flag == 0)
 			return (1);
@@ -31,5 +32,95 @@ int	is_quote(t_shelly *shelly, int flag)
 			return (i + 1);
 		return (i);
 	}
+	return (0);
+}
+
+int	is_good_char(char *str, int flag)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] <= 32 || str[i] > 126
+		|| str[i] == 34 || str[i] == 39
+		|| str[i] == '\0')
+		return (0);
+	while (str[i] > 32 && str[i] <= 126
+		&& str[i] != 34 && str[i] != 39
+		&& str[i] != '\0')
+			i++;
+	if (flag == 0)
+		return (1);
+	return (i);
+}
+
+int	is_pipe(char *str, int  flag)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '|')
+	{
+		if (check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
+			return (0);
+		if (((check_char(str[i - 1]) == 1 && check_char(str[i + 1]) == 0)
+			|| (check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 1)) && flag == 0)
+			return (1);
+		if (check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 0 && flag == 0)
+			return (2);
+	}
+	if (flag == 1)
+		return (i);
+	return (0);
+}
+
+int	is_trunc(char *str, int flag)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '>')
+	{
+		if (check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
+			return (0);
+		if (((check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 1)
+			|| (check_char(str[i - 1]) == 1 && check_char(str[i + 1]) == 0)) && flag == 0)
+			return (1);
+		if (check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 0  && flag == 0)
+			return (2);
+		if (str[i - 1] == '>' && (check_char(str[i - 2]) == 0 || check_char(str[i + 1]) == 0) && flag == 0)
+		{
+			if (check_char(str[i - 2]) == 0 && check_char(str[i + 1]) == 0 && flag == 0)
+				return (2);
+			return (1);
+		}
+	}
+	if (flag == 1)
+	 	return (i);
+	return (0);
+}
+
+int	is_input(char *str, int flag)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '<')
+	{
+		if (str[i] == '<' && check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
+			return (0);
+		if (str[i] == '<' && ((check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 1)
+			|| (check_char(str[i - 1]) == 1 && check_char(str[i + 1]) == 0)) && flag == 0)
+			return (1);
+		if (str[i] == '<' && check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 0  && flag == 0)
+			return (2);
+		if (str[i] == '<' && str[i - 1] == '<' && (check_char(str[i - 2]) == 0 || check_char(str[i + 1]) == 0) && flag == 0)
+		{
+			if (check_char(str[i - 2]) == 0 && check_char(str[i + 1]) == 0 && flag == 0)
+				return (2);
+			return (1);
+		}
+	}
+	if (flag == 1)
+	 	return (i);
 	return (0);
 }

@@ -59,8 +59,8 @@ int	size_elem(t_shelly *shelly, int j, int f)
 	{
 		i += count_index(&shelly->cmd[i], 1);
 		res = i + 1;
-		i += is_quote(shelly, 2);
-		count += is_quote(shelly, 0);
+		i += is_quote(&shelly->cmd[i], 2);
+		count += is_quote(&shelly->cmd[i], 0);
 		if (j == count && f == 0)
 			return (i - res);
 		count++;
@@ -87,9 +87,14 @@ void	add_elem(t_shelly *shelly, int count)
 		while (++k < size)
 			shelly->str[j][k] = shelly->cmd[k + i];
 		shelly->str[j][k] = '\0';
-		printf("elem: %s\n", shelly->str[j]);
 	}
 	shelly->str[j] = NULL;
+	j = 0;
+	while (shelly->str[j++])
+	{
+		printf("elem: >%s<\n", shelly->str[j]);
+	}
+	
 }
 
 void	split_command(t_shelly *shelly)
@@ -99,10 +104,10 @@ void	split_command(t_shelly *shelly)
 	count = 0;
 	count += count_elem(shelly, count);
 	printf("count : %d\n", count);
-	shelly->str = malloc(sizeof(char *) * (count + 1));
-	if (!shelly->str)
-		return ;
-	add_elem(shelly, count);
+	// shelly->str = malloc(sizeof(char *) * (count + 1));
+	// if (!shelly->str)
+	// 	return ;
+	// add_elem(shelly, count);
 }
 
 void	affiche_token(t_shelly *shelly)

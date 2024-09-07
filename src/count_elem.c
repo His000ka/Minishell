@@ -12,6 +12,15 @@
 
 #include "../include/minishell.h"
 
+int	check_char(char c)
+{
+	if (c == ' ' || c == 34 || c == 39)
+		return (1);
+	if (c == '>' || c == '<')
+		return (2);
+	return (0);
+}
+
 int	count_index(char *str, int flag)
 {
 	int	i;
@@ -30,64 +39,6 @@ int	count_index(char *str, int flag)
 	return (i);
 }
 
-int	count_elem_4(t_shelly *shelly, int count)
-{
-	int	i;
-
-	i = 0;
-	while (shelly->cmd[i])
-	{
-		i += count_index(&shelly->cmd[i], 0);
-		while (ft_isprint(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ')
-		{
-			if (shelly->cmd[i] == '<' && shelly->cmd[i - 1] != '<' && ((shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] == ' ')
-					|| (shelly->cmd[i - 1] == ' ' && shelly->cmd[i + 1] != ' ' && shelly->cmd[i + 1] != '<')))
-				count += 1;
-			if (shelly->cmd[i] == '<' && shelly->cmd[i - 1] != '<' && shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] != ' ' && shelly->cmd[i + 1] != '<')
-				count += 2;
-			if (shelly->cmd[i] == '<' && shelly->cmd[i - 1] == '<' && (shelly->cmd[i - 2] != ' ' || shelly->cmd[i + 1] != ' '))
-			{
-				if (shelly->cmd[i - 2] != ' ' && shelly->cmd[i + 1] != ' ')
-					count += 1;
-				count += 1;
-			}
-			i++;
-		}
-		while (shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
-			i++;
-	}
-	return (count);
-}
-
-int	count_elem_3(t_shelly *shelly, int count)
-{
-	int	i;
-
-	i = 0;
-	while (shelly->cmd[i])
-	{
-		i += count_index(&shelly->cmd[i], 0);
-		while (ft_isprint(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ')
-		{
-			if (shelly->cmd[i] == '>' && shelly->cmd[i - 1] != '>' && ((shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] == ' ')
-					|| (shelly->cmd[i - 1] == ' ' && shelly->cmd[i + 1] != ' ' && shelly->cmd[i + 1] != '>')))
-				count += 1;
-			if (shelly->cmd[i] == '>' && shelly->cmd[i - 1] != '>' && shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] != ' ' && shelly->cmd[i + 1] != '>')
-				count += 2;
-			if (shelly->cmd[i] == '>' && shelly->cmd[i - 1] == '>' && (shelly->cmd[i - 2] != ' ' || shelly->cmd[i + 1] != ' '))
-			{
-				if (shelly->cmd[i - 2] != ' ' && shelly->cmd[i + 1] != ' ')
-					count += 1;
-				count += 1;
-			}
-			i++;
-		}
-		while (shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
-			i++;
-	}
-	return (count_elem_4(shelly, count));
-}
-
 int	count_elem_2(t_shelly *shelly, int count)
 {
 	int	i;
@@ -96,19 +47,16 @@ int	count_elem_2(t_shelly *shelly, int count)
 	while (shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i], 0);
-		while (ft_isprint(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ' && shelly->cmd[i] != '\0')
-		{
-			if (shelly->cmd[i] == '|' && ((shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] == ' ')
-					|| (shelly->cmd[i - 1] == ' ' && shelly->cmd[i + 1] != ' ')))
-				count += 1;
-			if (shelly->cmd[i] == '|' && shelly->cmd[i - 1] != ' ' && shelly->cmd[i + 1] != ' ')
-				count += 2;
-			i++;
-		}
-		while (shelly->cmd[i] == ' ' && shelly->cmd[i] != '\0')
-			i++;
+		count += is_pipe(&shelly->cmd[i], 0);
+		i += is_pipe(&shelly->cmd[i], 1);
+		count += is_trunc(&shelly->cmd[i], 0);
+		i += is_trunc(&shelly->cmd[i], 1);
+		count += is_input(&shelly->cmd[i], 0);
+		i += is_input(&shelly->cmd[i], 1);
+		i++;
 	}
-	return (count_elem_3(shelly, count));
+	// printf("count2 :%d\n", count);
+	return (count);
 }
 
 int	count_elem(t_shelly *shelly, int count)
@@ -119,15 +67,12 @@ int	count_elem(t_shelly *shelly, int count)
 	while (shelly->cmd[i])
 	{
 		i += count_index(&shelly->cmd[i], 1);
-		count += is_quote(shelly, 0);
-		i += is_quote(shelly, 1);
-		if (ft_is_good_char(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ')
-		{
-			while (ft_is_good_char(shelly->cmd[i]) == 1 && shelly->cmd[i] != ' ')
-				i++;
-			count++;
-		}
+		count += is_quote(&shelly->cmd[i], 0);
+		i += is_quote(&shelly->cmd[i], 1);
+		count += is_good_char(&shelly->cmd[i], 0);
+		i += is_good_char(&shelly->cmd[i], 2);
 		i += count_index(&shelly->cmd[i], 1);
 	}
+	// printf("count1 :%d\n", count);
 	return (count_elem_2(shelly, count));
 }
