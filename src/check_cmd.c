@@ -47,11 +47,13 @@ int	check_last_elem(t_shelly *shelly)
 	if (ft_strlen(shelly->cmd) == 0)
 		return (1);
 	if (shelly->cmd[0] == '|')
-		return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[0], 1));
-	while (shelly->cmd[++i]);
+		return (ft_error(SYNTAX_ERROR, shelly->cmd[0], 1));
+	while (shelly->cmd[++i])
+		;
 	i--;
-	if (shelly->cmd[i] == '>' || shelly->cmd[i] == '<' || shelly->cmd[i] == '|')
-		return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[i], 1));
+	if (shelly->cmd[i] == '>' || shelly->cmd[i] == '<'
+		|| shelly->cmd[i] == '|')
+		return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
 	return (0);
 }
 
@@ -64,14 +66,17 @@ int	check_order(t_shelly *shelly, int check)
 		return (0);
 	while (shelly->cmd[++i])
 	{
-		if (shelly->cmd[i] == '|' && shelly->cmd[i + 1] == '|' && shelly->cmd[i + 2] == '|')
-			return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[i], 1));
-		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>' && shelly->cmd[i + 2] == '>' && shelly->cmd[i + 3] == '>')
-			return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[i], 2));
-		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>' && shelly->cmd[i + 2] == '>')
-			return (ft_error("bash: syntax error near unexpected token ''\n", shelly->cmd[i], 1));
+		if (shelly->cmd[i] == '|' && shelly->cmd[i + 1] == '|'
+			&& shelly->cmd[i + 2] == '|')
+			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
+		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>'
+			&& shelly->cmd[i + 2] == '>' && shelly->cmd[i + 3] == '>')
+			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 2));
+		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>'
+			&& shelly->cmd[i + 2] == '>')
+			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
 	}
-	return(0);
+	return (0);
 }
 
 int	check_cmd(t_shelly *shelly)

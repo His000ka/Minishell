@@ -98,7 +98,7 @@ int	is_trunc(char *str, int flag)
 			return (1);
 		}
 		if (flag == 1)
-			return (1);
+			return (1 + is_trunc(&str[1], 1));
 	}
 	return (0);
 }
@@ -124,7 +124,7 @@ int	is_input(char *str, int flag)
 			return (1);
 		}
 		if (flag == 1)
-			return (1);
+			return (1 + is_input(&str[1], 1));
 	}
 	return (0);
 }

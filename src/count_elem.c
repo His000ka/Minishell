@@ -50,7 +50,7 @@ int	count_elem_2(t_shelly *shelly, int count)
 		count += is_pipe(&shelly->cmd[i], 0);
 		count += is_trunc(&shelly->cmd[i], 0);
 		count += is_input(&shelly->cmd[i], 0);
-			i++;
+		i++;
 	}
 	return (count);
 }

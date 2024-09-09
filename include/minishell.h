@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+//token
 # define INPUT		1	//"<"
 # define HEREDOC	2	//"<<"
 # define TRUNC		3	//">"
@@ -28,6 +29,9 @@
 # define PIPE		5	//"|"
 # define CMD		6	//"|"
 # define ARG		7	//"|"
+
+//MSG_ERROR
+# define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
 //variable environnement
 typedef struct s_env
@@ -45,7 +49,7 @@ typedef struct s_token
 }				t_token;
 
 //struct principale
-typedef struct	s_shelly
+typedef struct s_shelly
 {
 	char	*cmd;
 	char	**str;
@@ -55,20 +59,27 @@ typedef struct	s_shelly
 }	t_shelly;
 
 //utils
-int	ft_error(char *str, char var, int nb);
+int		ft_error(char *str, char var, int nb);
 int		ft_is_good_char(int c);
 
+//parse
 int		ft_parse(t_shelly *shelly);
-void	split_cmd(t_shelly *shelly);
+
+//split_cmd
+int		size_elem(t_shelly *shelly, int i, int res);
+int		browse_elem(t_shelly *shelly, int i, int res);
+int		info_elem(t_shelly *shelly, int j, char *str);
+void	add_elem(t_shelly *shelly, int count);
+void	split_command(t_shelly *shelly);
 
 //init
 int		init_shelly(char **envp, t_shelly *shelly);
 int		init_env(char **envp, t_env *env);
 
 //check
-int	check_quote(t_shelly *shelly);
-int	check_last_elem(t_shelly *shelly);
-int	check_cmd(t_shelly *shelly);
+int		check_quote(t_shelly *shelly);
+int		check_last_elem(t_shelly *shelly);
+int		check_cmd(t_shelly *shelly);
 
 //free
 void	free_envp(t_env *env);
@@ -79,15 +90,19 @@ void	ft_free_token(t_token *t);
 // int		is_pipe(char c);
 
 //count_elem
-int	count_index(char *str, int flag);
-int	check_char(char c);
-int	count_elem(t_shelly *shelly, int count);
+int		count_index(char *str, int flag);
+int		check_char(char c);
+int		count_elem(t_shelly *shelly, int count);
 
 //count_elem2
-int	is_quote(char *str, int flag);
-int	is_good_char(char *str, int flag);
-int	is_pipe(char *str, int  flag);
-int	is_trunc(char *str, int flag);
-int	is_input(char *str, int flag);
+int		is_quote(char *str, int flag);
+int		is_good_char(char *str, int flag);
+int		is_pipe(char *str, int flag);
+int		is_trunc(char *str, int flag);
+int		is_input(char *str, int flag);
+
+//affiche
+void	affiche_elem(t_shelly *shelly);
+void	affiche_token(t_shelly *shelly);
 
 #endif
