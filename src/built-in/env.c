@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 15:54:08 by fimazouz         ###   ########.fr       */
+/*   Created: 2024/09/09 16:41:19 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/09/09 16:58:55 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../include/minishell.h"
 
-int	if_export(char **str)
+int	if_env(char **str)
 {
-	if (strncmp(str[1], "export", 6) == 0)
+	if (strncmp(str[1], "env", 3) == 0)
 		return (1);
 	return (0);
 }
 
-void	ft_export(t_env *list_env)
+void	ft_env(t_env *env_list)
 {
-	   while (list_env != NULL) {
-        printf("declare -x %s=\"%s\"\n", list_env->content, list_env->value);
-        list_env = list_env->next;
-    }
+	while(env_list != NULL)
+	{
+		if(env_list->type == 1)
+			printf("%s=%s\n", env_list->content, env_list->value);
+		env_list = env_list->next;
+	}
 }
 
 int main(int ac, char **av, char **envp) {
@@ -38,7 +41,7 @@ t_env	*env_list;
 
 	//print_env_list(env_list);
 
-	if(if_export(av) == 1)
-		ft_export(env_list);
+	if(if_env(av) == 1)
+		ft_env(env_list);
     return 0;
 }

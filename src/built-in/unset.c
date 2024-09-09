@@ -1,50 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:38:31 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 14:10:17 by fimazouz         ###   ########.fr       */
+/*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/09/09 17:14:35 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../include/minishell.h"
 
-int	if_pwd(char **str)
+int	if_unset(char **str)
 {
-	if (strncmp(str[1], "pwd", 3) == 0 && (str[2] == NULL))
+	if (strncmp(str[1], "unset", 5) == 0)
 		return (1);
 	return (0);
 }
 
-void	ft_pwd(void)
+void ft_unset(t_env *env_list, char **str)
 {
-	char	*cwd;
-	char	*buffer;
-	size_t	size;
+	char *node;
 
-	size = 1024;
-	buffer = (char *)malloc(sizeof(char) * size);
-	if (!buffer)
+	node = str[2];
+	while(env_list != NULL)
 	{
-		perror("malloc");
-		return ;
+		if(env_list->content == str[2])
+		{
+			env_list = NULL;
+		}
+		env_list = env_list->next;
 	}
-	cwd = getcwd(buffer, size);
-	if (cwd)
-		printf("%s\n", cwd);
-	else
-		perror("getcwd");
-	free(buffer);
-}
-
-int	main(int ac, char **av)
-{
-	if (if_pwd(av))
-		ft_pwd();
-	else
-		printf("Commande inconnue : %s\n", av[1]);
-	return (0);
 }
