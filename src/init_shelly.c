@@ -42,5 +42,8 @@ int	init_shelly(char **envp, t_shelly *shelly)
 	check += init_env(envp, shelly->env);
 	if (check > 0)
 		ft_error("ERROR INIT\n", 0, 0);
+	shelly->str = NULL;
+    shelly->token = NULL;
+    shelly->cmd = NULL;
 	return (check);
 }

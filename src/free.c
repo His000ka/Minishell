@@ -22,21 +22,19 @@ void	free_envp(t_env *env)
 	free(env->envp);
 }
 
-void	ft_free_token(t_token *t)
+void free_tokens(t_token *token)
 {
-	t_token	*current_token;
-	t_token	*next_token;
+	t_token *tmp;
 
-	current_token = t;
-	while (current_token != NULL)
+	while (token)
 	{
-		next_token = current_token->next;
-		if (current_token->str)
-			free(current_token->str);
-		free(current_token);
-		current_token = next_token;
+		tmp = token;
+		token = token->next;
+		free(tmp->str);
+		free(tmp);
 	}
 }
+
 
 void	ft_free(t_shelly *shelly)
 {
@@ -51,11 +49,11 @@ void	ft_free(t_shelly *shelly)
 		shelly->str = NULL;
 	}
 	//segfault si shelly->token n'existe pas ...
-	// if (shelly->token != NULL && ft_strlen(shelly->cmd) > 0)
-	// {
-	// 	ft_free_token(shelly->token);
-	// 	shelly->token = NULL;
-	// }
+	if (shelly->token != NULL)
+	{
+		free_tokens(shelly->token);
+		shelly->token = NULL;
+	}
 	if (shelly->env != NULL)
 	{
 		if (shelly->env->envp != NULL)

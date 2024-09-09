@@ -13,7 +13,7 @@
 # Variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -ggdb3
+CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
 PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src

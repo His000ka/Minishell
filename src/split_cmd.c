@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:19:51 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/09 12:21:42 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:07:01 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ void	add_elem(t_shelly *shelly, int count)
 	while (j < count)
 	{
 		size = info_elem(shelly, j, "size");
-		printf("size: %d\n", size);
+		// printf("size: %d\n", size);
 		shelly->str[j] = malloc(sizeof(char) * (size + 1));
 		if (!shelly->str[j])
 			return ;
 		i = info_elem(shelly, j, "index");
-		printf("i: %d\n", i);
+		// printf("i: %d\n", i);
 		k = -1;
 		while (++k < size && shelly->cmd[k + i] != '\0')
 			shelly->str[j][k] = shelly->cmd[k + i];
@@ -84,7 +84,6 @@ void	add_elem(t_shelly *shelly, int count)
 		j++;
 	}
 	shelly->str[j] = NULL;
-	affiche_elem(shelly);
 }
 
 void	split_command(t_shelly *shelly)

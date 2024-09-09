@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+
+
 int main(int ac, char **av, char **envp)
 {
 	t_shelly	shelly;
@@ -30,7 +32,7 @@ int main(int ac, char **av, char **envp)
 			else
 				add_history(shelly.cmd);
 			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
-				shelly.loop += ft_error("Exiting shell", 0, 0);
+				return (ft_error("Exiting shell", 0, 0));
 			ft_parse(&shelly);
 			ft_free(&shelly);
 		}
