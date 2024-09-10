@@ -6,14 +6,14 @@
 #    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/09/10 12:10:39 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/09/10 13:14:09 by fimazouz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 LIBFT_DIR = libft
 PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
@@ -25,8 +25,8 @@ INCLUDES += -I $(READLINE_DIR)/include
 LIBS = -L $(READLINE_DIR)/lib -lreadline
 
 # Source and object files
-SRCS = src/main.c src/utils.c
-OBJS = ${SRCS:.c=.o}
+SRCS = $(shell find src -name '*.c')
+OBJS = $(SRCS:.c=.o)
 
 # Rules
 all: $(NAME)
@@ -37,7 +37,8 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-%.o: src/%.c
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

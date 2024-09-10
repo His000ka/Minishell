@@ -6,15 +6,15 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 10:41:26 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:02:44 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	if_exit(char **str)
+int	if_exit(char *str)
 {
-	if (ft_strncmp(str[1], "exit", 4) == 0)
+	if (ft_strncmp(str, "exit", 4) == 0)
 		return (1);
 	return (0);
 }
@@ -62,8 +62,8 @@ int	ft_exit(char **str)
 	exit(is_num % 256);
 }
 
-int	main(int ac, char **av)
-{
-	if (if_exit(av) == 1)
-		ft_exit(av);
-}
+// int	main(int ac, char **av)
+// {
+// 	if (if_exit(av) == 1)
+// 		ft_exit(av);
+// }

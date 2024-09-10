@@ -14,21 +14,19 @@
 
 
 
-int main(int ac, char **av, char **envp)
+int main(void)
 {
 	t_shelly	shelly;
 
 	shelly.str = NULL;
-	(void)ac;
-	(void)av;
-	if (init_shelly(envp, &shelly) == 0)
+	if (init_shelly(&shelly) == 0)
 	{
 		shelly.loop = 0;
 		while (shelly.loop == 0)
 		{
 			shelly.cmd = readline("MINISHELL> ");
 			if (!shelly.cmd)
-				shelly.loop += ft_error("Error launching shell", 0, 0);
+				return (ft_error("Error launching shell", 0, 0));
 			else
 				add_history(shelly.cmd);
 			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
