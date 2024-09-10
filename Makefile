@@ -6,7 +6,7 @@
 #    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/09/10 10:43:03 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/09/10 12:10:39 by fimazouz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ INCLUDES += -I $(READLINE_DIR)/include
 LIBS = -L $(READLINE_DIR)/lib -lreadline
 
 # Source and object files
-SRCS = src/main.c src/utils.c 
+SRCS = src/main.c src/utils.c
 OBJS = ${SRCS:.c=.o}
 
 # Rules
