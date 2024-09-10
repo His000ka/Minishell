@@ -13,7 +13,7 @@
 # Variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 LIBFT_DIR = libft
 PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
@@ -25,7 +25,7 @@ INCLUDES += -I $(READLINE_DIR)/include
 LIBS = -L $(READLINE_DIR)/lib -lreadline
 
 # Source and object files
-SRCS = src/main.c src/utils.c src/parse.c src/init_shelly.c src/free.c src/token.c src/count_elem.c src/check_cmd.c src/count_elem2.c src/affiche.c src/split_cmd.c
+SRCS = src/main.c src/utils.c src/parse.c src/init_shelly.c src/free.c src/token.c src/count_elem.c src/check_cmd.c src/count_elem2.c src/affiche.c src/split_cmd.c src/built-in/cd.c src/built-in/echo.c src/built-in/env.c src/built-in/exit.c src/built-in/export.c src/built-in/pwd.c src/built-in/unset.c src/built-in/env_list.c src/built-in/builtin.c
 OBJS = ${SRCS:.c=.o}
 
 # Rules

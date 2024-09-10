@@ -12,48 +12,17 @@
 
 #include "../include/minishell.h"
 
-// void	create_token(t_shelly *shelly, char *val)
-// {
-// 	t_token *new_token;
-// 	t_token *current;
-
-// 	new_token = malloc(sizeof(t_token));
-// 	if (!new_token)
-// 	{
-// 		ft_error("ERROR ALLOCATING TOKEN\n", 0, 0);
-// 		return;
-// 	}
-// 	new_token->str = ft_strdup(val);
-// 	if (!new_token->str)
-//     {
-//         free(new_token);
-//         ft_error("ERROR COPYING STRING\n", 0, 0);
-//         return;
-//     }
-// 	new_token->type = 0;
-// 	new_token->next = NULL;
-// 	new_token->prev = NULL;
-// 	if (!shelly->token)
-// 		shelly->token = new_token;
-// 	else
-// 	{
-// 		current = shelly->token;
-// 		while (current->next != NULL)
-// 		{
-// 			// Vérification de l'intégrité du pointeur
-// 			if (current == NULL)
-// 			{
-// 				ft_error("ERROR: Invalid token pointer\n", 0, 0);
-// 				free(new_token->str);
-// 				free(new_token);
-// 				return;
-// 			}
-// 			current = current->next;
-// 		}
-// 		current->next = new_token;
-// 		new_token->prev = current;
-// 	}
-// }
+int	type_token(char *val)
+{
+	if (is_pipe(val, 0) == 1)
+		return (5);
+	if (is_trunc(val, 0) == 1)
+		return (3);
+	if (is_input(val, 0) == 1)
+		return (1);
+	else
+		return (6);
+}
 
 t_token *create_node(void)
 {
@@ -84,6 +53,7 @@ void create_token(t_shelly *shelly, char *val)
     if (!new_token)
         return;
     new_token->str = ft_strdup(val);
+	// new_token->type = type_token(val);
     if (!new_token->str)
     {
         // free(new_token);

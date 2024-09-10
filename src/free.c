@@ -12,15 +12,15 @@
 
 #include "../include/minishell.h"
 
-void	free_envp(t_env *env)
-{
-	int	i;
+// void	free_envp(t_env *env)
+// {
+// 	int	i;
 
-	i = -1;
-	while (env->envp[++i] != NULL)
-		free(env->envp[i]);
-	free(env->envp);
-}
+// 	i = -1;
+// 	while (env->envp[++i] != NULL)
+// 		free(env->envp[i]);
+// 	free(env->envp);
+// }
 
 void free_tokens(t_token *token)
 {
@@ -54,13 +54,13 @@ void	ft_free(t_shelly *shelly)
 		free_tokens(shelly->token);
 		shelly->token = NULL;
 	}
-	if (shelly->env != NULL)
-	{
-		if (shelly->env->envp != NULL)
-			free_envp(shelly->env);
-		free(shelly->env);
-		shelly->env = NULL;
-	}
+	// if (shelly->env != NULL)
+	// {
+	// 	if (shelly->env->envp != NULL)
+	// 		free_envp(shelly->env);
+	// 	free(shelly->env);
+	// 	shelly->env = NULL;
+	// }
 	if (shelly->cmd != NULL)
 	{
 		free(shelly->cmd);

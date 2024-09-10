@@ -14,14 +14,12 @@
 
 
 
-int main(int ac, char **av, char **envp)
+int main(void)
 {
 	t_shelly	shelly;
 
 	shelly.str = NULL;
-	(void)ac;
-	(void)av;
-	if (init_shelly(envp, &shelly) == 0)
+	if (init_shelly(&shelly) == 0)
 	{
 		shelly.loop = 0;
 		while (shelly.loop == 0)

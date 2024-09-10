@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:15:46 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/09 15:02:08 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/10 11:19:12 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,18 @@ void	affiche_token(t_shelly *shelly)
 	{
 		printf("->%s ->%d\n", current_token->str, current_token->type);
 		current_token = current_token->next;
+	}
+}
+
+void	affiche_env_list(t_env *list)
+{
+	t_env	*tmp;
+
+	tmp = list;
+	while (tmp)
+	{
+		printf("Content: %s\n", tmp->content);
+		printf("Value: %s\n", tmp->value);
+		tmp = tmp->next;
 	}
 }

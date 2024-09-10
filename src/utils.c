@@ -12,11 +12,49 @@
 
 #include "../include/minishell.h"
 
-int	ft_is_good_char(int c)
+char	*ft_strndup(const char *s, int n)
 {
-	if (c > 32 && c <= 126 && c != 34 && c != 39)
-		return (1);
-	return (0);
+	char	*p;
+	int		len;
+	int		i;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	if (len > n)
+		len = n;
+	p = malloc(sizeof(char) * (len + 1));
+	if (p == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		p[i] = s[i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}
+
+
+char	*ft_strsearch(char *s, int c, int flag)
+{
+	int	i;
+
+	i = 0;
+	while (c >= 256)
+		c -= 256;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c && flag == 0)
+			return (&s[i + 1]);
+		else  if(s[i] == c && flag == 1)
+			return(ft_strndup(s, i));
+		i++;
+	}
+	if (c == '\0')
+		return (&s[i]);
+	return (NULL);
 }
 
 int	ft_error(char *str, char var, int nb)

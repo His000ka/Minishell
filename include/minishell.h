@@ -34,10 +34,15 @@
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
 //variable environnement
+
 typedef struct s_env
 {
-	char	**envp;
-}	t_env;
+	char			*content;
+	char			*value;
+	int				type;
+	struct s_env	*next;
+
+}					t_env;
 
 //token
 typedef struct s_token
@@ -60,7 +65,8 @@ typedef struct s_shelly
 
 //utils
 int		ft_error(char *str, char var, int nb);
-int		ft_is_good_char(int c);
+char	*ft_strndup(const char *s, int n);
+char	*ft_strsearch(char *s, int c, int flag);
 
 //parse
 int		ft_parse(t_shelly *shelly);
@@ -73,7 +79,7 @@ void	add_elem(t_shelly *shelly, int count);
 void	split_command(t_shelly *shelly);
 
 //init
-int		init_shelly(char **envp, t_shelly *shelly);
+int		init_shelly(t_shelly *shelly);
 int		init_env(char **envp, t_env *env);
 
 //check
@@ -104,5 +110,34 @@ int		is_input(char *str, int flag);
 //affiche
 void	affiche_elem(t_shelly *shelly);
 void	affiche_token(t_shelly *shelly);
+void	affiche_env_list(t_env *list);
 
+//built-in
+//cd
+int 	if_cd(char *str);
+void	ft_cd(char **str);
+
+//echo
+int		if_echo(char *str);
+void	ft_echo(char **str);
+//env
+int		if_env(char *str);
+void	ft_env(t_env *env_list);
+//exit
+int		if_exit(char *str);
+int		is_numeric(char *str);
+int		ft_exit(char **str);
+//export
+int		if_export(char *str);
+void	ft_export(t_env *list_env);
+//pwd
+int		if_pwd(char *str);
+void	ft_pwd(void);
+//unset
+int	if_unset(char *str);
+void ft_unset(t_env *env_list, char **str);
+//env_list
+t_env	*create_env_node(char *env_var);
+void	add_node_env(t_env **list, t_env *new);
+t_env	*create_env_list(t_env **list, char **envp);
 #endif
