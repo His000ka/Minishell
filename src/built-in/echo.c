@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/04 13:30:51 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:41:49 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_echo(char **str)
 {
-	if (strncmp(str[1], "echo", 4) == 0)
+	if (ft_strncmp(str[1], "echo", 4) == 0)
 		return (1);
 	return (0);
 }

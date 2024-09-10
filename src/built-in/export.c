@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 15:54:08 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:41:19 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_export(char **str)
 {
-	if (strncmp(str[1], "export", 6) == 0)
+	if (ft_strncmp(str[1], "export", 6) == 0)
 		return (1);
 	return (0);
 }

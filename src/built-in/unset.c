@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 17:14:35 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:41:38 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	if_unset(char **str)
 {
-	if (strncmp(str[1], "unset", 5) == 0)
+	if (ft_strncmp(str[1], "unset", 5) == 0)
 		return (1);
 	return (0);
 }

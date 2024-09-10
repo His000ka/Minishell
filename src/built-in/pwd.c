@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:31 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 14:10:17 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:41:32 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_pwd(char **str)
 {
-	if (strncmp(str[1], "pwd", 3) == 0 && (str[2] == NULL))
+	if (ft_strncmp(str[1], "pwd", 3) == 0 && (str[2] == NULL))
 		return (1);
 	return (0);
 }

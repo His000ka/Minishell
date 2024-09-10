@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:13:46 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 16:51:33 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:40:45 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int 	if_cd(char *str)
 {
-	if (strncmp(str, "cd", 2) == 0)
+	if (ft_strncmp(str, "cd", 2) == 0)
 		return (1);
 	return (0);
 }

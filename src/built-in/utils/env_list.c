@@ -6,36 +6,11 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:00:37 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 17:04:23 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:42:34 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-char	*ft_strndup(const char *s, int n)
-{
-	char	*p;
-	int		len;
-	int		i;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	if (len > n)
-		len = n;
-	p = malloc(sizeof(char) * (len + 1));
-	if (p == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		p[i] = s[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
-}
-
 
 char	*ft_strsearch(char *s, int c, int flag)
 {

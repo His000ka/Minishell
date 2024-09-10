@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:41:19 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/09 16:58:55 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:41:08 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	if_env(char **str)
 {
-	if (strncmp(str[1], "env", 3) == 0)
+	if (ft_strncmp(str[1], "env", 3) == 0)
 		return (1);
 	return (0);
 }
