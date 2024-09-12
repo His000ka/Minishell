@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 13:02:10 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:27:52 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_echo(char **str)
 	i = 2;
 	option = 0;
 
-	if (str[i] && ft_strncmp(str[i], "-n", 2) == 0 && ft_strlen(str[i]) == 2)
+	while (str[i] && ft_strncmp(str[i], "-n", 2) == 0)
 	{
 		option = 1;
 		i++;
@@ -42,3 +42,16 @@ void	ft_echo(char **str)
 	if (option == 0)
 		printf("\n");
 }
+// int	main(int argc, char **argv)
+// {
+// 	if (argc < 2)
+// 	{
+// 		printf("Usage: %s [args]\n", argv[0]);
+// 		return (1);
+// 	}
+	
+// 	// Call the echo function with the command line arguments
+// 	ft_echo(argv);
+
+// 	return (0);
+// }
