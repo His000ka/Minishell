@@ -85,8 +85,8 @@ int	check_cmd(t_shelly *shelly)
 
 	check = 0;
 	check += check_quote(shelly);
-	check += check_last_elem(shelly);
-	check += check_order(shelly, check);
+	// check += check_last_elem(shelly);
+	// check += check_order(shelly, check);
 	// printf("check_cmd: %d\n", check);
 	return (check);
 }

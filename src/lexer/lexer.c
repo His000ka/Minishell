@@ -14,12 +14,16 @@
 
 int	type_token(char *val)
 {
-	if (is_pipe(val, 0) == 1)
+	if (is_pipe(val, 1) == 1)
 		return (PIPE);
-	if (is_trunc(val, 0) == 1)
-		return (3);
-	if (is_input(val, 0) == 1)
-		return (1);
+	if (is_trunc(val, 1) == 1)
+		return (TRUNC);
+	if (is_trunc(val, 1) == 2)
+		return (APPEND);
+	if (is_input(val, 1) == 1)
+		return (INPUT);
+	if (is_input(val, 1) == 2)
+		return (HEREDOC);
 	else
 		return (6);
 }
@@ -53,7 +57,7 @@ void create_token(t_shelly *shelly, char *val)
     if (!new_token)
         return;
     new_token->str = ft_strdup(val);
-	// new_token->type = type_token(val);
+	new_token->type = type_token(val);
     if (!new_token->str)
     {
         // free(new_token);
@@ -72,7 +76,7 @@ void create_token(t_shelly *shelly, char *val)
     }
 }
 
-int	ft_parse(t_shelly *shelly)
+int	ft_lexer(t_shelly *shelly)
 {
 	int	i;
 

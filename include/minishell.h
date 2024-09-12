@@ -35,6 +35,13 @@
 
 //variable environnement
 
+typedef struct s_ast {
+	char			**value;
+	int				node_type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
+
 typedef struct s_env
 {
 	char			*content;
@@ -61,6 +68,7 @@ typedef struct s_shelly
 	int		loop;
 	t_env	*env;
 	t_token	*token;
+	t_ast	*ast;
 }	t_shelly;
 
 //utils
@@ -68,8 +76,11 @@ int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
 
-//parse
-int		ft_parse(t_shelly *shelly);
+//lexer
+int		ft_lexer(t_shelly *shelly);
+//parser
+int		ft_parser(t_shelly *shelly);
+int		is_cmd(int type);
 
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);

@@ -66,6 +66,8 @@ int	is_pipe(char *str, int  flag)
 	{
 		if (flag == 1)
 			return (1);
+		if (ft_strlen(str) == 1 && flag == 0)
+			return (0);
 		if (check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
 			return (0);
 		if (((check_char(str[i - 1]) == 1 && check_char(str[i + 1]) == 0)
@@ -86,6 +88,8 @@ int	is_trunc(char *str, int flag)
 	{
 		if (flag == 1)
 			return (1 + is_trunc(&str[1], 1));
+		if (ft_strlen(str) == 1 && flag == 0)
+			return (0);
 		if (check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
 			return (0);
 		if (((check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 1)
@@ -112,6 +116,8 @@ int	is_input(char *str, int flag)
 	{
 		if (flag == 1)
 			return (1 + is_input(&str[1], 1));
+		if (ft_strlen(str) == 1 && flag == 0)
+			return (0);
 		if (str[i] == '<' && check_char(str[i - 1]) == 1 && check_char(str[i + 1] == 1) && flag == 0)
 			return (0);
 		if (str[i] == '<' && ((check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 1)
