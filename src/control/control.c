@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:21 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 13:14:53 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/10 20:42:25 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 // void control_c(int sig)
 // {
-// 	printf("\n");
+// 	printf("\nminihsell> ");
+//     rl_replace_line("minishell> ", 0);
 // 	rl_on_new_line();
 // 	rl_redisplay();
 // }
