@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:21 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 13:14:53 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:28:22 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,36 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// void control_c(int sig)
-// {
-// 	printf("\n");
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// }
 
-// void	control_d()
-// {
-// 	printf("exit\n");
-// 	exit(1);
-// }
+void control_c(int sig)
+{
+	(void)(sig);
 
-// void	control_backslash()
-// {
+  	//rl_replace_line("minishell>", 0); 
 	
-// }
+	//printf("\nMINISHELL>");
+	rl_on_new_line();
+	rl_redisplay();
+	write(STDOUT_FILENO, "\nminishell> ", 12);
+	rl_redisplay();
+}
 
-// void	control()
-// {
-// 	signal(SIGINT, control_c);
-// }
+void	control_d()
+{
+	printf("exit\n");
+	exit(1);
+}
+
+void	control_backslash(int sig)
+{
+	(void)sig;
+}
+
+void	control()
+{
+	signal(SIGINT, control_c);
+	signal(SIGQUIT, SIG_IGN);
+}
 
 // int	main()
 // {

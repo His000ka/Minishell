@@ -140,4 +140,9 @@ void ft_unset(t_env *env_list, char **str);
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
 t_env	*create_env_list(t_env **list, char **envp);
+//control
+void	control();
+void control_c(int sig);
+void	control_d();
+
 #endif

@@ -18,6 +18,8 @@ int main(void)
 {
 	t_shelly	shelly;
 
+	control();
+
 	shelly.str = NULL;
 	if (init_shelly(&shelly) == 0)
 	{
@@ -26,7 +28,7 @@ int main(void)
 		{
 			shelly.cmd = readline("MINISHELL> ");
 			if (!shelly.cmd)
-				return (ft_error("Error launching shell", 0, 0));
+				return (control_d(), 1);
 			else
 				add_history(shelly.cmd);
 			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
