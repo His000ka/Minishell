@@ -81,6 +81,9 @@ int		ft_lexer(t_shelly *shelly);
 //parser
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
+//ast
+t_ast	*create_ast(t_token *tokens);
+void	print_ast(t_ast *node, int level);
 
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
@@ -102,6 +105,7 @@ int		check_cmd(t_shelly *shelly);
 void	free_envp(t_env *env);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
+void	free_ast(t_ast *node);
 
 //token
 // int		is_pipe(char c);

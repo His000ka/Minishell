@@ -22,10 +22,11 @@ void	algo_minishell(t_shelly *shelly)
 	if (check == 0)
 	{
 		check = ft_parser(shelly);
-	// 	if (check == 0)
-	// 	{
+		if (check == 0)
+		{
+			free_ast(shelly->ast);
 	// 		check = ft_execut(shelly);
-	// 	}
+		}
 	}
 }
 

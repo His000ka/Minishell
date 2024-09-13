@@ -46,6 +46,8 @@ int	count_elem_2(t_shelly *shelly, int count)
 	while (shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i], 0);
+		if (shelly->cmd[i] == '\0')
+			return (count);
 		count += is_pipe(&shelly->cmd[i], 0);
 		count += is_trunc(&shelly->cmd[i], 0);
 		count += is_input(&shelly->cmd[i], 0);
@@ -60,16 +62,18 @@ int	count_elem(t_shelly *shelly, int count)
 	int tmp;
 
 	i = 0;
-	while (shelly->cmd[i])
+	while (shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i], 1);
+		if (shelly->cmd[i] == '\0')
+			return (count_elem_2(shelly, count));
 		tmp = i;
 		i += is_quote(&shelly->cmd[i], 1);
 		if (tmp == i)
 			i += is_good_char(&shelly->cmd[i], 1);
 		if (tmp == i)
 			i++;
-		else
+		else 
 			count++;
 	}
 	// printf("count: %d\n", count);

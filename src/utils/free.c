@@ -12,6 +12,33 @@
 
 #include "../../include/minishell.h"
 
+void free_command(char **cmd)
+{
+	int	i;
+
+	i = 0;
+    if (cmd)
+	{
+        while (cmd[i] != NULL)
+            free(cmd[i++]);
+        free(cmd);
+    }
+}
+
+// Fonction récursive pour libérer tout l'arbre AST
+void	free_ast(t_ast *node)
+{
+    if (!node)
+        return;
+    if (node->left)
+        free_ast(node->left);
+    if (node->right)
+        free_ast(node->right);
+    if (node->value)
+        free_command(node->value);
+    free(node);
+}
+
 // void	free_envp(t_env *env)
 // {
 // 	int	i;
@@ -48,7 +75,6 @@ void	ft_free(t_shelly *shelly)
 		free(shelly->str);
 		shelly->str = NULL;
 	}
-	//segfault si shelly->token n'existe pas ...
 	if (shelly->token != NULL)
 	{
 		free_tokens(shelly->token);

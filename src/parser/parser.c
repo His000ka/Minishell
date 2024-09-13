@@ -22,20 +22,14 @@ int	is_cmd(int type)
 int	check_pipeline(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
-	{
-		printf("type: %d et val: %s\n", current->type, current->str);
 		return (ft_error("ERROR PIPE\n", 0, 0));
-	}
 	return (0);
 }
 
 int	check_redirect(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
-	{
-		printf("type: %d et val: %s\n", current->type, current->str);
 		return (ft_error("ERROR REDIRECT\n", 0, 0));
-	}
 	return (0);
 }
 
@@ -61,18 +55,13 @@ int	check_token(t_shelly *shelly)
 
 int		ft_parser(t_shelly *shelly)
 {
-	int		count;
+	// int		count;
 	// t_token	*tmp;
 
-	count = 1;
+	// count = 1;
 	if (check_token(shelly) > 0)
 		return (1);
-	// tmp = shelly->token;
-	while (shelly->token)
-	{
-		count += is_cmd(shelly->token->type);
-		shelly->token = shelly->token->next;
-		// ft_create_ast(shelly);
-	}
+	shelly->ast = create_ast(shelly->token);
+	print_ast(shelly->ast, 0);
 	return (0);
 }
