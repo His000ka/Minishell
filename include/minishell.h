@@ -88,8 +88,8 @@ t_ast	*create_ast(t_token *tokens);
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
 int		info_elem(t_shelly *shelly, int j, char *str);
-void	add_elem(t_shelly *shelly, int count);
-void	split_command(t_shelly *shelly);
+int		add_elem(t_shelly *shelly, int count);
+int		split_command(t_shelly *shelly);
 
 //init
 int		init_shelly(t_shelly *shelly);

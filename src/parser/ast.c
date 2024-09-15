@@ -118,30 +118,3 @@ t_ast	*create_ast(t_token *tokens)
 	}
 	return (root);
 }
-
-
-// t_ast	*create_ast(t_token *tokens)
-// {
-// 	t_token	*current = tokens;
-// 	t_ast	*root = NULL;
-// 	t_ast	*new_node = NULL;
-
-// 	while (current)
-// 	{
-        // if (is_cmd(current->type) == 1)
-// 		{
-// 			new_node = create_ast_node(NULL, current->type);
-// 			new_node->left = root;
-// 			current = current->next;
-// 			new_node->right = create_ast(current);
-// 			return (new_node);
-//         }
-//         else
-// 		{
-//             root = create_ast_node(extract_command(current), CMD);
-//             while (current && is_cmd(current->type) == 0)
-//                 current = current->next;
-//         }
-//     }
-//     return (root);
-// }

@@ -45,20 +45,20 @@ t_token	*create_node(void)
 	return (new_node);
 }
 
-void	create_token(t_shelly *shelly, char *val)
+int	create_token(t_shelly *shelly, char *val)
 {
 	t_token	*new_token;
 	t_token	*current;
 
 	if (val == NULL)
-		return ;
+		return (1);
 	new_token = create_node();
 	if (!new_token)
-		return ;
-	new_token->str = ft_strdup(val);
+		return (1);
+	new_token->str = ft_strdup(val); //errer si NULL et qu'on quitte avec exit (celui de wish)
 	new_token->type = type_token(val);
 	if (!new_token->str)
-		return ;
+		return (1);
 	if (!shelly->token)
 		shelly->token = new_token;
 	else
@@ -69,6 +69,7 @@ void	create_token(t_shelly *shelly, char *val)
 		current->next = new_token;
 		new_token->prev = current;
 	}
+	return (0);
 }
 
 int	ft_lexer(t_shelly *shelly)
@@ -80,11 +81,15 @@ int	ft_lexer(t_shelly *shelly)
 		return (1);
 	if (!shelly->cmd || ft_strlen(shelly->cmd) == 0)
 		return (1);
-	split_command(shelly);
+	if (split_command(shelly) == 1)
+		return (1);
 	if (!shelly->str)
 		return (1);
 	while (shelly->str[++i] != NULL)
-		create_token(shelly, shelly->str[i]);
+	{
+		if (create_token(shelly, shelly->str[i]) == 1)
+			return (1);
+	}
 	affiche_token(shelly);
 	return (0);
 }

@@ -49,9 +49,19 @@ int	count_elem_2(t_shelly *shelly, int count)
 		i += count_index(&shelly->cmd[i], 0);
 		if (shelly->cmd[i] == '\0')
 			return (count);
-		count += is_pipe(&shelly->cmd[i], 0);
-		count += is_trunc(&shelly->cmd[i], 0);
-		count += is_input(&shelly->cmd[i], 0);
+		if (i == 0 && (shelly->cmd[i] == '|' || shelly->cmd[i] == '>'
+			|| shelly->cmd[i] == '<'))
+		{
+			i = count_index(&shelly->cmd[i + 1], 1) + 1;
+			if (shelly->cmd[i] == '\0')
+				return (count);
+		}
+		else
+		{
+			count += is_pipe(&shelly->cmd[i], 0);
+			count += is_trunc(&shelly->cmd[i], 0);
+			count += is_input(&shelly->cmd[i], 0);
+		}
 		i++;
 	}
 	return (count);
