@@ -12,6 +12,53 @@
 
 #include "../../include/minishell.h"
 
+void	affiche_ast(t_ast *node, int level)
+{
+	int	i;
+
+	if (!node)
+		return ;
+	i = -1;
+	while (++i < level)
+		printf("    ");
+	if (node->node_type == CMD)
+	{
+		printf("Command: ");
+		i = 0;
+		while (node->value[i] != NULL)
+			printf("%s ", node->value[i++]);
+		printf("\n");
+	}
+	else if (node->node_type == PIPE)
+		printf("Operator: |\n");
+	else if (node->node_type == INPUT)
+		printf("Operator: <\n");
+	else if (node->node_type == TRUNC)
+		printf("Operator: >\n");
+	else if (node->node_type == APPEND)
+		printf("Operator: >>\n");
+	else if (node->node_type == HEREDOC)
+		printf("Operator: <<\n");
+	else
+		printf("Unknown node type\n");
+	if (node->left)
+	{
+		i = -1;
+		while (++i < level)
+			printf("    ");
+		printf("Left:\n");
+		affiche_ast(node->left, level + 1);
+	}
+	if (node->right)
+	{
+		i = -1;
+		while (++i < level)
+			printf("    ");
+		printf("Right:\n");
+		affiche_ast(node->right, level + 1);
+	}
+}
+
 void	affiche_elem(t_shelly *shelly)
 {
 	int	j;

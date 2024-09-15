@@ -35,8 +35,8 @@ int	check_redirect(t_token *current)
 
 int	check_token(t_shelly *shelly)
 {
-	int	check;
-	t_token *tmp;
+	int		check;
+	t_token	*tmp;
 
 	check = 0;
 	tmp = shelly->token;
@@ -44,7 +44,8 @@ int	check_token(t_shelly *shelly)
 	{
 		if (tmp->type == PIPE)
 			check = check_pipeline(tmp);
-		if (tmp->type == TRUNC || tmp->type == INPUT || tmp->type == APPEND || tmp->type == HEREDOC)
+		if (tmp->type == TRUNC || tmp->type == INPUT
+			|| tmp->type == APPEND || tmp->type == HEREDOC)
 			check = check_redirect(tmp);
 		tmp = tmp->next;
 		if (check != 0)
@@ -53,15 +54,11 @@ int	check_token(t_shelly *shelly)
 	return (check);
 }
 
-int		ft_parser(t_shelly *shelly)
+int	ft_parser(t_shelly *shelly)
 {
-	// int		count;
-	// t_token	*tmp;
-
-	// count = 1;
 	if (check_token(shelly) > 0)
 		return (1);
 	shelly->ast = create_ast(shelly->token);
-	print_ast(shelly->ast, 0);
+	affiche_ast(shelly->ast, 0);
 	return (0);
 }

@@ -83,7 +83,6 @@ int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //ast
 t_ast	*create_ast(t_token *tokens);
-void	print_ast(t_ast *node, int level);
 
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
@@ -124,6 +123,7 @@ int		is_input(char *str, int flag);
 void	affiche_elem(t_shelly *shelly);
 void	affiche_token(t_shelly *shelly);
 void	affiche_env_list(t_env *list);
+void	affiche_ast(t_ast *node, int level);
 
 //built-in
 //cd

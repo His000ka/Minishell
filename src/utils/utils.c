@@ -36,7 +36,6 @@ char	*ft_strndup(const char *s, int n)
 	return (p);
 }
 
-
 char	*ft_strsearch(char *s, int c, int flag)
 {
 	int	i;
@@ -48,8 +47,8 @@ char	*ft_strsearch(char *s, int c, int flag)
 	{
 		if (s[i] == c && flag == 0)
 			return (&s[i + 1]);
-		else  if(s[i] == c && flag == 1)
-			return(ft_strndup(s, i));
+		else if (s[i] == c && flag == 1)
+			return (ft_strndup(s, i));
 		i++;
 	}
 	if (c == '\0')
@@ -75,23 +74,3 @@ int	ft_error(char *str, char var, int nb)
 	}
 	return (1);
 }
-
-// int	ft_error(char *str, t_shelly *shelly)
-// {
-// 	if(!str)
-// 		return(0);
-// 	write(1, str, ft_strlen(str));
-// 	// if (shelly->env != NULL)
-// 	// {
-// 	// 	if (shelly->env->envp != NULL)
-// 	// 		free_envp(shelly->env);
-// 	// 	free(shelly->env);
-// 	// 	shelly->env = NULL;
-// 	// }
-// 	// if (shelly->cmd != NULL)
-// 	// {
-// 	// 	free(shelly->cmd);
-// 	// 	shelly->cmd = NULL;
-// 	// }
-// 	return(1);
-// }
