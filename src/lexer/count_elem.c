@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
 int	check_char(char c)
 {
 	if (c == ' ' || c == 34 || c == 39)
@@ -59,7 +60,7 @@ int	count_elem_2(t_shelly *shelly, int count)
 int	count_elem(t_shelly *shelly, int count)
 {
 	int	i;
-	int tmp;
+	int	tmp;
 
 	i = 0;
 	while (shelly->cmd[i] != '\0')
@@ -73,9 +74,8 @@ int	count_elem(t_shelly *shelly, int count)
 			i += is_good_char(&shelly->cmd[i], 1);
 		if (tmp == i)
 			i++;
-		else 
+		else
 			count++;
 	}
-	// printf("count: %d\n", count);
 	return (count_elem_2(shelly, count));
 }

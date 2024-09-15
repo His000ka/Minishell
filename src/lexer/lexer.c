@@ -28,52 +28,47 @@ int	type_token(char *val)
 		return (6);
 }
 
-t_token *create_node(void)
+t_token	*create_node(void)
 {
-    t_token *new_node = malloc(sizeof(t_token));
-    if (!new_node)
-    {
-        ft_error("ERROR ALLOCATING TOKEN\n", 0, 0);
-        return NULL;
-    }
-    new_node->str = NULL;
-    new_node->type = 0;
-    new_node->next = NULL;
-    new_node->prev = NULL;
-    return new_node;
+	t_token	*new_node;
+
+	new_node = malloc(sizeof(t_token));
+	if (!new_node)
+	{
+		ft_error("ERROR ALLOCATING TOKEN\n", 0, 0);
+		return (NULL);
+	}
+	new_node->str = NULL;
+	new_node->type = 0;
+	new_node->next = NULL;
+	new_node->prev = NULL;
+	return (new_node);
 }
 
-void create_token(t_shelly *shelly, char *val)
+void	create_token(t_shelly *shelly, char *val)
 {
-    t_token *new_token;
-    t_token *current;
+	t_token	*new_token;
+	t_token	*current;
 
-    if (val == NULL)
-    {
-        ft_error("ERROR: Null value passed to create_token\n", 0, 0);
-        return;
-    }
-    new_token = create_node();
-    if (!new_token)
-        return;
-    new_token->str = ft_strdup(val);
+	if (val == NULL)
+		return ;
+	new_token = create_node();
+	if (!new_token)
+		return ;
+	new_token->str = ft_strdup(val);
 	new_token->type = type_token(val);
-    if (!new_token->str)
-    {
-        // free(new_token);
-        ft_error("ERROR COPYING STRING\n", 0, 0);
-        return;
-    }
-    if (!shelly->token)
-        shelly->token = new_token;
-    else
-    {
-        current = shelly->token;
-        while (current->next != NULL)
-            current = current->next;
-        current->next = new_token;
-        new_token->prev = current;
-    }
+	if (!new_token->str)
+		return ;
+	if (!shelly->token)
+		shelly->token = new_token;
+	else
+	{
+		current = shelly->token;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new_token;
+		new_token->prev = current;
+	}
 }
 
 int	ft_lexer(t_shelly *shelly)
@@ -81,12 +76,13 @@ int	ft_lexer(t_shelly *shelly)
 	int	i;
 
 	i = -1;
-	if (check_cmd(shelly) > 0)
+	if (check_quote(shelly) > 0)
 		return (1);
 	if (!shelly->cmd || ft_strlen(shelly->cmd) == 0)
 		return (1);
+	split_command(shelly);
 	if (!shelly->str)
-		split_command(shelly);
+		return (1);
 	while (shelly->str[++i] != NULL)
 		create_token(shelly, shelly->str[i]);
 	affiche_token(shelly);

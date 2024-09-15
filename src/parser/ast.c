@@ -14,47 +14,50 @@
 
 void	print_ast(t_ast *node, int level)
 {
-    if (!node)
-        return;
-    // Indentation pour afficher les niveaux
-    for (int i = 0; i < level; i++) {
-        printf("    ");  // 4 espaces par niveau
-    }
+	int	i;
 
-    // Afficher le type de nœud
-    if (node->node_type == CMD) {
-        printf("Command: ");
-        for (int i = 0; node->value[i] != NULL; i++) {
-            printf("%s ", node->value[i]);
-        }
+	if (!node)
+		return ;
+	i = -1;
+	while (++i < level)
+		printf("    ");
+	if (node->node_type == CMD)
+	{
+		printf("Command: ");
+		i = 0;
+        while (node->value[i] != NULL)
+            printf("%s ", node->value[i++]);
         printf("\n");
-    } else if (node->node_type == PIPE) {
+    }
+	else if (node->node_type == PIPE)
         printf("Operator: |\n");
-    } else if (node->node_type == INPUT) {
+    else if (node->node_type == INPUT)
         printf("Operator: <\n");
-    } else if (node->node_type == TRUNC) {
+    else if (node->node_type == TRUNC)
         printf("Operator: >\n");
+	else if (node->node_type == APPEND)
+        printf("Operator: >>\n");
+	else if (node->node_type == HEREDOC)
+        printf("Operator: <<\n");
     // } else if (node->node_type == AND) {
     //     printf("Operator: &&\n");
     // } else if (node->node_type == OR) {
     //     printf("Operator: ||\n");
-    } else {
+    else
         printf("Unknown node type\n");
-    }
-
-    // Appel récursif pour les sous-arbres gauche et droit
-    if (node->left) {
-        for (int i = 0; i < level; i++) {
+    if (node->left)
+	{
+        i = -1;
+		while (++i < level)
             printf("    ");
-        }
         printf("Left:\n");
         print_ast(node->left, level + 1);
     }
-
-    if (node->right) {
-        for (int i = 0; i < level; i++) {
+    if (node->right)
+	{
+        i = -1;
+    	while (++i < level)
             printf("    ");
-        }
         printf("Right:\n");
         print_ast(node->right, level + 1);
     }
@@ -62,21 +65,23 @@ void	print_ast(t_ast *node, int level)
 
 int count_command_tokens(t_token *token)
 {
-    int count = 0;
+    int	count;
 
-    while (token && is_cmd(token->type) == 0) {
+	count = 0;
+    while (token && is_cmd(token->type) == 0)
+	{
         count++;
         token = token->next;
     }
 
-    return count;
+    return (count);
 }
 
 char	**extract_command(t_token *token)
 {
-	int count;
+	int 	count;
 	char	**cmd;
-	int i;
+	int 	i;
 
 	count = count_command_tokens(token);
 	cmd = (char **)malloc((count + 1) * sizeof(char *));
@@ -106,29 +111,84 @@ t_ast *create_ast_node(char **value, int node_type)
     return (node);
 }
 
-
-t_ast	*create_ast(t_token *tokens)
+t_ast	*buid_left_pipe(t_token *tokens)
 {
 	t_token	*current = tokens;
 	t_ast	*root = NULL;
 	t_ast	*new_node = NULL;
 
-	while (current)
+	while (current && current->type != PIPE)
 	{
-        if (is_cmd(current->type) == 1)
+		if (is_cmd(current->type) == 1 && current->type != PIPE)
 		{
-            new_node = create_ast_node(NULL, current->type);
-            new_node->left = root;
-            current = current->next;
-            new_node->right = create_ast(current);
-            return (new_node);
-        }
-        else
+			new_node = create_ast_node(NULL, current->type);
+			new_node->left = root;
+			current = current->next;
+			new_node->right = buid_left_pipe(current);
+			return (new_node);
+		}
+		else
 		{
-            root = create_ast_node(extract_command(current), CMD);
-            while (current && is_cmd(current->type) == 0)
-                current = current->next;
-        }
-    }
-    return (root);
+			root = create_ast_node(extract_command(current), CMD);
+			while (current && is_cmd(current->type) == 0)
+				current = current->next;
+		}
+	}
+	return (root);
 }
+
+t_ast	*create_ast(t_token *tokens)
+{
+	t_token	*current = tokens;
+	t_ast	*root = NULL;
+
+	while (current && current->type != PIPE)
+		current = current->next;
+	if (current && current->type == PIPE)
+	{
+		root = create_ast_node(NULL, PIPE);
+		root->left = buid_left_pipe(tokens);
+		root->right = create_ast(current->next);
+		return (root);
+	}
+	current = tokens;
+	while (current && (is_cmd(current->type) == 0 || current->type == PIPE))
+		current = current->next;
+	if (current && is_cmd(current->type) == 1 && current->type != PIPE)  
+		return (buid_left_pipe(tokens));
+	current = tokens;
+	if (is_cmd(current->type) == 0)
+	{
+		root = create_ast_node(extract_command(current), CMD);
+		while (current && is_cmd(current->type) == 0)
+			current = current->next;
+	}
+	return (root);
+}
+
+
+// t_ast	*create_ast(t_token *tokens)
+// {
+// 	t_token	*current = tokens;
+// 	t_ast	*root = NULL;
+// 	t_ast	*new_node = NULL;
+
+// 	while (current)
+// 	{
+        // if (is_cmd(current->type) == 1)
+// 		{
+// 			new_node = create_ast_node(NULL, current->type);
+// 			new_node->left = root;
+// 			current = current->next;
+// 			new_node->right = create_ast(current);
+// 			return (new_node);
+//         }
+//         else
+// 		{
+//             root = create_ast_node(extract_command(current), CMD);
+//             while (current && is_cmd(current->type) == 0)
+//                 current = current->next;
+//         }
+//     }
+//     return (root);
+// }

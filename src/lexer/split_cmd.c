@@ -71,12 +71,10 @@ void	add_elem(t_shelly *shelly, int count)
 	while (j < count)
 	{
 		size = info_elem(shelly, j, "size");
-		// printf("size: %d\n", size);
 		shelly->str[j] = malloc(sizeof(char) * (size + 1));
 		if (!shelly->str[j])
 			return ;
 		i = info_elem(shelly, j, "index");
-		// printf("i: %d\n", i);
 		k = -1;
 		while (++k < size && shelly->cmd[k + i] != '\0')
 			shelly->str[j][k] = shelly->cmd[k + i];
@@ -92,7 +90,8 @@ void	split_command(t_shelly *shelly)
 
 	count = 0;
 	count += count_elem(shelly, count);
-	printf("count : %d\n", count);
+	if (count == 0)
+		return ;
 	shelly->str = malloc(sizeof(char *) * (count + 1));
 	if (!shelly->str)
 		return ;

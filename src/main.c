@@ -14,10 +14,9 @@
 
 void	algo_minishell(t_shelly *shelly)
 {
-	int	 check;
+	int	check;
 
 	check = 0;
-
 	check = ft_lexer(shelly);
 	if (check == 0)
 	{
@@ -30,7 +29,7 @@ void	algo_minishell(t_shelly *shelly)
 	}
 }
 
-int main(void)
+int	main(void)
 {
 	t_shelly	shelly;
 
@@ -45,7 +44,7 @@ int main(void)
 				return (ft_error("Error launching shell", 0, 0));
 			else
 				add_history(shelly.cmd);
-			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
+			if (ft_strncmp(shelly.cmd, "exit", 4) == 0)
 				return (ft_error("Exiting shell", 0, 0));
 			algo_minishell(&shelly);
 			ft_free(&shelly);

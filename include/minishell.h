@@ -34,8 +34,8 @@
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
 //variable environnement
-
-typedef struct s_ast {
+typedef struct s_ast
+{
 	char			**value;
 	int				node_type;
 	struct s_ast	*left;
@@ -98,8 +98,6 @@ int		init_env(char **envp, t_env *env);
 
 //check
 int		check_quote(t_shelly *shelly);
-int		check_last_elem(t_shelly *shelly);
-int		check_cmd(t_shelly *shelly);
 
 //free
 void	free_envp(t_env *env);
@@ -129,7 +127,7 @@ void	affiche_env_list(t_env *list);
 
 //built-in
 //cd
-int 	if_cd(char *str);
+int		if_cd(char *str);
 void	ft_cd(char **str);
 char	*ft_strjoin_pwd(char const *s1, char const *s2);
 //echo
@@ -149,8 +147,8 @@ void	ft_export(t_env *list_env);
 int		if_pwd(char *str);
 void	ft_pwd(void);
 //unset
-int	if_unset(char *str);
-void ft_unset(t_env *env_list, char **str);
+int		if_unset(char *str);
+void	ft_unset(t_env *env_list, char **str);
 //env_list
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
