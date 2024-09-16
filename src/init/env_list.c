@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:00:37 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 11:19:06 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/10 18:06:31 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 t_env	*create_env_node(char *env_var)
 {
 	t_env	*new;
-	int i;
 
-	i = 0;
-	
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
@@ -29,7 +26,6 @@ t_env	*create_env_node(char *env_var)
 		else
 			new->type = 0;
 		new->next = NULL;
-		i++;
 	return (new);
 }
 

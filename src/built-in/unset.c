@@ -3,34 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 12:54:30 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:22:00 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../include/minishell.h"
 
-int	if_unset(char *str)
+// Check if the command is 'unset'
+int if_unset(char *str)
 {
-	if (ft_strncmp(str, "unset", 5) == 0)
+	if (str && ft_strncmp(str, "unset", 5) == 0 && (str[5] == '\0' || str[5] == ' '))
 		return (1);
 	return (0);
 }
 
-void ft_unset(t_env *env_list, char **str)
+// Function to remove a node from the environment list by its key
+void remove_env_node(t_env **env_list, char *key)
 {
-	char *node;
+	t_env *current = *env_list;
+	t_env *previous = NULL;
 
-	node = str[2];
-	while(env_list != NULL)
+	while (current != NULL)
 	{
-		if(env_list->content == str[2])
+		// If the key matches, remove the node
+		if (ft_strcmp(current->content, key) == 0)
 		{
-			env_list = NULL;
+			// Unlink the node from the list
+			if (previous == NULL)
+				*env_list = current->next;  // Removing the head node
+			else
+				previous->next = current->next;
+
+			// Free the memory associated with the node
+			free(current->content);
+			free(current->value);
+			free(current);
+			return;
 		}
-		env_list = env_list->next;
+		previous = current;
+		current = current->next;
 	}
+}
+
+// Function to handle the 'unset' command
+int ft_unset(t_env **env_list, char **args)
+{
+	int i = 1;
+
+	// Loop through all the arguments passed to 'unset'
+	while (args[i])
+	{
+		// Check if the argument is a valid identifier
+		if (is_valid_identifier(args[i]))
+		{
+			remove_env_node(env_list, args[i]);
+		}
+		else
+		{
+			printf("bash: unset: `%s': not a valid identifier\n", args[i]);
+		}
+		i++;
+	}
+	return (0);
+}
+
+// Uncomment the main for testing
+int main(int ac, char **av, char **envp)
+{
+    t_env *env_list = NULL;
+    env_list = create_env_list(&env_list, envp);
+
+    if (if_unset(av[1]) == 1)
+        ft_unset(&env_list, av);
+
+    return 0;
 }

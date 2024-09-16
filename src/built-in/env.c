@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 13:02:23 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:13:55 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	if_env(char *str)
 
 void	ft_env(t_env *env_list)
 {
+	if (env_list == NULL)
+	{
+		printf(stderr, "Error: Environment list is empty or null\n");
+		return;
+	}
 	while(env_list != NULL)
 	{
 		if(env_list->type == 1)

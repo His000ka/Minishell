@@ -6,11 +6,7 @@
 #    By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/10 20:54:21 by firdawssema      ###   ########.fr        #
-=======
-#    Updated: 2024/09/12 10:16:48 by fimazouz         ###   ########.fr        #
->>>>>>> ca0e902071020c232e7aea1c649b042fae72d6f6
+#    Updated: 2024/09/12 22:30:50 by firdawssema      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
