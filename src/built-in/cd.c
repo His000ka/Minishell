@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 17:03:18 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:29:49 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int 	if_cd(char *str)
 {
-	if (ft_strncmp(str, "cd", 2) == 0)
+	if (ft_strcmp(str, "cd") == 0)
 		return (1);
 	return (0);
 }
@@ -27,7 +27,7 @@ void ft_cd(char **str)
 	
 	pwd = getcwd(NULL, 0);
 	
-	if (!str[1] || ft_strncmp(str[1], "~", 1) == 0)
+	if (!str[1] || ft_strcmp(str[1], "~") == 0)
 		path = getenv("HOME");
 	else
 		path = str[1];

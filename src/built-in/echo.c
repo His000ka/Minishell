@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/12 13:27:52 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:29:26 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_echo(char *str)
 {
-	if (ft_strncmp(str, "echo", 4) == 0)
+	if (ft_strcmp(str, "echo") == 0)
 		return (1);
 	return (0);
 }
@@ -27,7 +27,7 @@ void	ft_echo(char **str)
 	i = 1;
 	option = 0;
 
-	while (str[i] && ft_strncmp(str[i], "-n", 2) == 0)
+	while (str[i] && ft_strcmp(str[i], "-n") == 0)
 	{
 		option = 1;
 		i++;

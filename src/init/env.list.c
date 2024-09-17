@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:35:02 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/17 17:45:26 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:26:46 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	add_node_env(t_env **list, t_env *new)
 	}
 }
 
-t_env	*create_env_list(t_env **list, char **envp)
+int	create_env_list(t_env **list, char **envp)
 {
 	t_env	*new;
 	int i = 0;
@@ -59,5 +59,5 @@ t_env	*create_env_list(t_env **list, char **envp)
 		add_node_env(list, new);
 		i++;
 	}
-	return (*list);
+	return (0);
 }

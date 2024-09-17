@@ -87,9 +87,4 @@ void	ft_free(t_shelly *shelly)
 		free(shelly->cmd);
 		shelly->cmd = NULL;
 	}
-	if (shelly->env)
-	{
-		free_env(shelly->env);
-		shelly->env = NULL;
-	}
 }

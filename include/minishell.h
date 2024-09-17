@@ -91,7 +91,7 @@ int		ft_lexer(t_shelly *shelly);
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //exec
-void	*ft_exec(t_ast *node);
+void	*ft_exec(t_shelly *shelly, t_ast *node);
 
 //ast
 t_ast	*create_ast(t_token *tokens);
@@ -111,7 +111,7 @@ int		init_env(char **envp, t_env **env);
 int		check_quote(t_shelly *shelly);
 
 //free
-void	free_envp(t_env *env);
+void	free_env(t_env *env);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
@@ -138,7 +138,7 @@ void	affiche_env_list(t_env *list);
 void	affiche_ast(t_ast *node, int level);
 
 //built-in
-int 	ft_builtins(char *cmd, t_ast *ast);
+int 	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
 int		ft_strcmp(const char *s1, const char *s2);
 //cd
 int		if_cd(char *str);
@@ -166,5 +166,5 @@ void	ft_unset(t_env **env_list, char **args);
 //env_list
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
-t_env	*create_env_list(t_env **env, char **envp);
+int		create_env_list(t_env **list, char **envp);
 #endif

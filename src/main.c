@@ -23,7 +23,7 @@ void	algo_minishell(t_shelly *shelly)
 		check = ft_parser(shelly);
 		if (check == 0)
 		{
-			ft_exec(shelly->ast);
+			ft_exec(shelly, shelly->ast);
 			free_ast(shelly->ast);
 		}
 	}
@@ -34,6 +34,7 @@ int	main(int ac, char **av, char **envp)
 	t_shelly	shelly;
 
 	shelly.str = NULL;
+	shelly.env = NULL;
 	(void)ac;
 	(void)av;
 	create_env_list(&shelly.env, envp);
@@ -52,5 +53,7 @@ int	main(int ac, char **av, char **envp)
 			ft_free(&shelly);
 		}
 	}
+	free_env(shelly.env);
+	shelly.env = NULL;
 	// system("leaks minishell");
 }

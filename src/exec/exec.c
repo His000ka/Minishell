@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 09:36:59 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/17 17:30:46 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/17 18:35:58 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	*search_value(t_ast *node)
 	return (tmp->value[0]);
 }
 
-void	exec_append(t_ast *node)
+void	exec_append(t_shelly *shelly, t_ast *node)
 {
 	int		fd_out;
 	pid_t	pid;
 
 	if (node->right->node_type != CMD)
-        ft_exec(node->right);
+        ft_exec(shelly, node->right);
 	fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_out == -1)
 	{
@@ -44,7 +44,7 @@ void	exec_append(t_ast *node)
 			exit(EXIT_FAILURE);
 		}
 		close(fd_out);
-		ft_exec(node->left);
+		ft_exec(shelly, node->left);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
@@ -59,13 +59,13 @@ void	exec_append(t_ast *node)
 	}
 }
 
-void	exec_trunc(t_ast *node)
+void	exec_trunc(t_shelly *shelly, t_ast *node)
 {
     int     fd_out;
     pid_t   pid;
 
     if (node->right->node_type != CMD)
-        ft_exec(node->right);
+        ft_exec(shelly, node->right);
     fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd_out == -1)
     {
@@ -81,7 +81,7 @@ void	exec_trunc(t_ast *node)
             exit(EXIT_FAILURE);
         }
         close(fd_out);
-        ft_exec(node->left);
+        ft_exec(shelly, node->left);
         exit(EXIT_SUCCESS);
     }
     else if (pid > 0)
@@ -96,7 +96,7 @@ void	exec_trunc(t_ast *node)
     }
 }
 
-void	exec_input(t_ast *node)
+void	exec_input(t_shelly *shelly, t_ast *node)
 {
 	int		fd_in;
 	pid_t	pid;
@@ -104,7 +104,7 @@ void	exec_input(t_ast *node)
 	if (node->right->node_type == APPEND)
 		return ;
 	if (node->right->node_type != CMD)
-        ft_exec(node->right);
+        ft_exec(shelly, node->right);
 	fd_in = open(search_value(node), O_RDONLY);
 	if (fd_in == -1)
 	{
@@ -120,7 +120,7 @@ void	exec_input(t_ast *node)
 			exit(EXIT_FAILURE);
 		}
 		close(fd_in);
-		ft_exec(node->left);
+		ft_exec(shelly, node->left);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
@@ -135,22 +135,22 @@ void	exec_input(t_ast *node)
 	}
 }
 
-void	exec_cmd(t_ast *node)
+void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
-	if (ft_builtins(node->value[0], node) == 0)
+	if (ft_builtins(shelly, node->value[0], node) == 0)
 		return ;
 	msg_cmd_not_found(node);
 }
 
-void	*ft_exec(t_ast *node)
+void	*ft_exec(t_shelly *shelly, t_ast *node)
 {
 	if (node->node_type == CMD)
-		exec_cmd(node);
+		exec_cmd(shelly, node);
 	else if (node->node_type == APPEND)
-		exec_append(node);
+		exec_append(shelly, node);
 	else if (node->node_type == TRUNC)
-		exec_trunc(node);
+		exec_trunc(shelly, node);
 	else if (node->node_type == INPUT)
-		exec_input(node);
+		exec_input(shelly, node);
 	return (NULL);
 }
