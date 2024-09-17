@@ -38,18 +38,21 @@ void	free_ast(t_ast *node)
 	free(node);
 }
 
-void	free_env(t_env *env)
+void	free_env(t_shelly *shelly)
 {
 	t_env	*tmp;
 
-	while (env)
+	while (shelly->env)
 	{
-		tmp = env;
-		env = env->next;
+		tmp = shelly->env;
+		shelly->env = shelly->env->next;
 		free(tmp->value);
 		free(tmp->content);
 		free(tmp);
 	}
+	if (shelly->envp)
+		free(shelly->envp);
+	shelly->env = NULL;
 }
 
 void	free_tokens(t_token *token)
@@ -87,4 +90,15 @@ void	ft_free(t_shelly *shelly)
 		free(shelly->cmd);
 		shelly->cmd = NULL;
 	}
+	// if (shelly->envp)
+	// {
+	// 	i = 0;
+	// 	while (shelly->envp[i])
+	// 		printf("%s\n", shelly->envp[i++]);
+	// 	i = 0;
+	// 	while (shelly->envp[i])
+	// 		free(shelly->envp[i++]);
+	// 	free(shelly->envp);
+	// 	shelly->str = NULL;
+	// }
 }

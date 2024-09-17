@@ -53,7 +53,7 @@ int	main(int ac, char **av, char **envp)
 			ft_free(&shelly);
 		}
 	}
-	free_env(shelly.env);
+	free_env(&shelly);
 	shelly.env = NULL;
 	// system("leaks minishell");
 }

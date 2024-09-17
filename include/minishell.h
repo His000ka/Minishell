@@ -70,6 +70,7 @@ typedef struct s_shelly
 {
 	char	*cmd;
 	char	**str;
+	char	**envp;
 	int		loop;
 	t_env	*env;
 	t_token	*token;
@@ -80,7 +81,7 @@ typedef struct s_shelly
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
-
+char **convert_env_to_array(t_env *env_list);
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
@@ -111,7 +112,7 @@ int		init_env(char **envp, t_env **env);
 int		check_quote(t_shelly *shelly);
 
 //free
-void	free_env(t_env *env);
+void	free_env(t_shelly *shelly);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
