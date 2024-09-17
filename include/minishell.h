@@ -34,6 +34,13 @@
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
 //variable environnement
+typedef struct s_ast
+{
+	char			**value;
+	int				node_type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
 
 typedef struct s_env
 {
@@ -61,6 +68,7 @@ typedef struct s_shelly
 	int		loop;
 	t_env	*env;
 	t_token	*token;
+	t_ast	*ast;
 }	t_shelly;
 
 //utils
@@ -68,15 +76,20 @@ int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
 
-//parse
-int		ft_parse(t_shelly *shelly);
+//lexer
+int		ft_lexer(t_shelly *shelly);
+//parser
+int		ft_parser(t_shelly *shelly);
+int		is_cmd(int type);
+//ast
+t_ast	*create_ast(t_token *tokens);
 
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
 int		info_elem(t_shelly *shelly, int j, char *str);
-void	add_elem(t_shelly *shelly, int count);
-void	split_command(t_shelly *shelly);
+int		add_elem(t_shelly *shelly, int count);
+int		split_command(t_shelly *shelly);
 
 //init
 int		init_shelly(t_shelly *shelly);
@@ -84,13 +97,12 @@ int		init_env(char **envp, t_env *env);
 
 //check
 int		check_quote(t_shelly *shelly);
-int		check_last_elem(t_shelly *shelly);
-int		check_cmd(t_shelly *shelly);
 
 //free
 void	free_envp(t_env *env);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
+void	free_ast(t_ast *node);
 
 //token
 // int		is_pipe(char c);
@@ -111,10 +123,11 @@ int		is_input(char *str, int flag);
 void	affiche_elem(t_shelly *shelly);
 void	affiche_token(t_shelly *shelly);
 void	affiche_env_list(t_env *list);
+void	affiche_ast(t_ast *node, int level);
 
 //built-in
 //cd
-int 	if_cd(char *str);
+int		if_cd(char *str);
 void	ft_cd(char **str);
 char	*ft_strjoin_pwd(char const *s1, char const *s2);
 //echo
@@ -134,8 +147,8 @@ void	ft_export(t_env *list_env);
 int		if_pwd(char *str);
 void	ft_pwd(void);
 //unset
-int	if_unset(char *str);
-void ft_unset(t_env *env_list, char **str);
+int		if_unset(char *str);
+void	ft_unset(t_env *env_list, char **str);
 //env_list
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);

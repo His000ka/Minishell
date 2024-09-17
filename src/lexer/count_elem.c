@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
 int	check_char(char c)
 {
 	if (c == ' ' || c == 34 || c == 39)
@@ -46,9 +47,21 @@ int	count_elem_2(t_shelly *shelly, int count)
 	while (shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i], 0);
-		count += is_pipe(&shelly->cmd[i], 0);
-		count += is_trunc(&shelly->cmd[i], 0);
-		count += is_input(&shelly->cmd[i], 0);
+		if (shelly->cmd[i] == '\0')
+			return (count);
+		if (i == 0 && (shelly->cmd[i] == '|' || shelly->cmd[i] == '>'
+			|| shelly->cmd[i] == '<'))
+		{
+			i = count_index(&shelly->cmd[i + 1], 1) + 1;
+			if (shelly->cmd[i] == '\0')
+				return (count);
+		}
+		else
+		{
+			count += is_pipe(&shelly->cmd[i], 0);
+			count += is_trunc(&shelly->cmd[i], 0);
+			count += is_input(&shelly->cmd[i], 0);
+		}
 		i++;
 	}
 	return (count);
@@ -57,12 +70,14 @@ int	count_elem_2(t_shelly *shelly, int count)
 int	count_elem(t_shelly *shelly, int count)
 {
 	int	i;
-	int tmp;
+	int	tmp;
 
 	i = 0;
-	while (shelly->cmd[i])
+	while (shelly->cmd[i] != '\0')
 	{
 		i += count_index(&shelly->cmd[i], 1);
+		if (shelly->cmd[i] == '\0')
+			return (count_elem_2(shelly, count));
 		tmp = i;
 		i += is_quote(&shelly->cmd[i], 1);
 		if (tmp == i)
@@ -72,6 +87,5 @@ int	count_elem(t_shelly *shelly, int count)
 		else
 			count++;
 	}
-	// printf("count: %d\n", count);
 	return (count_elem_2(shelly, count));
 }

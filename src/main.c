@@ -12,9 +12,24 @@
 
 #include "../include/minishell.h"
 
+void	algo_minishell(t_shelly *shelly)
+{
+	int	check;
 
+	check = 0;
+	check = ft_lexer(shelly);
+	if (check == 0)
+	{
+		check = ft_parser(shelly);
+		if (check == 0)
+		{
+			free_ast(shelly->ast);
+	// 		check = ft_execut(shelly);
+		}
+	}
+}
 
-int main(void)
+int	main(void)
 {
 	t_shelly	shelly;
 
@@ -31,9 +46,9 @@ int main(void)
 				return (control_d(), 1);
 			else
 				add_history(shelly.cmd);
-			if(ft_strncmp(shelly.cmd, "exit", 4) == 0)
+			if (ft_strncmp(shelly.cmd, "exit", 4) == 0)
 				return (ft_error("Exiting shell", 0, 0));
-			ft_parse(&shelly);
+			algo_minishell(&shelly);
 			ft_free(&shelly);
 		}
 	}
