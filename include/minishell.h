@@ -151,7 +151,7 @@ void	ft_echo(char **str);
 int		if_env(char *str);
 void	ft_env(t_env *env_list);
 //exit
-int		if_exit(char *str);
+int		if_exit(char **str);
 int		is_numeric(char *str);
 int		ft_exit(char **str);
 //export
@@ -162,7 +162,7 @@ int		if_pwd(char *str);
 void	ft_pwd(void);
 //unset
 int		if_unset(char *str);
-void	ft_unset(t_env *env_list, char **str);
+void	ft_unset(t_env **env_list, char **args);
 //env_list
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
