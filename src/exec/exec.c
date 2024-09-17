@@ -124,6 +124,8 @@ void	exec_input(t_ast *node)
 
 void	exec_cmd(t_ast *node)
 {
+	if (ft_builtins(node->value[0], node) == 0)
+		return ;
 	msg_cmd_not_found(node);
 }
 

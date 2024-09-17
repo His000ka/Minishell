@@ -33,6 +33,9 @@
 # define CMD		6	//"|"
 # define ARG		7	//"|"
 
+# define EXIT_SUCCESS	0
+# define EXIT_FAILURE	1
+
 //MSG_ERROR
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
@@ -136,6 +139,7 @@ void	affiche_env_list(t_env *list);
 void	affiche_ast(t_ast *node, int level);
 
 //built-in
+int ft_builtins(char *cmd, t_ast *ast);
 //cd
 int		if_cd(char *str);
 void	ft_cd(char **str);
