@@ -23,7 +23,7 @@ void	algo_minishell(t_shelly *shelly)
 		check = ft_parser(shelly);
 		if (check == 0)
 		{
-			check = ft_exec(shelly->ast);
+			ft_exec(shelly->ast);
 			free_ast(shelly->ast);
 		}
 	}

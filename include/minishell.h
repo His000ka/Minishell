@@ -54,7 +54,6 @@ typedef struct s_env
 	char			*value;
 	int				type;
 	struct s_env	*next;
-
 }					t_env;
 
 //token
@@ -92,7 +91,7 @@ int		ft_lexer(t_shelly *shelly);
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //exec
-int		ft_exec(t_ast *node);
+void	*ft_exec(t_ast *node);
 
 //ast
 t_ast	*create_ast(t_token *tokens);
@@ -105,8 +104,8 @@ int		add_elem(t_shelly *shelly, int count);
 int		split_command(t_shelly *shelly);
 
 //init
-int		init_shelly(t_shelly *shelly);
-int		init_env(char **envp, t_env *env);
+int 	init_shelly(t_shelly *shelly);
+int		init_env(char **envp, t_env **env);
 
 //check
 int		check_quote(t_shelly *shelly);
@@ -139,7 +138,7 @@ void	affiche_env_list(t_env *list);
 void	affiche_ast(t_ast *node, int level);
 
 //built-in
-int ft_builtins(char *cmd, t_ast *ast);
+int 	ft_builtins(char *cmd, t_ast *ast);
 //cd
 int		if_cd(char *str);
 void	ft_cd(char **str);

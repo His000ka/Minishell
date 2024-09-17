@@ -29,12 +29,12 @@ void	free_ast(t_ast *node)
 {
 	if (!node)
 		return ;
+	if (node->value)
+		free_command(node->value);
 	if (node->left)
 		free_ast(node->left);
 	if (node->right)
 		free_ast(node->right);
-	if (node->value)
-		free_command(node->value);
 	free(node);
 }
 
