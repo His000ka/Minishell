@@ -29,12 +29,16 @@ void	algo_minishell(t_shelly *shelly)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_shelly	shelly;
+	t_env	*env_list;
 
+	(void)ac;
+	(void)av;
+	env_list = NULL;
+	env_list = create_env_list(&env_list, envp);
 	control();
-
 	shelly.str = NULL;
 	if (init_shelly(&shelly) == 0)
 	{

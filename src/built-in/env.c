@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/15 19:13:55 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/09/17 13:09:18 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_env(t_env *env_list)
 {
 	if (env_list == NULL)
 	{
-		printf(stderr, "Error: Environment list is empty or null\n");
+		printf("Error: Environment list is empty or null\n");
 		return;
 	}
 	while(env_list != NULL)
