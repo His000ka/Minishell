@@ -64,6 +64,6 @@ int init_shelly(t_shelly *shelly)
     shelly->token = NULL;
     shelly->cmd = NULL;
     shelly->ast = NULL;
-    
+    // shelly->env = NULL;
     return check;
 }

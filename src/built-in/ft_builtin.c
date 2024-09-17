@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:01:25 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/09/17 10:31:35 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/09/17 17:10:27 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int ft_builtins(char *cmd, t_ast *ast)
         return(ft_echo(ast->value), EXIT_SUCCESS);
     // if(if_env(cmd))
     //     return(ft_env(ast->value), EXIT_SUCCESS);
-    // if(if_exit(cmd))
-    //     return(ft_exit(ast->value), EXIT_SUCCESS);
+    if(if_exit(ast->value))
+        return(ft_exit(ast->value), EXIT_SUCCESS);
     // if(if_export(cmd))
     //     return(ft_exit(ast->value), EXIT_SUCCESS);
     if(if_pwd(cmd))

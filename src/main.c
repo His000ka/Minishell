@@ -29,11 +29,15 @@ void	algo_minishell(t_shelly *shelly)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	t_shelly	shelly;
 
 	shelly.str = NULL;
+	(void)ac;
+	(void)av;
+	create_env_list(&shelly.env, envp);
+	// control();
 	if (init_shelly(&shelly) == 0)
 	{
 		shelly.loop = 0;
@@ -44,8 +48,6 @@ int	main(void)
 				return (ft_error("Error launching shell", 0, 0));
 			else
 				add_history(shelly.cmd);
-			if (ft_strncmp(shelly.cmd, "exit", 4) == 0)
-				return (ft_error("Exiting shell", 0, 0));
 			algo_minishell(&shelly);
 			ft_free(&shelly);
 		}

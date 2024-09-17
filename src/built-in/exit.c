@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/10 10:41:26 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:02:32 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	if_exit(char **str)
 {
-	if (ft_strncmp(str[1], "exit", 4) == 0)
+	if (ft_strcmp(str[0], "exit") == 0)
 		return (1);
 	return (0);
 }

@@ -38,6 +38,20 @@ void	free_ast(t_ast *node)
 	free(node);
 }
 
+void	free_env(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env;
+		env = env->next;
+		free(tmp->value);
+		free(tmp->content);
+		free(tmp);
+	}
+}
+
 void	free_tokens(t_token *token)
 {
 	t_token	*tmp;
@@ -72,5 +86,10 @@ void	ft_free(t_shelly *shelly)
 	{
 		free(shelly->cmd);
 		shelly->cmd = NULL;
+	}
+	if (shelly->env)
+	{
+		free_env(shelly->env);
+		shelly->env = NULL;
 	}
 }

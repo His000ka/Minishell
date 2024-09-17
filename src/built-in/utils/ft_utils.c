@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:40:20 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/12 22:39:02 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/09/17 17:29:36 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1)
+		return (1);
+	while (s1[i] == s2[i] && s1[i] != 0 && s2[i] != 0)
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
 char	*ft_strjoin_pwd(char const *s1, char const *s2)
 {
