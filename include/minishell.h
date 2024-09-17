@@ -17,6 +17,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -76,11 +79,18 @@ int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
 
+//msg_error
+void	msg_not_file(t_ast *node);
+void	msg_cmd_not_found(t_ast *node);
+
 //lexer
 int		ft_lexer(t_shelly *shelly);
 //parser
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
+//exec
+int		ft_exec(t_ast *node);
+
 //ast
 t_ast	*create_ast(t_token *tokens);
 
