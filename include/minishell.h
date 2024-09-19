@@ -81,7 +81,6 @@ typedef struct s_shelly
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
-char **convert_env_to_array(t_env *env_list);
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
@@ -93,8 +92,8 @@ int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
-
-//ast
+//execve
+int	exec_cmd_path(char *cmd, char **args, char **envp);
 t_ast	*create_ast(t_token *tokens);
 
 //split_cmd
@@ -106,7 +105,6 @@ int		split_command(t_shelly *shelly);
 
 //init
 int 	init_shelly(t_shelly *shelly);
-int		init_env(char **envp, t_env **env);
 
 //check
 int		check_quote(t_shelly *shelly);
@@ -167,5 +165,5 @@ void	ft_unset(t_env **env_list, char **args);
 //env_list
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
-int		create_env_list(t_env **list, char **envp);
+int		create_env_list(t_shelly *shelly, char **envp);
 #endif

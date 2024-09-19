@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 	shelly.env = NULL;
 	(void)ac;
 	(void)av;
-	create_env_list(&shelly.env, envp);
+	create_env_list(&shelly, envp);
 	// control();
 	if (init_shelly(&shelly) == 0)
 	{

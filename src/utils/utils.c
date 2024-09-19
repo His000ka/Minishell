@@ -12,43 +12,6 @@
 
 #include "../../include/minishell.h"
 
-char **convert_env_to_array(t_env *env_list)
-{
-    char **env_array;
-    t_env *tmp;
-    int i = 0;
-
-    tmp = env_list;
-    int env_count = 0;
-    while (tmp)
-    {
-        env_count++;
-        tmp = tmp->next;
-    }
-    env_array = malloc(sizeof(char *) * (env_count + 1));
-    if (!env_array)
-        return NULL;
-    tmp = env_list;
-    while (tmp)
-    {
-        env_array[i] = ft_strdup(tmp->value);
-		if (!env_array[i])
-        {
-            while (i > 0)
-            {
-                free(env_array[--i]);
-            }
-            free(env_array);
-            return NULL;
-        }
-        i++;
-        tmp = tmp->next;
-    }
-    env_array[i] = NULL;
-    return env_array;
-}
-
-
 char	*ft_strndup(const char *s, int n)
 {
 	char	*p;

@@ -41,7 +41,15 @@ void	free_ast(t_ast *node)
 void	free_env(t_shelly *shelly)
 {
 	t_env	*tmp;
+	int		i;
 
+	i = 0;
+	if (shelly->envp)
+	{
+		while (shelly->envp[i]!= NULL)
+			free(shelly->envp[i++]);
+		free(shelly->envp);
+	}
 	while (shelly->env)
 	{
 		tmp = shelly->env;
@@ -90,15 +98,4 @@ void	ft_free(t_shelly *shelly)
 		free(shelly->cmd);
 		shelly->cmd = NULL;
 	}
-	// if (shelly->envp)
-	// {
-	// 	i = 0;
-	// 	while (shelly->envp[i])
-	// 		printf("%s\n", shelly->envp[i++]);
-	// 	i = 0;
-	// 	while (shelly->envp[i])
-	// 		free(shelly->envp[i++]);
-	// 	free(shelly->envp);
-	// 	shelly->str = NULL;
-	// }
 }
