@@ -17,12 +17,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+#include <string.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <sys/stat.h>
 
 //token
 # define INPUT		1	//"<"
@@ -82,6 +84,10 @@ int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
 char **convert_env_to_array(t_env *env_list);
+char *ft_strtok(char *str, const char *delim);
+int is_delimiter(char c, const char *delim);
+char *ft_strcpy(char *dst, const char *src);
+
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
