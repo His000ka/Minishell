@@ -39,6 +39,14 @@
 //MSG_ERROR
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 
+typedef struct s_data_elem
+{
+	int	k;
+	int	i;
+	int	size;
+	int	j;
+}				t_data_elem;
+
 //variable environnement
 typedef struct s_ast
 {
@@ -166,4 +174,6 @@ void	ft_unset(t_env **env_list, char **args);
 t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
 int		create_env_list(t_shelly *shelly, char **envp);
+//control
+void	control();
 #endif

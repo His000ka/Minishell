@@ -29,7 +29,11 @@ int	is_quote(char *str, int flag)
 		if (flag == 0)
 			return (1);
 		if (flag == 1)
-			return (i + 1);
+		{
+			if (str[i + 1] == 34 || str[i + 1] == 39)
+				return (i + is_quote(&str[i + 1], 1) + 1);
+			return (i + is_good_char(&str[i + 1], 1) + 1);
+		}
 		return (i);
 	}
 	return (0);
@@ -54,7 +58,9 @@ int	is_good_char(char *str, int flag)
 	}
 	if (flag == 0)
 		return (1);
-	return (i);
+	if (flag == 3)
+		return (i);
+	return (i + is_quote(&str[i], 1));
 }
 
 int	is_pipe(char *str, int flag)
