@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/25 17:05:18 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/09/25 18:21:14 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,11 @@ void	expend_not_path(t_shelly *shelly, t_data_elem *data)
 	if (!test)
 		return ;
 	free(shelly->str[data->j]);
-	data->size--;
-	shelly->str[data->j] = malloc(sizeof(char) * (data->size + 1));
+	shelly->str[data->j] = malloc(sizeof(char) * (data->size) + 1);
 	if (!shelly->str[data->j])
 		return ;
 	while (++i < data->k && test[i] != '\0')
 		shelly->str[data->j][i] = test[i];
-	while (check_char(shelly->cmd[data->k + data->i + 1]) == 0
-		&& shelly->cmd[data->k + data->i + 1] != '\0')
-	{
-		shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i + 1];
-		data->k++;
-	}
 	shelly->str[data->j][data->k] = '\0';
 	free(test);
 	return ;
@@ -87,7 +80,11 @@ void	expender(t_shelly *shelly, t_data_elem *data)
 		expende_2(shelly, data, value);
 	}
 	else
+	{
+		data->size = data->size - ft_strlen(path) - 1;
+		data->i = start + size - data->k;
 		return (expend_not_path(shelly, data));
+	}
 	free(path);
 	data->i = start + size - data->k;
 }
