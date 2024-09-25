@@ -114,17 +114,19 @@ int		split_command(t_shelly *shelly);
 //init
 int 	init_shelly(t_shelly *shelly);
 
-//check
+//quote utils (lexer)
 int		check_quote(t_shelly *shelly);
-
+void	manage_quote(t_shelly *shelly, t_data_elem *data);
+//info_elem (lexer)
+int	info_elem(t_shelly *shelly, int j, char *str);
 //free
 void	free_env(t_shelly *shelly);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
 
-//token
-// int		is_pipe(char c);
+//expender
+void	expender(t_shelly *shelly, t_data_elem *data);
 
 //count_elem
 int		count_index(char *str, int flag);

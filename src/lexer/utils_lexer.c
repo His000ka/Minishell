@@ -12,6 +12,34 @@
 
 #include "../../include/minishell.h"
 
+void	manage_quote(t_shelly *shelly, t_data_elem *data)
+{
+	if (shelly->cmd[data->k + data->i] == 34)
+	{
+		data->i++;
+		while (shelly->cmd[data->k + data->i] != 34)
+		{
+			if (shelly->cmd[data->k + data->i] == '$')
+				expender(shelly, data);
+			else
+			{
+				shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
+				data->k++;
+			}
+		}
+	}
+	if (shelly->cmd[data->k + data->i] == 39)
+	{
+		data->i++;
+		while (shelly->cmd[data->k + data->i] != 39)
+		{
+			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
+			data->k++;
+		}
+	}
+	data->i++;
+}
+
 int	check_quote(t_shelly *shelly)
 {
 	int	i;
