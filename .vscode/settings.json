@@ -29,6 +29,7 @@
 		"system_error": "c",
 		"tuple": "c",
 		"type_traits": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"ios": "c"
 	}
 }

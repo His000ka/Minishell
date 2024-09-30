@@ -135,7 +135,7 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	}
 }
 
-#include <sys/stat.h>  // Pour stat()
+#include <sys/stat.h>
 char *get_env_value(t_env *env, const char *key)
 {
     t_env *tmp = env;
@@ -143,7 +143,7 @@ char *get_env_value(t_env *env, const char *key)
     while (tmp)
     {
         if (ft_strncmp(tmp->value, key, ft_strlen(key)) == 0 && tmp->value[ft_strlen(key)] == '=')
-            return (tmp->value + ft_strlen(key) + 1);  // +1 pour passer le '='
+            return (tmp->value + ft_strlen(key) + 1);
         tmp = tmp->next;
     }
     return (NULL);
