@@ -22,12 +22,9 @@ char	*ft_strcpy(char *dest, char *src)
 {
 	int	i;
 
-	i = 0;
-	while (src[i] != '\0')
-	{
+	i = -1;
+	while (src[++i] != '\0')
 		dest[i] = src[i];
-		i++;
-	}
 	dest[i] = '\0';
 	return (dest);
 }
@@ -109,32 +106,20 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 			return (EXIT_FAILURE);
 		}
 	}
-	// On tente d'exécuter la commande dans un processus enfant
 	if (fork() == 0)
 	{
 		if (execve(path, args, envp) == -1)
 		{
 			perror("execve");
-			exit(EXIT_FAILURE); // Le processus enfant doit se terminer en cas d'échec
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		int status;
-		wait(&status); // Le parent attend que le processus enfant termine
+		wait(&status);
 	}
+	free (path);
 	return (0);
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-//     if (argc < 2)
-//     {
-//         fprintf(stderr, "Usage: %s <command>\n", argv[0]);
-//         return 1;
-//     }
-
-//     // Passe tous les arguments (commande + options) à execute_command
-//     execute_command(argv[1], argv + 1, envp);
-//     return 0;
-// }

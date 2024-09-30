@@ -24,6 +24,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+//variable globale
+// char	*exe;
+
 //token
 # define INPUT		1	//"<"
 # define HEREDOC	2	//"<<"
@@ -101,9 +104,10 @@ int		is_cmd(int type);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
 //execve
-int	exec_cmd_path(char *cmd, char **args, char **envp);
+int		exec_cmd_path(char *cmd, char **args, char **envp);
 t_ast	*create_ast(t_token *tokens);
-
+//exec heredoc
+int		exec_heredoc(t_shelly *shelly, t_ast  *node);
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
@@ -116,7 +120,7 @@ int 	init_shelly(t_shelly *shelly);
 
 //quote utils (lexer)
 int		check_quote(t_shelly *shelly);
-void	manage_quote(t_shelly *shelly, t_data_elem *data);
+int		manage_quote(t_shelly *shelly, t_data_elem *data);
 //info_elem (lexer)
 int	info_elem(t_shelly *shelly, int j, char *str);
 //free
@@ -126,7 +130,7 @@ void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
 
 //expender
-void	expender(t_shelly *shelly, t_data_elem *data);
+int		expender(t_shelly *shelly, t_data_elem *data);
 
 //count_elem
 int		count_index(char *str, int flag);

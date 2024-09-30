@@ -78,18 +78,18 @@ int	ft_lexer(t_shelly *shelly)
 
 	i = -1;
 	if (check_quote(shelly) > 0)
-		return (1);
+		return (EXIT_FAILURE);
 	if (!shelly->cmd || ft_strlen(shelly->cmd) == 0)
-		return (1);
+		return (EXIT_FAILURE);
 	if (split_command(shelly) == 1)
-		return (1);
+		return (EXIT_FAILURE);
 	if (!shelly->str)
-		return (1);
+		return (EXIT_FAILURE);
 	while (shelly->str[++i] != NULL)
 	{
 		if (create_token(shelly, shelly->str[i]) == 1)
-			return (1);
+			return (EXIT_FAILURE);
 	}
 	affiche_token(shelly);
-	return (0);
+	return (EXIT_SUCCESS);
 }

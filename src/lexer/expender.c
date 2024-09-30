@@ -22,6 +22,7 @@ int	expende_2(t_shelly *shelly, t_data_elem *data, char *value)
 	if (!test)
 		return (EXIT_FAILURE);
 	free(shelly->str[data->j]);
+	data->size += ft_strlen(value);
 	shelly->str[data->j] = malloc(sizeof(char) * (data->size + 1));
 	if (!shelly->str[data->j])
 		return (EXIT_FAILURE);
@@ -38,7 +39,7 @@ int	expende_2(t_shelly *shelly, t_data_elem *data, char *value)
 	return (EXIT_SUCCESS);
 }
 
-void	expend_not_path(t_shelly *shelly, t_data_elem *data)
+int	expend_not_path(t_shelly *shelly, t_data_elem *data)
 {
 	char	*test;
 	int		i;
@@ -46,19 +47,42 @@ void	expend_not_path(t_shelly *shelly, t_data_elem *data)
 	i = -1;
 	test = ft_strdup(shelly->str[data->j]);
 	if (!test)
-		return ;
+		return (EXIT_FAILURE);
 	free(shelly->str[data->j]);
 	shelly->str[data->j] = malloc(sizeof(char) * (data->size) + 1);
 	if (!shelly->str[data->j])
-		return ;
+		return (EXIT_FAILURE);
 	while (++i < data->k && test[i] != '\0')
 		shelly->str[data->j][i] = test[i];
 	shelly->str[data->j][data->k] = '\0';
 	free(test);
-	return ;
+	return (EXIT_SUCCESS);
 }
 
-void	expender(t_shelly *shelly, t_data_elem *data)
+// void	expend_exit(t_shelly *shelly, t_data_elem *data)
+// {
+// 	char	*test;
+// 	int		i;
+
+// 	i = -1;
+// 	test = ft_strdup(shelly->str[data->j]);
+// 	if (!test)
+// 		return ;
+// 	free(shelly->str[data->j]);
+// 	data->size += ft_strlen(exe);
+// 	shelly->str[data->j] = malloc(sizeof(char) * (data->size) + 1);
+// 	if (!shelly->str[data->j])
+// 		return ;
+// 	while (++i < data->k && test[i] != '\0')
+// 		shelly->str[data->j][i] = test[i];
+// 	i = -1;
+// 	while (exe[++i] != '\0')
+// 		shelly->str[data->j][data->k + i] = exe[i];
+// 	free(test);
+// 	return ;
+// }
+
+int	expender(t_shelly *shelly, t_data_elem *data)
 {
 	char	*value;
 	char	*path;
@@ -73,18 +97,24 @@ void	expender(t_shelly *shelly, t_data_elem *data)
 		&& shelly->cmd[start + size] != '\0')
 		size++;
 	path = ft_strndup(&shelly->cmd[start], size);
+	if (!path)
+		return (EXIT_FAILURE);
 	value = getenv(path);
+	data->size = data->size - ft_strlen(path) - 1;
 	if (value)
 	{
-		data->size = data->size - ft_strlen(path) + ft_strlen(value) - 1;
-		expende_2(shelly, data, value);
+		if (expende_2(shelly, data, value) == 1)
+			return (EXIT_FAILURE);
 	}
 	else
 	{
-		data->size = data->size - ft_strlen(path) - 1;
-		data->i = start + size - data->k;
-		return (expend_not_path(shelly, data));
+		// if (path[0] == '?' && ft_strlen(path) == 1)
+		// 	expend_exit(shelly, data);
+		// else
+		if (expend_not_path(shelly, data) == 1)
+			return (EXIT_FAILURE);
 	}
 	free(path);
 	data->i = start + size - data->k;
+	return (EXIT_SUCCESS);
 }

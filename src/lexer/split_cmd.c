@@ -12,18 +12,25 @@
 
 #include "../../include/minishell.h"
 
-void	manage_elem(t_shelly *shelly, t_data_elem *data)
+int	manage_elem(t_shelly *shelly, t_data_elem *data)
 {
 	if (shelly->cmd[data->k + data->i] == 34
 		|| shelly->cmd[data->k + data->i] == 39)
-		manage_quote(shelly, data);
+	{
+		if (manage_quote(shelly, data) == 1)
+			return (EXIT_FAILURE);
+	}
 	else if (shelly->cmd[data->k + data->i] == '$')
-		expender(shelly, data);
+	{
+		if (expender(shelly, data) == 1)
+			return (EXIT_FAILURE);
+	}
 	else
 	{
 		shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
 		data->k++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	add_elem(t_shelly *shelly, int count)
@@ -36,16 +43,19 @@ int	add_elem(t_shelly *shelly, int count)
 		data.size = info_elem(shelly, data.j, "size");
 		shelly->str[data.j] = malloc(sizeof(char) * (data.size + 1));
 		if (!shelly->str[data.j])
-			return (1);
+			return (EXIT_FAILURE);
 		data.i = info_elem(shelly, data.j, "index");
 		data.k = 0;
 		while (data.k < data.size && shelly->cmd[data.k + data.i] != '\0')
-			manage_elem(shelly, &data);
+		{
+			if (manage_elem(shelly, &data) == 1)
+				return(EXIT_FAILURE);
+		}
 		shelly->str[data.j][data.k] = '\0';
 		data.j++;
 	}
 	shelly->str[data.j] = NULL;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	split_command(t_shelly *shelly)
@@ -54,13 +64,12 @@ int	split_command(t_shelly *shelly)
 
 	count = 0;
 	count += count_elem(shelly, count);
-	printf("count : %d\n", count);
 	if (count == 0)
-		return (1);
+		return (EXIT_FAILURE);
 	shelly->str = malloc(sizeof(char *) * (count + 1));
 	if (!shelly->str)
-		return (1);
+		return (EXIT_FAILURE);
 	if (add_elem(shelly, count) == 1)
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

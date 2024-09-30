@@ -12,21 +12,31 @@
 
 #include "../../include/minishell.h"
 
-void	manage_quote(t_shelly *shelly, t_data_elem *data)
+int	double_quote(t_shelly *shelly, t_data_elem *data)
+{
+	data->i++;
+	while (shelly->cmd[data->k + data->i] != 34)
+	{
+		if (shelly->cmd[data->k + data->i] == '$')
+		{
+			if (expender(shelly, data) == 1)
+				return (EXIT_FAILURE);
+		}
+		else
+		{
+			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
+			data->k++;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	manage_quote(t_shelly *shelly, t_data_elem *data)
 {
 	if (shelly->cmd[data->k + data->i] == 34)
 	{
-		data->i++;
-		while (shelly->cmd[data->k + data->i] != 34)
-		{
-			if (shelly->cmd[data->k + data->i] == '$')
-				expender(shelly, data);
-			else
-			{
-				shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
-				data->k++;
-			}
-		}
+		if (double_quote(shelly, data) == 1)
+			return (EXIT_FAILURE);
 	}
 	if (shelly->cmd[data->k + data->i] == 39)
 	{
@@ -38,6 +48,7 @@ void	manage_quote(t_shelly *shelly, t_data_elem *data)
 		}
 	}
 	data->i++;
+	return(EXIT_SUCCESS);
 }
 
 int	check_quote(t_shelly *shelly)
@@ -63,46 +74,6 @@ int	check_quote(t_shelly *shelly)
 			if (shelly->cmd[i] != 39)
 				return (ft_error(NULL, 0, 0));
 		}
-	}
-	return (0);
-}
-
-int	check_last_elem(t_shelly *shelly)
-{
-	int	i;
-
-	i = -1;
-	if (ft_strlen(shelly->cmd) == 0)
-		return (1);
-	if (shelly->cmd[0] == '|')
-		return (ft_error(SYNTAX_ERROR, shelly->cmd[0], 1));
-	while (shelly->cmd[++i])
-		;
-	i--;
-	if (shelly->cmd[i] == '>' || shelly->cmd[i] == '<'
-		|| shelly->cmd[i] == '|')
-		return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
-	return (0);
-}
-
-int	check_order(t_shelly *shelly, int check)
-{
-	int	i;
-
-	i = -1;
-	if (check > 0)
-		return (0);
-	while (shelly->cmd[++i])
-	{
-		if (shelly->cmd[i] == '|' && shelly->cmd[i + 1] == '|'
-			&& shelly->cmd[i + 2] == '|')
-			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
-		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>'
-			&& shelly->cmd[i + 2] == '>' && shelly->cmd[i + 3] == '>')
-			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 2));
-		if (shelly->cmd[i] == '>' && shelly->cmd[i + 1] == '>'
-			&& shelly->cmd[i + 2] == '>')
-			return (ft_error(SYNTAX_ERROR, shelly->cmd[i], 1));
 	}
 	return (0);
 }

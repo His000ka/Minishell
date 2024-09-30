@@ -135,7 +135,8 @@ int	is_input(char *str, int flag)
 			return (1);
 		if (check_char(str[i - 1]) == 0 && check_char(str[i + 1]) == 0)
 			return (2);
-		if (check_char(str[i - 2]) == 0 || check_char(str[i + 1]) == 0)
+		if (str[i - 1] == '<' && (check_char(str[i - 2]) == 0
+				|| check_char(str[i + 1]) == 0))
 		{
 			if (check_char(str[i - 2]) == 0 && check_char(str[i + 1]) == 0)
 				return (2);
