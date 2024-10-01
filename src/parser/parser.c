@@ -61,6 +61,5 @@ int	ft_parser(t_shelly *shelly)
 	shelly->ast = create_ast(shelly->token);
 	if (!shelly->ast)
 		return (1);
-	affiche_ast(shelly->ast, 0);
 	return (0);
 }

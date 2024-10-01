@@ -25,10 +25,7 @@ void	algo_minishell(t_shelly *shelly)
 		{
 			check = exec_heredoc(shelly, shelly->ast);
 			if (check == 0)
-			{
-				// affiche_ast(shelly->ast, 0);
 				ft_exec(shelly, shelly->ast);
-			}
 			free_ast(shelly->ast);
 		}
 	}
@@ -60,5 +57,4 @@ int	main(int ac, char **av, char **envp)
 	}
 	free_env(&shelly);
 	shelly.env = NULL;
-	// system("leaks minishell");
 }

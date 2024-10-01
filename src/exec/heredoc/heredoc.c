@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/01 16:34:18 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/01 16:44:12 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,10 @@ int	adapt_cmd(t_shelly *shelly)
 		tmp->next->prev = tmp->prev;
 	free(tmp);
 	free(shelly->ast);
-	printf("TOKEN\n");
-	affiche_token(shelly);
 	if (ft_parser(shelly) == 0)
 	{
 		if (exec_heredoc(shelly, shelly->ast) == 0)
-		{
-			// affiche_ast(shelly->ast, 0);
 			ft_exec(shelly, shelly->ast);
-		}
 	}
 	return (0);
 }
@@ -130,8 +125,8 @@ int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
 {
 	if (pipe(shelly->fd) < 0)
 		return (ft_error("pipe", 0, 0));
-	printf("before here doc\n");
 	read_heredoc(shelly);
+	free(shelly->delimiter);
 	close(shelly->fd[1]);
 	if (node->right->node_type == CMD && !node->right->value[1])
 		exec_fork_heredoc(shelly);
@@ -148,7 +143,5 @@ int	exec_heredoc(t_shelly *shelly, t_ast  *node)
 	if (!shelly->delimiter)
 		return (1);
 	exec_heredoc_2(shelly, node);
-	free(shelly->delimiter);
-	printf("Heredoc End\n");
 	return (1);
 }
