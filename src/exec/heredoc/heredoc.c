@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/30 17:31:53 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/01 16:34:18 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,14 @@ char	*search_delimiter(t_ast *node)
 	char	*delimiter;
 
 	current = node;
-	while (current->right && current->right->left->node_type != CMD)
+	if (node->right->node_type == CMD)
+		delimiter = ft_strdup(node->right->value[0]);
+	else
+	{
+		while (current->right && current->right->left->node_type != CMD)
 		current = current->right;
-	delimiter = ft_strdup(node->right->left->value[0]);
+		delimiter = ft_strdup(node->right->left->value[0]);
+	}
 	if (!delimiter)
 		return (NULL);
 	return (delimiter);
@@ -42,7 +47,6 @@ char	*search_delimiter(t_ast *node)
 void	read_heredoc(t_shelly *shelly)
 {
 	char	*input;
-	char	*tmp;
 
 	while (1)
 	{
@@ -54,49 +58,85 @@ void	read_heredoc(t_shelly *shelly)
 		}
 		if (input)
 		{
-			tmp = ft_strjoin(shelly->buff_heredoc, input);
-			free(shelly->buff_heredoc);
-			shelly->buff_heredoc = ft_strdup(tmp);
-			shelly->buff_heredoc = ft_strjoin(shelly->buff_heredoc, "\n");
-			if (!shelly->buff_heredoc)
-				return ;
-			free(tmp);
+			write(shelly->fd[1], input, ft_strlen(input));
+			write(shelly->fd[1], "\n", 1);
 		}
 		free(input);
 	}
 }
 
-int	exec_heredoc_not_token(t_shelly *shelly, t_ast  *node)
+int	adapt_cmd(t_shelly *shelly)
 {
-	shelly->delimiter = ft_strdup(node->right->value[0]);
-	shelly->buff_heredoc = ft_strdup("");
-	if (!shelly->buff_heredoc)
-		return (ft_error("bash: syntax error near unexpected token 'newline'\n", 0, 0));
-	read_heredoc(shelly);
-	if (node->left->node_type != CMD)
-		ft_exec(shelly, node->left);
-	if (shelly->buff_heredoc)
+	t_token	*current;
+	t_token	*tmp;
+
+	current = shelly->token;
+	while (current && current->type != HEREDOC)
+		current = current->next;
+	if (!current)
+		return (0);
+	tmp = current->next;
+	if (current->prev)
+		current->prev->next = current->next;
+	if (current->next)
+		current->next->prev = current->prev;
+	free(current);
+	if (tmp->prev)
+		tmp->prev->next = tmp->next;
+	if (tmp->next)
+		tmp->next->prev = tmp->prev;
+	free(tmp);
+	free(shelly->ast);
+	printf("TOKEN\n");
+	affiche_token(shelly);
+	if (ft_parser(shelly) == 0)
 	{
-		printf("buffer_heredoc: %s", shelly->buff_heredoc);
-		free(shelly->buff_heredoc);
+		if (exec_heredoc(shelly, shelly->ast) == 0)
+		{
+			// affiche_ast(shelly->ast, 0);
+			ft_exec(shelly, shelly->ast);
+		}
 	}
 	return (0);
 }
 
-int	exec_heredoc_token(t_shelly *shelly, t_ast  *node)
+void	exec_fork_heredoc(t_shelly *shelly)
 {
-	shelly->delimiter = search_delimiter(node);
-	shelly->buff_heredoc = ft_strdup("");
-	if (!shelly->buff_heredoc)
-		return (ft_error("bash: syntax error near unexpected token 'newline'\n", 0, 0));
-	read_heredoc(shelly);
-	if (node->left->node_type != CMD)
-		ft_exec(shelly, node->left);
-	if (shelly->buff_heredoc)
+	pid_t	pid;
+	int	 fd_in;
+
+	fd_in = shelly->fd[0];
+	pid = fork();
+	if (pid == 0)
 	{
-		printf("buffer_heredoc: %s", shelly->buff_heredoc);
-		free(shelly->buff_heredoc);
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+		{
+			write(STDERR_FILENO, "ERROR DUP2\n", 11);
+			exit(EXIT_FAILURE);
+		}
+		close(fd_in);
+		exit(EXIT_SUCCESS);
 	}
+	else if (pid > 0)
+	{
+		close(fd_in);
+		waitpid(pid, NULL, 0);
+	}
+	else
+		write(STDERR_FILENO, "ERROR FORK\n", 11);
+}
+
+int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
+{
+	if (pipe(shelly->fd) < 0)
+		return (ft_error("pipe", 0, 0));
+	printf("before here doc\n");
+	read_heredoc(shelly);
+	close(shelly->fd[1]);
+	if (node->right->node_type == CMD && !node->right->value[1])
+		exec_fork_heredoc(shelly);
+	else
+		adapt_cmd(shelly);
 	return (0);
 }
 
@@ -104,11 +144,10 @@ int	exec_heredoc(t_shelly *shelly, t_ast  *node)
 {
 	if (node->node_type != HEREDOC)
 		return (0);
-	if (node->right->node_type == CMD)
-		exec_heredoc_not_token(shelly, node);
-	else
-		exec_heredoc_token(shelly, node);
-	// exec_heredoc_2(shelly, node);
+	shelly->delimiter = search_delimiter(node);
+	if (!shelly->delimiter)
+		return (1);
+	exec_heredoc_2(shelly, node);
 	free(shelly->delimiter);
 	printf("Heredoc End\n");
 	return (1);

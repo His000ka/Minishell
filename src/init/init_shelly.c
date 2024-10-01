@@ -18,7 +18,6 @@ int init_shelly(t_shelly *shelly)
     shelly->token = NULL;
     shelly->cmd = NULL;
     shelly->ast = NULL;
-	shelly->buff_heredoc = NULL;
 	shelly->delimiter = NULL;
     return (0);
 }

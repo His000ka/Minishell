@@ -84,7 +84,7 @@ typedef struct s_shelly
 	char	**envp;
 	int		loop;
 	char	*delimiter;
-	char	*buff_heredoc;
+	int		fd[2];
 	t_env	*env;
 	t_token	*token;
 	t_ast	*ast;
