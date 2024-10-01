@@ -101,10 +101,7 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 	{
 		path = find_executable_in_path(cmd);
 		if (!path)
-		{
-			printf("Command not found: %s\n", cmd);
 			return (EXIT_FAILURE);
-		}
 	}
 	if (fork() == 0)
 	{

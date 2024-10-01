@@ -29,7 +29,7 @@ int	check_pipeline(t_token *current)
 int	check_redirect(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
-		return (ft_error("ERROR REDIRECT\n", 0, 0));
+		return (ft_error("bash: syntax error near unexpected token 'newline'\n", 0, 0));
 	return (0);
 }
 
