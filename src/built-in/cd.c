@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 18:29:49 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/02 23:10:44 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void ft_cd(char **str)
 
 	if (chdir(path) != 0)
 		perror("Problem with chdir");
-
 	new_pwd = getcwd(NULL, 0);
 	if (new_pwd)
 	{

@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:31 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 10:22:42 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/02 23:06:12 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,33 @@
 
 int	if_pwd(char *str)
 {
-	if (ft_strncmp(str, "pwd", 3) == 0)
+	if (ft_strcmp(str, "pwd") == 0)
 		return (1);
 	return (0);
 }
 
-void	ft_pwd(void)
+void	ft_pwd(char **str)
 {
-	char	*cwd;
-	char	*buffer;
-	size_t	size;
+	char *cwd;
+	int i = 1;
 
-	size = 1024;
-	buffer = (char *)malloc(sizeof(char) * size);
-	if (!buffer)
+	while (str[i])
 	{
-		perror("malloc");
-		return ;
+		if (str[i][0] == '-')
+		{
+			printf("bash: pwd: %s: invalid option\n", str[i]);
+			return;
+		}
+		i++;
 	}
-	cwd = getcwd(buffer, size);
+	cwd = getcwd(NULL, 0);
 	if (cwd)
+	{
 		printf("%s\n", cwd);
+		free(cwd);
+	}
 	else
-		perror("getcwd");
-	free(buffer);
+		perror("pwd");
 }
 
 // int	main(int ac, char **av)

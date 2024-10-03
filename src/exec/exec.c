@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 09:36:59 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/19 10:38:40 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/09/30 20:16:21 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	}
 }
 
-#include <sys/stat.h>  // Pour stat()
+#include <sys/stat.h>
 char *get_env_value(t_env *env, const char *key)
 {
     t_env *tmp = env;
@@ -143,98 +143,20 @@ char *get_env_value(t_env *env, const char *key)
     while (tmp)
     {
         if (ft_strncmp(tmp->value, key, ft_strlen(key)) == 0 && tmp->value[ft_strlen(key)] == '=')
-            return (tmp->value + ft_strlen(key) + 1);  // +1 pour passer le '='
+            return (tmp->value + ft_strlen(key) + 1);
         tmp = tmp->next;
     }
     return (NULL);
 }
 
-// char *search_in_path(t_shelly *shelly, char *command)
-// {
-//     char *path_env = get_env_value(shelly->env, "PATH");
-//     if (!path_env)
-//     {
-//         printf("PATH not found in environment.\n");
-//         return NULL;
-//     }
-    
-//     printf("PATH: %s\n", path_env);
-
-//     char **paths = ft_split(path_env, ':');
-//     if (!paths)
-//     {
-//         printf("Memory allocation failed for split paths.\n");
-//         return NULL;
-//     }
-
-//     char *full_path;
-//     struct stat buf;
-//     int i = 0;
-//     while (paths[i])
-//     {
-//         full_path = ft_strjoin(paths[i], "/");
-//         char *temp_path = ft_strjoin(full_path, command);
-//         free(full_path);
-
-//         if (stat(temp_path, &buf) == 0 && (buf.st_mode & S_IXUSR))
-//         {
-//             printf("Found executable at: %s\n", temp_path);
-//             free(paths);
-//             return temp_path;
-//         }
-        
-//         free(temp_path);
-//         i++;
-//     }
-
-//     printf("Command not found in PATH.\n");
-//     free(paths);
-//     return NULL;
-// }
-
-
-// void	exec_cmd(t_shelly *shelly, t_ast *node)
-// {
-// 	pid_t	pid;
-// 	char	*path = NULL;
-
-// 	if (ft_builtins(shelly, node->value[0], node) == 0)
-// 		return ;
-// 	pid = fork();
-//     if (pid == 0)
-//     {
-//         if (ft_strchr(node->value[0], '/') == NULL)
-//         {
-//             path = search_in_path(shelly, node->value[0]);
-//             if (path == NULL)
-//                 exit(127);
-//         }
-//         else
-//             path = node->value[0];
-//         if (execve(path, node->value, shelly->envp) == -1)
-//         {
-//             perror("execve");
-//             exit(0);
-//         }
-//     }
-//     else if (pid > 0)
-//     {
-//         int status;
-//         waitpid(pid, &status, 0);
-//         if (WIFEXITED(status))
-//         {
-//             int exit_status = WEXITSTATUS(status);
-//             if (exit_status == 127)
-//                 msg_cmd_not_found(node);
-// 		}
-//     }
-//     else
-//     {
-//         perror("fork");
-//         exit(EXIT_FAILURE);
-//     }
-// 	msg_cmd_not_found(node);
-// }
+void	exec_cmd(t_shelly *shelly, t_ast *node)
+{
+	if (ft_builtins(shelly, node->value[0], node) == 0)
+		return ;
+	if (exec_cmd_path(node->value[0], node->value, shelly->envp) == 0)
+		return ;
+	msg_cmd_not_found(node);
+}
 
 void	*ft_exec(t_shelly *shelly, t_ast *node)
 {
@@ -246,5 +168,7 @@ void	*ft_exec(t_shelly *shelly, t_ast *node)
 		exec_trunc(shelly, node);
 	else if (node->node_type == INPUT)
 		exec_input(shelly, node);
+	else if(node->node_type == PIPE)
+		exec_pipe(shelly, node);
 	return (NULL);
 }

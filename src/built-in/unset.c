@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 11:07:13 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/02 20:56:44 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,13 @@ void ft_unset(t_env **env_list, char **args)
 	}
 }
 
-// Uncomment the main for testing
 // int main(int ac, char **av, char **envp)
 // {
-//     t_env *env_list = NULL;
-//     env_list = create_env_list(&env_list, envp);
+//     t_shelly shelly;
+//     create_env_list(&shelly, envp);  // Assuming create_env_list populates shelly's env_list
 
 //     if (if_unset(av[1]) == 1)
-//         ft_unset(&env_list, av);
+//         ft_unset(&shelly.env_list, av);  // Access the environment list from shelly
 
 //     return 0;
 // }
