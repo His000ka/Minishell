@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 11:58:59 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/04 12:02:42 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/04 14:56:48 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@ void	exec_trunc(t_shelly *shelly, t_ast *node)
 {
     int     fd_out;
     pid_t   pid;
+	t_ast	*current;
 
-    if (node->right->node_type != CMD)
-        ft_exec(shelly, node->right);
-    fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	current = node;
+    while (current->right && current->right->node_type == TRUNC)
+	{
+		fd_out = open(search_value(current), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out == -1)
+			return ;
+		close (fd_out);
+        current = current->right;
+	}
+    fd_out = open(search_value(current), O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd_out == -1)
     {
         perror("ERROR OPEN");

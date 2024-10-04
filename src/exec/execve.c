@@ -116,7 +116,6 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 		int status;
 		wait(&status);
 	}
-	free (path);
 	return (0);
 }
 

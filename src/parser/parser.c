@@ -42,8 +42,8 @@ int	check_token(t_shelly *shelly)
 	tmp = shelly->token;
 	while (tmp != NULL)
 	{
-		if (tmp->type == PIPE)
-			check = check_pipeline(tmp);
+		// if (tmp->type == PIPE)
+		// 	check = check_pipeline(tmp);
 		if (tmp->type == TRUNC || tmp->type == INPUT
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
 			check = check_redirect(tmp);

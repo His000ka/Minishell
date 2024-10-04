@@ -90,8 +90,8 @@ typedef struct s_shelly
 	t_ast	*ast;
 }	t_shelly;
 
-//pipe
-void exec_pipe(t_shelly *shelly, t_ast *node);
+//algo_shelly
+void	algo_minishell(t_shelly *shelly);
 //utils
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
@@ -99,7 +99,6 @@ char	*ft_strsearch(char *s, int c, int flag);
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
-
 //lexer
 int		ft_lexer(t_shelly *shelly);
 //parser
@@ -119,16 +118,16 @@ void	exec_trunc(t_shelly *shelly, t_ast *node);
 void	exec_append(t_shelly *shelly, t_ast *node);
 //exec input
 void	exec_input(t_shelly *shelly, t_ast *node);
+//pipe
+void	exec_pipe(t_shelly *shelly, t_ast *node);
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
 int		info_elem(t_shelly *shelly, int j, char *str);
 int		add_elem(t_shelly *shelly, int count);
 int		split_command(t_shelly *shelly);
-
 //init
 int 	init_shelly(t_shelly *shelly);
-
 //quote utils (lexer)
 int		check_quote(t_shelly *shelly);
 int		manage_quote(t_shelly *shelly, t_data_elem *data);
@@ -139,7 +138,6 @@ void	free_env(t_shelly *shelly);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
-
 //expender
 int		expender(t_shelly *shelly, t_data_elem *data);
 

@@ -122,6 +122,8 @@ t_ast	*create_ast(t_token *tokens)
 	t_token	*current;
 	t_ast	*root;
 
+	if (!tokens)
+		return (NULL);
 	current = tokens;
 	while (current && current->type != HEREDOC)
 		current = current->next;

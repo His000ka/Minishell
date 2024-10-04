@@ -19,6 +19,7 @@ void	free_command(char **cmd)
 	i = 0;
 	if (cmd)
 	{
+		// printf("free: %s\n", cmd[i]);
 		while (cmd[i] != NULL)
 			free(cmd[i++]);
 		free(cmd);
@@ -37,6 +38,7 @@ void	free_ast(t_ast *node)
 	if (node->right)
 		free_ast(node->right);
 	free(node);
+	node = NULL;
 }
 
 void	free_env(t_shelly *shelly)
