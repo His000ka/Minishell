@@ -90,6 +90,8 @@ typedef struct s_shelly
 	t_ast	*ast;
 }	t_shelly;
 
+//pipe
+void exec_pipe(t_shelly *shelly, t_ast *node);
 //utils
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);

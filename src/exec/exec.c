@@ -168,5 +168,7 @@ void	*ft_exec(t_shelly *shelly, t_ast *node)
 		exec_trunc(shelly, node);
 	else if (node->node_type == INPUT)
 		exec_input(shelly, node);
+	else if(node->node_type == PIPE)
+		exec_pipe(shelly, node);
 	return (NULL);
 }
