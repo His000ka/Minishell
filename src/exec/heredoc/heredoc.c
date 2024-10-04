@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/03 18:02:52 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/04 12:26:20 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void	exec_fork_heredoc(t_shelly *shelly, t_ast *node)
 			exit(EXIT_FAILURE);
 		}
 		close(fd_in);
-		ft_exec(shelly, node->left);
+		if (node->left)
+			ft_exec(shelly, node->left);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)

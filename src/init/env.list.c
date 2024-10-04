@@ -36,9 +36,7 @@ void	add_node_env(t_env **list, t_env *new)
 	if (!new)
 		return ;
 	if (*list == NULL)
-	{
 		*list = new;
-	}
 	else
 	{
 		tmp = *list;

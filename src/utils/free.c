@@ -22,6 +22,7 @@ void	free_command(char **cmd)
 		while (cmd[i] != NULL)
 			free(cmd[i++]);
 		free(cmd);
+		cmd = NULL;
 	}
 }
 

@@ -107,11 +107,18 @@ int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
+char	*search_value(t_ast *node);
 //execve
 int		exec_cmd_path(char *cmd, char **args, char **envp);
 t_ast	*create_ast(t_token *tokens);
 //exec heredoc
 int		exec_heredoc(t_shelly *shelly, t_ast  *node);
+//exec trunc
+void	exec_trunc(t_shelly *shelly, t_ast *node);
+//exec append
+void	exec_append(t_shelly *shelly, t_ast *node);
+//exec input
+void	exec_input(t_shelly *shelly, t_ast *node);
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
@@ -176,7 +183,7 @@ int		if_export(char *str);
 void	ft_export(t_env *list_env);
 //pwd
 int		if_pwd(char *str);
-void	ft_pwd(void);
+void	ft_pwd(char **str);
 //unset
 int		if_unset(char *str);
 void	ft_unset(t_env **env_list, char **args);
