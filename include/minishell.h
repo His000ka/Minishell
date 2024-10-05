@@ -178,7 +178,7 @@ int		is_numeric(char *str);
 int		ft_exit(char **str);
 //export
 int		if_export(char *str);
-void	ft_export(t_env *list_env);
+void 	ft_export(t_env **env_list, char **args);
 //pwd
 int		if_pwd(char *str);
 void	ft_pwd(char **str);

@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/02 20:56:44 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/06 00:16:48 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 // Check if the command is 'unset'
 int if_unset(char *str)
 {
-	if (str && ft_strncmp(str, "unset", 5) == 0 && (str[5] == '\0' || str[5] == ' '))
+	if (str && ft_strcmp(str, "unset") == 0)
 		return (1);
 	return (0);
 }
 
-// Helper function to check if a string is a valid identifier
 int is_valid_identifier(char *str)
 {
 	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
@@ -35,7 +34,6 @@ int is_valid_identifier(char *str)
 	return (1);
 }
 
-// Function to remove a node from the environment list by its key
 void remove_env_node(t_env **env_list, char *key)
 {
 	t_env *current = *env_list;
@@ -43,19 +41,12 @@ void remove_env_node(t_env **env_list, char *key)
 
 	while (current != NULL)
 	{
-		// If the key matches, remove the node
-		if (ft_strncmp(current->content, key, ft_strlen(key) + 1) == 0)
+		if (ft_strcmp(current->content, key) == 0)
 		{
-			// Unlink the node from the list
 			if (previous == NULL)
-				*env_list = current->next;  // Removing the head node
+				*env_list = current->next;
 			else
 				previous->next = current->next;
-
-			// Free the memory associated with the node
-			free(current->content);
-			free(current->value);
-			free(current);
 			return;
 		}
 		previous = current;
@@ -63,23 +54,18 @@ void remove_env_node(t_env **env_list, char *key)
 	}
 }
 
-// Function to handle the 'unset' command
 void ft_unset(t_env **env_list, char **args)
 {
-	int i = 1;
+	int i;
 
-	// Loop through all the arguments passed to 'unset'
+	i = 1;
 	while (args[i])
 	{
-		// Check if the argument is a valid identifier
+		// printf("STRING %s\n", args[i]);
 		if (is_valid_identifier(args[i]))
-		{
 			remove_env_node(env_list, args[i]);
-		}
 		else
-		{
 			printf("bash: unset: `%s': not a valid identifier\n", args[i]);
-		}
 		i++;
 	}
 }
