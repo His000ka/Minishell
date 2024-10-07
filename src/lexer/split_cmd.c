@@ -49,7 +49,7 @@ int	add_elem(t_shelly *shelly, int count)
 		while (data.k < data.size && shelly->cmd[data.k + data.i] != '\0')
 		{
 			if (manage_elem(shelly, &data) == 1)
-				return(EXIT_FAILURE);
+				return (EXIT_FAILURE);
 		}
 		shelly->str[data.j][data.k] = '\0';
 		data.j++;

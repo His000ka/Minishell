@@ -48,7 +48,7 @@ int	manage_quote(t_shelly *shelly, t_data_elem *data)
 		}
 	}
 	data->i++;
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	check_quote(t_shelly *shelly)
@@ -76,16 +76,4 @@ int	check_quote(t_shelly *shelly)
 		}
 	}
 	return (0);
-}
-
-int	check_cmd(t_shelly *shelly)
-{
-	int	check;
-
-	check = 0;
-	check += check_quote(shelly);
-	// check += check_last_elem(shelly);
-	// check += check_order(shelly, check);
-	// printf("check_cmd: %d\n", check);
-	return (check);
 }

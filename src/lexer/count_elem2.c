@@ -78,7 +78,7 @@ int	is_pipe(char *str, int flag)
 			&& check_char(str[i + 1]) == 1)
 			return (0);
 		if ((check_char(str[i - 1]) == 1 && check_char(str[i + 1]) == 0)
-				|| (check_char(str[i - 1]) == 0
+			|| (check_char(str[i - 1]) == 0
 				&& check_char(str[i + 1]) == 1))
 			return (1);
 		if (check_char(str[i - 1]) == 0

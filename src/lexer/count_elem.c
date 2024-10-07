@@ -57,7 +57,7 @@ int	count_elem_2(t_shelly *shelly, int count)
 		if (shelly->cmd[i] == '\0')
 			return (count);
 		if (i == 0 && (shelly->cmd[i] == '|' || shelly->cmd[i] == '>'
-			|| shelly->cmd[i] == '<'))
+				|| shelly->cmd[i] == '<'))
 		{
 			i = count_index(&shelly->cmd[i + 1], 1) + 1;
 			if (shelly->cmd[i] == '\0')
@@ -95,7 +95,8 @@ int	count_elem(t_shelly *shelly, int count)
 			count++;
 	}
 	if (check_char(shelly->cmd[0]) == 2 && (ft_ischar(shelly->cmd[1]) == 1
-		|| (check_char(shelly->cmd[1]) == 2 && ft_ischar(shelly->cmd[2]) == 1)))
+			|| (check_char(shelly->cmd[1]) == 2
+				&& ft_ischar(shelly->cmd[2]) == 1)))
 		count++;
 	return (count_elem_2(shelly, count));
 }
