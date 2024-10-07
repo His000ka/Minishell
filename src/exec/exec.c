@@ -37,10 +37,22 @@ char *get_env_value(t_env *env, const char *key)
 
 void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
+	if (shelly->exit_status)
+			free(shelly->exit_status);
+	shelly->exit_status = ft_strdup("0");
 	if (ft_builtins(shelly, node->value[0], node) == 0)
+	{
+		shelly->exit_status = ft_strdup("0");
 		return ;
+	}
 	if (exec_cmd_path(node->value[0], node->value, shelly->envp) == 0)
+	{
+		shelly->exit_status = ft_strdup("0");
 		return ;
+	}
+	if (shelly->exit_status)
+			free(shelly->exit_status);
+	shelly->exit_status = ft_strdup("127");
 	msg_cmd_not_found(node);
 }
 

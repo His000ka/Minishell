@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/25 18:21:14 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/07 10:37:34 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ int	expend_not_path(t_shelly *shelly, t_data_elem *data)
 // 	return ;
 // }
 
+
+
+int	char_expend(char c)
+{
+	if (c <= 32 || c > 126 || c == '>' || c == '<' || c == '|'
+			|| c == '\'' || c == '\"')
+		return (1);
+	return (0);
+}
+
 int	expender(t_shelly *shelly, t_data_elem *data)
 {
 	char	*value;
@@ -93,17 +103,29 @@ int	expender(t_shelly *shelly, t_data_elem *data)
 	size = 0;
 	path = NULL;
 	shelly->str[data->j][data->k] = '\0';
-	while (check_char(shelly->cmd[start + size]) == 0
+	while (char_expend(shelly->cmd[start + size]) == 0
 		&& shelly->cmd[start + size] != '\0')
 		size++;
 	path = ft_strndup(&shelly->cmd[start], size);
 	if (!path)
 		return (EXIT_FAILURE);
+	// printf("path: %s\nsize: %d\n", path, size);
 	value = getenv(path);
 	data->size = data->size - ft_strlen(path) - 1;
 	if (value)
 	{
 		if (expende_2(shelly, data, value) == 1)
+			return (EXIT_FAILURE);
+	}
+	else if (ft_strcmp(path, "?") == 0)
+	{
+		if (!shelly->exit_status)
+		{
+			shelly->exit_status = ft_strdup("0");
+			if (!shelly->exit_status)
+				return (EXIT_FAILURE);
+		}
+		if (expende_2(shelly, data, shelly->exit_status) == 1)
 			return (EXIT_FAILURE);
 	}
 	else

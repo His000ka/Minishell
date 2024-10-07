@@ -85,6 +85,7 @@ typedef struct s_shelly
 	int		loop;
 	char	*delimiter;
 	int		fd[2];
+	char	*exit_status;
 	t_env	*env;
 	t_token	*token;
 	t_ast	*ast;
@@ -177,8 +178,8 @@ int		if_exit(char **str);
 int		is_numeric(char *str);
 int		ft_exit(char **str);
 //export
-int		if_export(char *str);
-void 	ft_export(t_env **env_list, char **args);
+// int		if_export(char *str);
+// void	ft_export(t_env *list_env);
 //pwd
 int		if_pwd(char *str);
 void	ft_pwd(char **str);
