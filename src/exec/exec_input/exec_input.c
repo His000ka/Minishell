@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/04 12:59:26 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/07 15:02:56 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,20 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 
 	if (node->right->node_type == APPEND)
 		return ;
-	if (node->right->node_type != CMD)
-        ft_exec(shelly, node->right);
 	fd_in = open(search_value(node), O_RDONLY);
 	if (fd_in == -1)
 	{
-		msg_not_file(node->right);
-		return;
+		msg_not_file(search_value(node));
+		printf("test\n");
+		return ;
 	}
+	if (node->right->node_type != CMD)
+        ft_exec(shelly, node->right);
 	pid = fork();
 	if (pid == 0)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-		{
-			write(STDERR_FILENO, "ERROR DUP2\n", 11);
 			exit(EXIT_FAILURE);
-		}
 		close(fd_in);
 		if (node->left)
 			ft_exec(shelly, node->left);
@@ -46,8 +44,5 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 		waitpid(pid, NULL, 0);
 	}
 	else
-	{
-		write(STDERR_FILENO, "ERROR FORK\n", 11);
 		exit(EXIT_FAILURE);
-	}
 }

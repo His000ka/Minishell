@@ -12,15 +12,15 @@
 
 #include "../../include/minishell.h"
 
-void	msg_not_file(t_ast *node)
+void	msg_not_file(char *str)
 {
-	if (node == NULL || node->value == NULL || node->value[0] == NULL)
-	{
-		write(STDERR_FILENO, "bash: Unknown error\n", 20);
-		return;
-	}
+	// if (node == NULL || node->value == NULL || node->value[0] == NULL)
+	// {
+	// 	write(STDERR_FILENO, "bash: Unknown error\n", 20);
+	// 	return;
+	// }
 	write(STDERR_FILENO, "bash: ", 6);
-	write(STDERR_FILENO, node->value[0], ft_strlen(node->value[0]));
+	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, ": No such file or directory\n", 28);
 }
 
