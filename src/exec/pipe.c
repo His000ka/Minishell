@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:38:01 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/04 17:00:23 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/07 11:05:21 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	after_pipe(t_shelly *shelly)
 		free_ast(shelly->ast);
 		ft_free(shelly);
 		shelly->cmd = ft_strdup(tmp);
-		printf("cmd: %s\n", shelly->cmd);
 		if (ft_lexer(shelly) == 0)
 		{
 			if (ft_parser(shelly) == 0)

@@ -41,6 +41,8 @@
 
 //MSG_ERROR
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
+# define SYNTAX_TOKEN	"bash: syntax error near unexpected token 'newline'\n"
+
 
 typedef struct s_data_elem
 {
@@ -110,7 +112,16 @@ void	*ft_exec(t_shelly *shelly, t_ast *node);
 char	*search_value(t_ast *node);
 //execve
 int		exec_cmd_path(char *cmd, char **args, char **envp);
+//ast
 t_ast	*create_ast(t_token *tokens);
+t_ast	*create_ast_node(char **value, int node_type);
+char	**extract_command(t_token *token);
+int		count_command_tokens(t_token *token);
+//ast 2
+t_ast	*buid_left_pipe(t_token *tokens);
+t_ast	*ast_heredoc(t_token *tokens, t_ast *root);
+t_ast	*ast_pipe(t_token *tokens, t_ast *root);
+t_ast	*ast_priority(t_token *tokens, t_ast *root);
 //exec heredoc
 int		exec_heredoc(t_shelly *shelly, t_ast  *node);
 //exec trunc
@@ -133,7 +144,7 @@ int 	init_shelly(t_shelly *shelly);
 int		check_quote(t_shelly *shelly);
 int		manage_quote(t_shelly *shelly, t_data_elem *data);
 //info_elem (lexer)
-int	info_elem(t_shelly *shelly, int j, char *str);
+int		info_elem(t_shelly *shelly, int j, char *str);
 //free
 void	free_env(t_shelly *shelly);
 void	ft_free(t_shelly *shelly);

@@ -29,7 +29,7 @@ int	check_pipeline(t_token *current)
 int	check_redirect(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
-		return (ft_error("bash: syntax error near unexpected token 'newline'\n", 0, 0));
+		return (ft_error(SYNTAX_TOKEN, 0, 0));
 	return (0);
 }
 
@@ -40,10 +40,10 @@ int	check_token(t_shelly *shelly)
 
 	check = 0;
 	tmp = shelly->token;
+	if (tmp->type == PIPE && tmp->next == NULL)
+		return (ft_error(SYNTAX_ERROR, '|', 1));
 	while (tmp != NULL)
 	{
-		// if (tmp->type == PIPE)
-		// 	check = check_pipeline(tmp);
 		if (tmp->type == TRUNC || tmp->type == INPUT
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
 			check = check_redirect(tmp);
