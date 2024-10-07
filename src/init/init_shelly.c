@@ -19,5 +19,8 @@ int init_shelly(t_shelly *shelly)
     shelly->cmd = NULL;
     shelly->ast = NULL;
 	shelly->delimiter = NULL;
+	shelly->exit_status = ft_strdup("0");
+	if (!shelly->exit_status)
+		return (1);
     return (0);
 }

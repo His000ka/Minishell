@@ -21,6 +21,13 @@ int	check_char(char c)
 	return (0);
 }
 
+int	ft_ischar(int c)
+{
+	if (c > 32 && c <= 126 && c != '>' && c != '<')
+		return (1);
+	return (0);
+}
+
 int	count_index(char *str, int flag)
 {
 	int	i;
@@ -87,5 +94,8 @@ int	count_elem(t_shelly *shelly, int count)
 		else
 			count++;
 	}
+	if (check_char(shelly->cmd[0]) == 2 && (ft_ischar(shelly->cmd[1]) == 1
+		|| (check_char(shelly->cmd[1]) == 2 && ft_ischar(shelly->cmd[2]) == 1)))
+		count++;
 	return (count_elem_2(shelly, count));
 }

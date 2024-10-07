@@ -29,7 +29,7 @@ int	check_pipeline(t_token *current)
 int	check_redirect(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
-		return (ft_error("ERROR REDIRECT\n", 0, 0));
+		return (ft_error("bash: syntax error near unexpected token 'newline'\n", 0, 0));
 	return (0);
 }
 
@@ -42,8 +42,8 @@ int	check_token(t_shelly *shelly)
 	tmp = shelly->token;
 	while (tmp != NULL)
 	{
-		if (tmp->type == PIPE)
-			check = check_pipeline(tmp);
+		// if (tmp->type == PIPE)
+		// 	check = check_pipeline(tmp);
 		if (tmp->type == TRUNC || tmp->type == INPUT
 			|| tmp->type == APPEND || tmp->type == HEREDOC)
 			check = check_redirect(tmp);
@@ -61,6 +61,5 @@ int	ft_parser(t_shelly *shelly)
 	shelly->ast = create_ast(shelly->token);
 	if (!shelly->ast)
 		return (1);
-	affiche_ast(shelly->ast, 0);
 	return (0);
 }

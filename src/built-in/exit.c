@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 18:02:32 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/04 11:54:07 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	ft_exit(char **str)
 		exit(255);
 	}
 	is_num = ft_atoi(str[1]);
-	if (str[3] != NULL)
+	if (str[2] != NULL)
 	{
 		printf("exit\n");
-		printf("bash: exit: too many arguments");
+		printf("bash: exit: too many arguments\n");
 		is_num = 1;
 		return (1);
 	}
@@ -62,8 +62,3 @@ int	ft_exit(char **str)
 	exit(is_num % 256);
 }
 
-// int	main(int ac, char **av)
-// {
-// 	if (if_exit(av) == 1)
-// 		ft_exit(av);
-// }

@@ -85,11 +85,14 @@ typedef struct s_shelly
 	int		loop;
 	char	*delimiter;
 	int		fd[2];
+	char	*exit_status;
 	t_env	*env;
 	t_token	*token;
 	t_ast	*ast;
 }	t_shelly;
 
+//algo_shelly
+void	algo_minishell(t_shelly *shelly);
 //utils
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
@@ -97,7 +100,6 @@ char	*ft_strsearch(char *s, int c, int flag);
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
-
 //lexer
 int		ft_lexer(t_shelly *shelly);
 //parser
@@ -105,21 +107,28 @@ int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
+char	*search_value(t_ast *node);
 //execve
 int		exec_cmd_path(char *cmd, char **args, char **envp);
 t_ast	*create_ast(t_token *tokens);
 //exec heredoc
 int		exec_heredoc(t_shelly *shelly, t_ast  *node);
+//exec trunc
+void	exec_trunc(t_shelly *shelly, t_ast *node);
+//exec append
+void	exec_append(t_shelly *shelly, t_ast *node);
+//exec input
+void	exec_input(t_shelly *shelly, t_ast *node);
+//pipe
+void	exec_pipe(t_shelly *shelly, t_ast *node);
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
 int		browse_elem(t_shelly *shelly, int i, int res);
 int		info_elem(t_shelly *shelly, int j, char *str);
 int		add_elem(t_shelly *shelly, int count);
 int		split_command(t_shelly *shelly);
-
 //init
 int 	init_shelly(t_shelly *shelly);
-
 //quote utils (lexer)
 int		check_quote(t_shelly *shelly);
 int		manage_quote(t_shelly *shelly, t_data_elem *data);
@@ -130,7 +139,6 @@ void	free_env(t_shelly *shelly);
 void	ft_free(t_shelly *shelly);
 void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
-
 //expender
 int		expender(t_shelly *shelly, t_data_elem *data);
 
@@ -174,7 +182,7 @@ int		if_export(char *str);
 void	ft_export(t_env *list_env);
 //pwd
 int		if_pwd(char *str);
-void	ft_pwd(void);
+void	ft_pwd(char **str);
 //unset
 int		if_unset(char *str);
 void	ft_unset(t_env **env_list, char **args);

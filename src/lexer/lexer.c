@@ -90,6 +90,5 @@ int	ft_lexer(t_shelly *shelly)
 		if (create_token(shelly, shelly->str[i]) == 1)
 			return (EXIT_FAILURE);
 	}
-	affiche_token(shelly);
 	return (EXIT_SUCCESS);
 }

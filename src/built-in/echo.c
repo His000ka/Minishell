@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 18:29:26 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/02 22:44:18 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ int	if_echo(char *str)
 	return (0);
 }
 
+int	is_valid_option(char *str)
+{
+	int i;
+
+	if (str[0] != '-')
+		return (0);
+	i = 1;
+	while (str[i] == 'n')
+		i++;
+	if (str[i] != '\0')
+		return (0);
+	return (1);
+}
+
 void	ft_echo(char **str)
 {
 	int	i;
@@ -26,8 +40,7 @@ void	ft_echo(char **str)
 	
 	i = 1;
 	option = 0;
-
-	while (str[i] && ft_strcmp(str[i], "-n") == 0)
+	while (str[i] && is_valid_option(str[i]))
 	{
 		option = 1;
 		i++;
@@ -42,6 +55,7 @@ void	ft_echo(char **str)
 	if (option == 0)
 		printf("\n");
 }
+
 // int	main(int argc, char **argv)
 // {
 // 	if (argc < 2)
