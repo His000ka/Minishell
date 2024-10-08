@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/04 11:54:07 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:50:07 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ int	ft_exit(char **str)
 	printf("exit\n");
 	exit(is_num % 256);
 }
-

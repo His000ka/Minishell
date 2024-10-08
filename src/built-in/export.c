@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/06 00:42:27 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/07 18:50:10 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	if_export(char *str)
 //     if (if_export(av[0]) == 1)
 //         ft_export(shelly.env);
 
-//     return 0;
+//     return (0);
 // }

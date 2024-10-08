@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:40:20 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 19:32:41 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:51:12 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,3 @@ char	*ft_strjoin_pwd(char const *s1, char const *s2)
 	p[i] = '\0';
 	return (p);
 }
-
-

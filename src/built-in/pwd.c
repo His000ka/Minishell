@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:38:31 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/02 23:06:12 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/07 18:50:32 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ int	if_pwd(char *str)
 
 void	ft_pwd(char **str)
 {
-	char *cwd;
-	int i = 1;
+	char	*cwd;
+	int		i;
 
+	i = 1;
 	while (str[i])
 	{
 		if (str[i][0] == '-')
 		{
 			printf("bash: pwd: %s: invalid option\n", str[i]);
-			return;
+			return ;
 		}
 		i++;
 	}

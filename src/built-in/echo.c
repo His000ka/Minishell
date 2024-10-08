@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:46:35 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/02 22:44:18 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/07 18:49:59 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	if_echo(char *str)
 
 int	is_valid_option(char *str)
 {
-	int i;
+	int	i;
 
 	if (str[0] != '-')
 		return (0);
@@ -37,7 +37,7 @@ void	ft_echo(char **str)
 {
 	int	i;
 	int	option;
-	
+
 	i = 1;
 	option = 0;
 	while (str[i] && is_valid_option(str[i]))
@@ -63,7 +63,7 @@ void	ft_echo(char **str)
 // 		printf("Usage: %s [args]\n", argv[0]);
 // 		return (1);
 // 	}
-	
+
 // 	// Call the echo function with the command line arguments
 // 	ft_echo(argv);
 
