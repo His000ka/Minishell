@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 11:58:59 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/07 14:41:12 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/08 12:57:34 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ int	trunc_right(t_ast *node)
 	return (fd_out);
 }
 
+int	trunc_input(t_shelly *shelly, t_ast *node)
+{
+	t_ast *current;
+
+	current = node;
+	while (current->right && current->right->node_type == TRUNC)
+		current = current->right;
+	if (current->right->node_type == INPUT)
+	{
+		ft_exec(shelly, node->right);
+		return (1);
+	}
+	return (0);
+}
+
 void	exec_trunc(t_shelly *shelly, t_ast *node)
 {
 	int		fd_out;
@@ -46,7 +61,7 @@ void	exec_trunc(t_shelly *shelly, t_ast *node)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 			exit(EXIT_FAILURE);
 		close(fd_out);
-		if (node->left)
+		if (node->left && trunc_input(shelly, node) == 0)
 			ft_exec(shelly, node->left);
 		exit(EXIT_SUCCESS);
 	}

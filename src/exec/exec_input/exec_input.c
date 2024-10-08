@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/07 15:02:56 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/08 12:50:31 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	if (fd_in == -1)
 	{
 		msg_not_file(search_value(node));
-		printf("test\n");
 		return ;
 	}
 	if (node->right->node_type != CMD)
