@@ -40,13 +40,17 @@ void	exec_cmd(t_shelly *shelly, t_ast *node)
 	if (shelly->exit_status)
 			free(shelly->exit_status);
 	shelly->exit_status = ft_strdup("0");
+	if (!shelly->exit_status)
+		return ;
 	if (ft_builtins(shelly, node->value[0], node) == 0)
 	{
+		free(shelly->exit_status);
 		shelly->exit_status = ft_strdup("0");
 		return ;
 	}
 	if (exec_cmd_path(node->value[0], node->value, shelly->envp) == 0)
 	{
+		free(shelly->exit_status);
 		shelly->exit_status = ft_strdup("0");
 		return ;
 	}
