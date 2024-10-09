@@ -21,22 +21,22 @@ int	if_export(char *str)
 
 void	affiche_export(t_shelly *shelly)
 {
-	
-	while (shelly->env != NULL)
+	t_env	*tmp;
+
+	tmp = shelly->env;
+	while (tmp != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n", shelly->env->content,
-			shelly->env->value);
-		shelly->env = shelly->env->next;
+		printf("declare -x %s=\"%s\"\n", tmp->content,
+			tmp->value);
+		tmp = tmp->next;
 	}
 }
 
 void	add_or_not(t_shelly *shelly, char *str)
 {
 	t_env	*export_str;
-	t_env	*list_env;
 	t_env	*prev;
 
-	list_env = shelly->env;
 	export_str = create_env_node(str);
 	printf("La variable = %s, la valeur : %s", export_str->content,export_str->value);
 	prev = shelly->env;
