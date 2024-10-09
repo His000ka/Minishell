@@ -174,6 +174,7 @@ void	affiche_ast(t_ast *node, int level);
 //built-in
 int 	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
 int		ft_strcmp(const char *s1, const char *s2);
+int		is_valid_identifier(char *str);
 //cd
 int		if_cd(char *str);
 void	ft_cd(char **str);
@@ -189,8 +190,8 @@ int		if_exit(char **str);
 int		is_numeric(char *str);
 int		ft_exit(char **str);
 //export
-// int		if_export(char *str);
-// void	ft_export(t_env *list_env);
+int		if_export(char *str);
+void	ft_export(t_shelly *shelly, char **av);
 //pwd
 int		if_pwd(char *str);
 void	ft_pwd(char **str);

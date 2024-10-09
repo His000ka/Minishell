@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:01:25 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/08 20:18:22 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/09 19:14:02 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast)
 		return (ft_env(shelly->env), EXIT_SUCCESS);
 	if (if_exit(ast->value))
 		return (ft_exit(ast->value), EXIT_SUCCESS);
-	// if (if_export(cmd))
-	// 	return (ft_export(&shelly->env, ast->value), EXIT_SUCCESS);
+	if (if_export(cmd))
+		return (ft_export(shelly, ast->value), EXIT_SUCCESS);
 	if (if_pwd(cmd))
 		return (ft_pwd(ast->value), EXIT_SUCCESS);
 	if (if_unset(cmd))
