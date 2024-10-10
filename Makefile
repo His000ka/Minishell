@@ -6,14 +6,14 @@
 #    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/09/10 13:14:09 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/10/10 12:32:33 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -ggdb3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -ggdb3 -g
 LIBFT_DIR = libft
 PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src

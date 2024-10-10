@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/09 19:12:16 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:16:06 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,39 @@ void	affiche_export(t_shelly *shelly)
 	}
 }
 
+void	add_node_export(t_env *list, t_env *new)
+{
+	t_env	*tmp;
+
+	if (!new)
+		return ;
+	if (list == NULL)
+		list = new;
+	else
+	{
+		tmp = list;
+		while (list->next)
+			list = list->next;
+		list->next = new;
+		list = tmp;
+	}
+}
+
 void	add_or_not(t_shelly *shelly, char *str)
 {
 	t_env	*export_str;
 	t_env	*prev;
 
 	export_str = create_env_node(str);
-	printf("La variable = %s, la valeur : %s", export_str->content,export_str->value);
+	printf("La variable = %s, la valeur : %s\n", export_str->content,export_str->value);
+	if (export_str->type == 0)
+	{
+		printf("Not value\n");
+		return ; 
+	}
 	prev = shelly->env;
 	while (shelly->env != NULL)
 	{
-		// printf("jss la");
-		
 		if (ft_strcmp(export_str->content, shelly->env->content) == 0)
 		{
 			//printf("je suis la");
@@ -53,18 +74,22 @@ void	add_or_not(t_shelly *shelly, char *str)
 				{
 					free(shelly->env->value);
 					shelly->env->value = ft_strdup(export_str->value);
-					break ;
 				}
 			}
+			break ;
 		}
 		shelly->env = shelly->env->next;
 	}
 	if (shelly->env == NULL)
 	{
 		// printf("CAMKNDJKSA0");
+		// shelly->env = prev;
 		shelly->env = prev;
+		
 		add_node_env(&shelly->env, export_str);
 	}
+	shelly->env = prev;
+	//affiche_env_list(shelly->env);
 }
 
 void	ft_export(t_shelly *shelly, char **av)

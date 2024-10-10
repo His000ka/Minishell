@@ -50,7 +50,7 @@ char	*ft_strsearch(char *s, int c, int flag)
 	while (s[i] != '\0')
 	{
 		if (s[i] == c && flag == 0)
-			return (&s[i + 1]);
+			return (ft_strndup((&s[i + 1]), i));
 		else if (s[i] == c && flag == 1)
 			return (ft_strndup(s, i));
 		i++;

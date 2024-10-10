@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/07 18:50:03 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:07:13 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ int	if_env(char *str)
 
 void	ft_env(t_env *env_list)
 {
+	t_env	*tmp;
+
 	if (env_list == NULL)
 	{
 		printf("Error: Environment list is empty or null\n");
 		return ;
 	}
-	while (env_list != NULL)
+	tmp = env_list;
+	while (tmp != NULL)
 	{
-		if (env_list->type == 1)
-			printf("%s=%s\n", env_list->content, env_list->value);
-		env_list = env_list->next;
+		// if (env_list->type == 1)
+		printf("%s=%s\n", tmp->content, tmp->value);
+		tmp = tmp->next;
 	}
 }
 

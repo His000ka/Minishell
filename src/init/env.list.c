@@ -40,7 +40,7 @@ void	add_node_env(t_env **list, t_env *new)
 	else
 	{
 		tmp = *list;
-		while (tmp->next)
+		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new;
 	}

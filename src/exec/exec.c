@@ -38,7 +38,7 @@ char *get_env_value(t_env *env, const char *key)
 void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
 	if (shelly->exit_status)
-			free(shelly->exit_status);
+		free(shelly->exit_status);
 	shelly->exit_status = ft_strdup("0");
 	if (!shelly->exit_status)
 		return ;

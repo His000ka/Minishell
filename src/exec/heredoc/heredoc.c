@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/04 12:26:20 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 15:40:07 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	read_heredoc(t_shelly *shelly)
 			free(input);
 			break;
 		}
+		
 		if (input)
 		{
 			write(shelly->fd[1], input, ft_strlen(input));
