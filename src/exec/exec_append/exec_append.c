@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_append.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:09:37 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/04 12:10:52 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 20:17:02 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	exec_append(t_shelly *shelly, t_ast *node)
 	pid_t	pid;
 
 	if (node->right->node_type != CMD)
-        ft_exec(shelly, node->right);
+		ft_exec(shelly, node->right);
 	fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_out == -1)
 	{
 		write(STDERR_FILENO, "ERROR OPEN\n", 11);
-		return;
+		return ;
 	}
 	pid = fork();
 	if (pid == 0)

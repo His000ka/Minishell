@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/08 20:19:30 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:22:31 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	ft_unset(t_env **env_list, char **args)
 	i = 1;
 	while (args[i])
 	{
-		// printf("STRING %s\n", args[i]);
 		if (is_valid_identifier(args[i]))
 			remove_env_node(env_list, args[i]);
 		else

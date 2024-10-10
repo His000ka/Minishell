@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/10 14:07:13 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 19:46:42 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	ft_env(t_env *env_list)
 	tmp = env_list;
 	while (tmp != NULL)
 	{
-		// if (env_list->type == 1)
-		printf("%s=%s\n", tmp->content, tmp->value);
+		if (tmp->type == 1)
+		{
+			printf("%s=%s\n", tmp->content, tmp->value);
+		}
 		tmp = tmp->next;
 	}
 }

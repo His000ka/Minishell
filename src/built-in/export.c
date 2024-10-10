@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/10 15:16:06 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 20:09:46 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@ void	affiche_export(t_shelly *shelly)
 	tmp = shelly->env;
 	while (tmp != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n", tmp->content,
-			tmp->value);
+		if (tmp->type == 1)
+		{
+			printf("declare -x %s=\"%s\"\n", tmp->content, tmp->value);
+		}
+		else if (tmp->type == 0)
+		{
+			printf("declare -x %s\n", tmp->content);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -53,49 +59,36 @@ void	add_node_export(t_env *list, t_env *new)
 void	add_or_not(t_shelly *shelly, char *str)
 {
 	t_env	*export_str;
-	t_env	*prev;
+	t_env	*tmp;
 
 	export_str = create_env_node(str);
-	printf("La variable = %s, la valeur : %s\n", export_str->content,export_str->value);
-	if (export_str->type == 0)
+	tmp = shelly->env;
+	while (tmp != NULL)
 	{
-		printf("Not value\n");
-		return ; 
-	}
-	prev = shelly->env;
-	while (shelly->env != NULL)
-	{
-		if (ft_strcmp(export_str->content, shelly->env->content) == 0)
+		if (export_str->content && tmp->content
+			&& ft_strcmp(export_str->content, tmp->content) == 0)
 		{
-			//printf("je suis la");
-			if (export_str->value != NULL)
+			if (export_str->value)
 			{
-				if (ft_strcmp(export_str->value, shelly->env->value) != 0)
+				if (!tmp->value || (tmp->value && ft_strcmp(export_str->value,
+							tmp->value) != 0))
 				{
-					free(shelly->env->value);
-					shelly->env->value = ft_strdup(export_str->value);
+					tmp->value = ft_strdup(export_str->value);
+					tmp->type = 1;
 				}
 			}
 			break ;
 		}
-		shelly->env = shelly->env->next;
+		tmp = tmp->next;
 	}
-	if (shelly->env == NULL)
-	{
-		// printf("CAMKNDJKSA0");
-		// shelly->env = prev;
-		shelly->env = prev;
-		
+	if (tmp == NULL)
 		add_node_env(&shelly->env, export_str);
-	}
-	shelly->env = prev;
-	//affiche_env_list(shelly->env);
 }
 
 void	ft_export(t_shelly *shelly, char **av)
 {
 	int	i;
-	
+
 	i = 1;
 	if (!av[1])
 		affiche_export(shelly);

@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+      
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
 /*   Updated: 2024/09/05 11:52:35 by pitroin          ###   ########.fr       */
@@ -15,12 +15,11 @@
 
 #include "../../include/minishell.h"
 
-
 char	*ft_strndup(const char *s, int n)
 {
-	char *p;
-	int len;
-	int i;
+	char	*p;
+	int		len;
+	int		i;
 
 	len = 0;
 	while (s[len] != '\0')
@@ -42,7 +41,7 @@ char	*ft_strndup(const char *s, int n)
 
 char	*ft_strsearch(char *s, int c, int flag)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (c >= 256)
@@ -64,7 +63,7 @@ char	*ft_strsearch(char *s, int c, int flag)
 
 int	ft_error(char *str, char var, int nb)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!str)

@@ -43,7 +43,6 @@
 # define SYNTAX_ERROR	"bash: syntax error near unexpected token ''\n"
 # define SYNTAX_TOKEN	"bash: syntax error near unexpected token 'newline'\n"
 
-
 typedef struct s_data_elem
 {
 	int	k;
@@ -157,20 +156,17 @@ int		expender(t_shelly *shelly, t_data_elem *data);
 int		count_index(char *str, int flag);
 int		check_char(char c);
 int		count_elem(t_shelly *shelly, int count);
-
 //count_elem2
 int		is_quote(char *str, int flag);
 int		is_good_char(char *str, int flag);
 int		is_pipe(char *str, int flag);
 int		is_trunc(char *str, int flag);
 int		is_input(char *str, int flag);
-
 //affiche
 void	affiche_elem(t_shelly *shelly);
 void	affiche_token(t_shelly *shelly);
 void	affiche_env_list(t_env *list);
 void	affiche_ast(t_ast *node, int level);
-
 //built-in
 int 	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -203,5 +199,5 @@ t_env	*create_env_node(char *env_var);
 void	add_node_env(t_env **list, t_env *new);
 int		create_env_list(t_shelly *shelly, char **envp);
 //control
-void	control();
+void	control(void);
 #endif

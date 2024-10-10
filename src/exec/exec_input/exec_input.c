@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/04 12:59:26 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 20:16:07 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	if (node->right->node_type == APPEND)
 		return ;
 	if (node->right->node_type != CMD)
-        ft_exec(shelly, node->right);
+		ft_exec(shelly, node->right);
 	fd_in = open(search_value(node), O_RDONLY);
 	if (fd_in == -1)
 	{
 		msg_not_file(node->right);
-		return;
+		return ;
 	}
 	pid = fork();
 	if (pid == 0)

@@ -20,7 +20,7 @@ void	control_c(int sig)
 	(void)(sig);
 	rl_on_new_line();
 	rl_redisplay();
-	write(STDOUT_FILENO, "\nminishell> ", 12);
+	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
 	rl_redisplay();
 }
 

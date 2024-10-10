@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/10 15:40:07 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/10 20:14:59 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	search_heredoc(t_shelly *shelly, t_ast *node)
 		return (0);
 	if (node->node_type == PIPE || node->node_type == TRUNC
 		|| node->node_type == APPEND || node->node_type == INPUT)
-		return (search_heredoc(shelly, node->right)
-			|| search_heredoc(shelly, node->left));
+		return (search_heredoc(shelly, node->right) || search_heredoc(shelly,
+				node->left));
 	if (node->node_type == HEREDOC)
 		return (exec_heredoc(shelly, node));
 	return (0);
@@ -36,7 +36,7 @@ char	*search_delimiter(t_ast *node)
 	else
 	{
 		while (current->right && current->right->left->node_type != CMD)
-		current = current->right;
+			current = current->right;
 		delimiter = ft_strdup(node->right->left->value[0]);
 	}
 	if (!delimiter)
@@ -54,9 +54,8 @@ void	read_heredoc(t_shelly *shelly)
 		if (ft_strcmp(input, shelly->delimiter) == 0)
 		{
 			free(input);
-			break;
+			break ;
 		}
-		
 		if (input)
 		{
 			write(shelly->fd[1], input, ft_strlen(input));
@@ -99,7 +98,7 @@ int	adapt_cmd(t_shelly *shelly)
 void	exec_fork_heredoc(t_shelly *shelly, t_ast *node)
 {
 	pid_t	pid;
-	int	 fd_in;
+	int		fd_in;
 
 	fd_in = shelly->fd[0];
 	pid = fork();
@@ -138,7 +137,7 @@ int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
 	return (0);
 }
 
-int	exec_heredoc(t_shelly *shelly, t_ast  *node)
+int	exec_heredoc(t_shelly *shelly, t_ast *node)
 {
 	if (node->node_type != HEREDOC)
 		return (0);
