@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <string.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -98,6 +100,7 @@ void	algo_minishell(t_shelly *shelly);
 int		ft_error(char *str, char var, int nb);
 char	*ft_strndup(const char *s, int n);
 char	*ft_strsearch(char *s, int c, int flag);
+char	*ft_strcpy(char *dest, char *src);
 //msg_error
 void	msg_not_file(t_ast *node);
 void	msg_cmd_not_found(t_ast *node);
@@ -122,7 +125,13 @@ t_ast	*ast_heredoc(t_token *tokens, t_ast *root);
 t_ast	*ast_pipe(t_token *tokens, t_ast *root);
 t_ast	*ast_priority(t_token *tokens, t_ast *root);
 //exec heredoc
-int		exec_heredoc(t_shelly *shelly, t_ast  *node);
+int		exec_heredoc(t_shelly *shelly, t_ast *node);
+int		exec_heredoc_2(t_shelly *shelly, t_ast *node);
+void	read_heredoc(t_shelly *shelly);
+char	*search_delimiter(t_ast *node);
+int		search_heredoc(t_shelly *shelly, t_ast *node);
+void	exec_fork_heredoc(t_shelly *shelly, t_ast *node);
+int		adapt_cmd(t_shelly *shelly);
 //exec trunc
 void	exec_trunc(t_shelly *shelly, t_ast *node);
 //exec append
@@ -138,7 +147,7 @@ int		info_elem(t_shelly *shelly, int j, char *str);
 int		add_elem(t_shelly *shelly, int count);
 int		split_command(t_shelly *shelly);
 //init
-int 	init_shelly(t_shelly *shelly);
+int		init_shelly(t_shelly *shelly);
 //quote utils (lexer)
 int		check_quote(t_shelly *shelly);
 int		manage_quote(t_shelly *shelly, t_data_elem *data);
@@ -168,7 +177,7 @@ void	affiche_token(t_shelly *shelly);
 void	affiche_env_list(t_env *list);
 void	affiche_ast(t_ast *node, int level);
 //built-in
-int 	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
+int		ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
 int		ft_strcmp(const char *s1, const char *s2);
 int		is_valid_identifier(char *str);
 //cd

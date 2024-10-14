@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/09/17 09:36:59 by marvin            #+#    #+#             */
 /*   Updated: 2024/09/17 19:36:21 by pitroin          ###   ########.fr       */
 /*                                                                            */
@@ -22,17 +25,19 @@ char	*search_value(t_ast *node)
 	return (tmp->value[0]);
 }
 
-char *get_env_value(t_env *env, const char *key)
+char	*get_env_value(t_env *env, const char *key)
 {
-    t_env *tmp = env;
+	t_env	*tmp;
 
-    while (tmp)
-    {
-        if (ft_strncmp(tmp->value, key, ft_strlen(key)) == 0 && tmp->value[ft_strlen(key)] == '=')
-            return (tmp->value + ft_strlen(key) + 1);
-        tmp = tmp->next;
-    }
-    return (NULL);
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->value, key, ft_strlen(key)) == 0
+			&& tmp->value[ft_strlen(key)] == '=')
+			return (tmp->value + ft_strlen(key) + 1);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
 
 void	exec_cmd(t_shelly *shelly, t_ast *node)
@@ -55,7 +60,7 @@ void	exec_cmd(t_shelly *shelly, t_ast *node)
 		return ;
 	}
 	if (shelly->exit_status)
-			free(shelly->exit_status);
+		free(shelly->exit_status);
 	shelly->exit_status = ft_strdup("127");
 	msg_cmd_not_found(node);
 }
@@ -70,7 +75,7 @@ void	*ft_exec(t_shelly *shelly, t_ast *node)
 		exec_trunc(shelly, node);
 	else if (node->node_type == INPUT)
 		exec_input(shelly, node);
-	else if(node->node_type == PIPE)
+	else if (node->node_type == PIPE)
 		exec_pipe(shelly, node);
 	return (NULL);
 }

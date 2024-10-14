@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 10:06:36 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/17 10:06:36 by marvin           ###   ########.fr       */
+/*   Created: 2024/10/14 10:30:46 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/10/14 10:30:46 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	msg_not_file(t_ast *node)
 	if (node == NULL || node->value == NULL || node->value[0] == NULL)
 	{
 		write(STDERR_FILENO, "bash: Unknown error\n", 20);
-		return;
+		return ;
 	}
 	write(STDERR_FILENO, "bash: ", 6);
 	write(STDERR_FILENO, node->value[0], ft_strlen(node->value[0]));
@@ -29,7 +29,7 @@ void	msg_cmd_not_found(t_ast *node)
 	if (node == NULL || node->value == NULL || node->value[0] == NULL)
 	{
 		write(STDERR_FILENO, "bash: Unknown error\n", 20);
-		return;
+		return ;
 	}
 	write(STDERR_FILENO, "bash: ", 6);
 	write(STDERR_FILENO, node->value[0], ft_strlen(node->value[0]));

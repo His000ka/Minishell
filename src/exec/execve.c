@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+      
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/09/19 10:35:33 by firdawssema       #+#    #+#             */
 /*   Updated: 2024/09/19 14:17:45 by firdawssema      ###   ########.fr       */
@@ -14,24 +14,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int i;
-
-	i = -1;
-	while (src[++i] != '\0')
-		dest[i] = src[i];
-	dest[i] = '\0';
-	return (dest);
-}
 
 int	is_absolute_or_relative(char *cmd)
 {
@@ -40,21 +22,24 @@ int	is_absolute_or_relative(char *cmd)
 
 char	*path_concat(char *dir, char *cmd)
 {
-	int len_dir = ft_strlen(dir);
-	int len_cmd = ft_strlen(cmd);
-	char *full_path = malloc(len_dir + len_cmd + 2);
+	int		len_dir;
+	int		len_cmd;
+	char	*full_path;
+
+	len_dir = ft_strlen(dir);
+	len_cmd = ft_strlen(cmd);
+	full_path = malloc(len_dir + len_cmd + 2);
 	if (!full_path)
 		return (NULL);
 	ft_strcpy(full_path, dir);
 	full_path[len_dir] = '/';
 	ft_strcpy(full_path + len_dir + 1, cmd);
-
 	return (full_path);
 }
 
 int	is_executable(char *path)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	if (stat(path, &sb) == 0 && sb.st_mode & S_IXUSR)
 		return (1);
@@ -63,13 +48,16 @@ int	is_executable(char *path)
 
 char	*find_executable_in_path(char *cmd)
 {
-	char *path_env = getenv("PATH");
-	char *path_token;
-	char *full_path = NULL;
+	char	*path_env;
+	char	*path_token;
+	char	*full_path;
+	char	*path_copy;
 
+	full_path = NULL;
+	path_env = getenv("PATH");
 	if (!path_env)
 		return (NULL);
-	char *path_copy = strdup(path_env);
+	path_copy = ft_strdup(path_env);
 	if (!path_copy)
 		return (NULL);
 	path_token = strtok(path_copy, ":");
@@ -95,8 +83,10 @@ char	*find_executable_in_path(char *cmd)
 
 int	exec_cmd_path(char *cmd, char **args, char **envp)
 {
-	char *path = NULL;
+	char	*path;
+	int		status;
 
+	path = NULL;
 	if (is_absolute_or_relative(cmd))
 		path = cmd;
 	else
@@ -114,10 +104,7 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 		}
 	}
 	else
-	{
-		int status;
 		wait(&status);
-	}
 	free(path);
 	return (0);
 }
