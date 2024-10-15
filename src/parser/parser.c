@@ -19,13 +19,6 @@ int	is_cmd(int type)
 	return (1);
 }
 
-int	check_pipeline(t_token *current)
-{
-	if (current->next == NULL || is_cmd(current->next->type) == 1)
-		return (ft_error("ERROR PIPE\n", 0, 0));
-	return (0);
-}
-
 int	check_redirect(t_token *current)
 {
 	if (current->next == NULL || is_cmd(current->next->type) == 1)
@@ -57,6 +50,8 @@ int	check_token(t_shelly *shelly)
 int	ft_parser(t_shelly *shelly)
 {
 	if (check_token(shelly) > 0)
+		return (1);
+	if (check_mult_token(shelly->token) > 0)
 		return (1);
 	shelly->ast = create_ast(shelly->token);
 	if (!shelly->ast)

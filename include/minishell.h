@@ -109,6 +109,8 @@ int		ft_lexer(t_shelly *shelly);
 //parser
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
+//check mult
+int		check_mult_token(t_token *token);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
 char	*search_value(t_ast *node);

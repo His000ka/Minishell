@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:09:46 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:47:23 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	ft_export(t_shelly *shelly, char **av)
 		affiche_export(shelly);
 	while (av[i])
 	{
-		if (av[i][0] != '-')
+		if (av[i][0] != '-' && ft_strcmp(av[i], "+=") != 0)
 			add_or_not(shelly, av[i]);
 		else
-			printf("bash: export: `%s': not a valid identifier", av[i]);
+			printf("bash: export: `%s': not a valid identifier\n", av[i]);
 		i++;
 	}
 }
