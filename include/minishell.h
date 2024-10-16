@@ -109,8 +109,6 @@ int		ft_lexer(t_shelly *shelly);
 //parser
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
-//check mult
-int		check_mult_token(t_token *token);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
 char	*search_value(t_ast *node);
@@ -141,6 +139,11 @@ void	exec_append(t_shelly *shelly, t_ast *node);
 //exec input
 void	exec_input(t_shelly *shelly, t_ast *node);
 //pipe
+void	exec_pipe(t_shelly *shelly, t_ast *node);
+void	handle_pipe_error(void);
+void	handle_fork_error(void);
+void	child_process_left(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
+void	child_process_right(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
 void	exec_pipe(t_shelly *shelly, t_ast *node);
 //split_cmd
 int		size_elem(t_shelly *shelly, int i, int res);
@@ -199,6 +202,12 @@ int		ft_exit(char **str);
 //export
 int		if_export(char *str);
 void	ft_export(t_shelly *shelly, char **av);
+void	affiche_export(t_shelly *shelly);
+void	add_node_export(t_env *list, t_env *new);
+void	add_or_not(t_shelly *shelly, char *str);
+void	update_existing_var(t_env *tmp, char *value);
+void	add_new_env_var(t_shelly *shelly, char *key, char *value);
+void	concat_export(t_shelly *shelly, char *str);
 //pwd
 int		if_pwd(char *str);
 void	ft_pwd(char **str);

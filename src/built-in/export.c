@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/14 13:47:23 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/16 13:33:33 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	if_export(char *str)
-{
-	if (ft_strcmp(str, "export") == 0)
-		return (1);
-	return (0);
-}
 
 void	affiche_export(t_shelly *shelly)
 {
@@ -27,13 +20,9 @@ void	affiche_export(t_shelly *shelly)
 	while (tmp != NULL)
 	{
 		if (tmp->type == 1)
-		{
 			printf("declare -x %s=\"%s\"\n", tmp->content, tmp->value);
-		}
 		else if (tmp->type == 0)
-		{
 			printf("declare -x %s\n", tmp->content);
-		}
 		tmp = tmp->next;
 	}
 }
@@ -85,52 +74,27 @@ void	add_or_not(t_shelly *shelly, char *str)
 		add_node_env(&shelly->env, export_str);
 }
 
-void	ft_export(t_shelly *shelly, char **av)
+void	update_existing_var(t_env *tmp, char *value)
 {
-	int	i;
+	char	*new_value;
 
-	i = 1;
-	if (!av[1])
-		affiche_export(shelly);
-	while (av[i])
+	if (tmp->value)
 	{
-		if (av[i][0] != '-' && ft_strcmp(av[i], "+=") != 0)
-			add_or_not(shelly, av[i]);
-		else
-			printf("bash: export: `%s': not a valid identifier\n", av[i]);
-		i++;
+		new_value = ft_strjoin(tmp->value, value);
+		free(tmp->value);
+		tmp->value = new_value;
 	}
+	else
+		tmp->value = ft_strdup(value);
+	tmp->type = 1;
 }
 
-// int main(int ac, char **av, char **envp) {
+void	add_new_env_var(t_shelly *shelly, char *key, char *value)
+{
+	t_env	*new_var;
 
-//  	t_shelly shelly;
-
-//     (void)ac;
-//     (void)av;
-
-//     create_env_list(&shelly, envp);
-// 	// add_or_not(&shelly,av[2]);
-// 	// affiche_export(&shelly);
-// 	if(if_export(av[1]) == 1)
-// 	{
-// 		ft_export(&shelly, av);
-// 	}
-// }
-
-// int main(int ac, char **av, char **envp) {
-
-//  t_shelly shelly;
-
-//     (void)ac;
-//     (void)av;
-
-//     // Initialize the environment list
-//     create_env_list(&shelly, envp);
-
-//     // Check if the command is 'export'
-//     if (if_export(av[0]) == 1)
-//         ft_export(shelly.env);
-
-//     return (0);
-// }
+	new_var = create_env_node(key);
+	new_var->value = ft_strdup(value);
+	new_var->type = 1;
+	add_node_env(&shelly->env, new_var);
+}
