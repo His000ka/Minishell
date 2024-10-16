@@ -79,7 +79,7 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 
 	path = NULL;
 	if (is_absolute_or_relative(cmd))
-		path = cmd;
+		path = ft_strdup(cmd);
 	else
 	{
 		path = find_executable_in_path(cmd);
