@@ -19,17 +19,13 @@ void	control_c(int sig)
 	rl_redisplay();
 	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
 	rl_redisplay();
+	//exit(130);
 }
 
 void	control_d(void)
 {
 	printf("exit\n");
-	exit(1);
-}
-
-void	control_backslash(int sig)
-{
-	(void)sig;
+	exit(131);
 }
 
 void	control(void)

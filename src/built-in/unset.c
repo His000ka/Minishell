@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:42:04 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/10 20:22:31 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:01:14 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	remove_env_node(t_env **env_list, char *key)
 	previous = NULL;
 	while (current != NULL)
 	{
+		if (ft_strcmp(current->content, "_") == 0)
+			return ;
 		if (ft_strcmp(current->content, key) == 0)
 		{
 			if (previous == NULL)

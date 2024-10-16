@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/09/03 15:05:23 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/05 11:52:35 by pitroin          ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/16 16:45:25 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/10/16 16:45:25 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +41,20 @@ char	*ft_strsearch(char *s, int c, int flag)
 	int	i;
 
 	i = 0;
-	while (c >= 256)
-		c -= 256;
+	c %= 256;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c && flag == 0)
-			return (ft_strndup((&s[i + 1]), i));
-		else if (s[i] == c && flag == 1)
-			return (ft_strndup(s, i));
+		if (s[i] == c)
+		{
+			if (flag == 0)
+				return (ft_strndup(s + i + 1, ft_strlen(s + i + 1)));
+			else if (flag == 1)
+				return (ft_strndup(s, i));
+		}
 		i++;
 	}
 	if (flag == 1)
 		return (ft_strndup(s, ft_strlen(s)));
-	if (c == '\0')
-		return (&s[i]);
 	return (NULL);
 }
 
