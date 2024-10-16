@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/16 13:34:00 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/16 14:14:47 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	concat_export(t_shelly *shelly, char *str)
 	char	*plus_equal_pos;
 
 	plus_equal_pos = ft_strnstr(str, "+=", ft_strlen(str));
-	if (!plus_equal_pos)
-		return ;
 	*plus_equal_pos = '\0';
 	key = ft_strdup(str);
 	value = ft_strdup(plus_equal_pos + 2);

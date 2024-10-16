@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			shelly.cmd = readline("MINISHELL> ");
 			if (!shelly.cmd)
-				return (1);
+				return (control_d(), 1);
 			else
 				add_history(shelly.cmd);
 			algo_minishell(&shelly);

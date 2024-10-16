@@ -51,8 +51,8 @@ int	ft_parser(t_shelly *shelly)
 {
 	if (check_token(shelly) > 0)
 		return (1);
-	if (check_mult_token(shelly->token) > 0)
-		return (1);
+	// if (check_mult_token(shelly->token) > 0)
+	// 	return (1);
 	shelly->ast = create_ast(shelly->token);
 	if (!shelly->ast)
 		return (1);

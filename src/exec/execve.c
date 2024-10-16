@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/09/19 10:35:33 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/09/19 14:17:45 by firdawssema      ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/16 14:20:00 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/10/16 14:20:00 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +62,9 @@ char	*find_executable_in_path(char *cmd)
 	{
 		full_path = path_concat(path_token, cmd);
 		if (!full_path)
-		{
-			free(path_copy);
-			return (NULL);
-		}
+			return (free(path_copy), NULL);
 		if (is_executable(full_path))
-		{
-			free(path_copy);
-			return (full_path);
-		}
+			return (free(path_copy), full_path);
 		free(full_path);
 		path_token = strtok(NULL, ":");
 	}

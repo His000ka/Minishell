@@ -220,4 +220,6 @@ void	add_node_env(t_env **list, t_env *new);
 int		create_env_list(t_shelly *shelly, char **envp);
 //control
 void	control(void);
+void	control_d(void);
+void	control_c(int sig);
 #endif
