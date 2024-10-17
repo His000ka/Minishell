@@ -25,9 +25,7 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-
-//variable globale
-// char	*exe;
+# include <termios.h>
 
 //token
 # define INPUT		1	//"<"
@@ -37,6 +35,7 @@
 # define PIPE		5	//"|"
 # define CMD		6	//"|"
 # define ARG		7	//"|"
+# define MINISHELL	8	//"./minishell"
 
 # define EXIT_SUCCESS	0
 # define EXIT_FAILURE	1
@@ -165,7 +164,6 @@ void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
 //expender
 int		expender(t_shelly *shelly, t_data_elem *data);
-
 //count_elem
 int		count_index(char *str, int flag);
 int		check_char(char c);
@@ -196,7 +194,13 @@ int		if_echo(char *str);
 void	ft_echo(char **str);
 //env
 int		if_env(char *str);
-void	ft_env(t_env *env_list);
+void	ft_env(t_shelly *shelly);
+char	*ft_strjoin_free(char *s1, char const *s2);
+void	initialize_default_env(t_shelly *shelly);
+void	update_envp(t_shelly *shelly);
+void	copy_env_to_envp(t_shelly *shelly);
+void	free_envp(char **envp);
+int		count_env_vars(t_env *env);
 //exit
 int		if_exit(char **str);
 int		is_numeric(char *str);

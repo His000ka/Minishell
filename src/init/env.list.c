@@ -46,6 +46,28 @@ void	add_node_env(t_env **list, t_env *new)
 	}
 }
 
+void	increment_shlvl(t_shelly *shelly)
+{
+	t_env	*tmp;
+	int		shlvl_value;
+	char	*new_value;
+
+	tmp = shelly->env;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->content, "SHLVL") == 0)
+		{
+			shlvl_value = ft_atoi(tmp->value) + 1;
+			free(tmp->value);
+			new_value = ft_itoa(shlvl_value);
+			tmp->value = new_value;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	add_new_env_var(shelly, ft_strdup("SHLVL"), ft_strdup("1"));
+}
+
 int	create_env_list(t_shelly *shelly, char **envp)
 {
 	t_env	*new;
@@ -58,6 +80,7 @@ int	create_env_list(t_shelly *shelly, char **envp)
 		add_node_env(&shelly->env, new);
 		i++;
 	}
+	increment_shlvl(shelly);
 	i = 0;
 	while (envp[i] != NULL)
 		i++;

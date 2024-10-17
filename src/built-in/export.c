@@ -6,7 +6,7 @@
 /*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/17 17:01:40 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 01:07:16 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	affiche_export(t_shelly *shelly)
 {
 	t_env	*tmp;
-	
-    sort_env_list(shelly->env);
+
+	sort_env_list(shelly->env);
 	tmp = shelly->env;
 	while (tmp != NULL)
 	{

@@ -19,7 +19,6 @@ void	control_c(int sig)
 	rl_redisplay();
 	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
 	rl_redisplay();
-	//exit(130);
 }
 
 void	control_d(void)
@@ -30,6 +29,6 @@ void	control_d(void)
 
 void	control(void)
 {
-	signal(SIGINT, control_c);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, control_c);
 }

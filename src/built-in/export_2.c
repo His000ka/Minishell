@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/16 14:14:47 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 01:08:26 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,21 @@ void	ft_export(t_shelly *shelly, char **av)
 {
 	int	i;
 
-	i = 1;
+	if (shelly->env == NULL)
+		initialize_default_env(shelly);
+	i = 0;
 	if (!av[1])
 		affiche_export(shelly);
-	while (av[i])
+	while (av[++i])
 	{
 		if (av[i][0] == '-' || ft_strcmp(av[i], "+=") == 0)
 		{
 			printf("bash: export: `%s': not a valid identifier\n", av[i]);
 			return ;
 		}
-		i++;
 	}
-	i = 1;
-	while (av[i])
+	i = 0;
+	while (av[++i])
 	{
 		if (ft_strnstr(av[i], "+=", ft_strlen(av[i])))
 			concat_export(shelly, av[i]);
@@ -72,6 +73,5 @@ void	ft_export(t_shelly *shelly, char **av)
 			add_or_not(shelly, av[i]);
 		else
 			printf("bash: export: `%s': not a valid identifier\n", av[i]);
-		i++;
 	}
 }

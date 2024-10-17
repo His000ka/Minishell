@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+      
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
 /*   Updated: 2024/09/05 11:50:00 by pitroin          ###   ########.fr       */
