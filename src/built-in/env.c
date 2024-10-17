@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/10 19:46:42 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/17 00:01:29 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	if_env(char *str)
 		return (1);
 	return (0);
 }
-
 void	ft_env(t_env *env_list)
 {
 	t_env	*tmp;
@@ -31,7 +30,7 @@ void	ft_env(t_env *env_list)
 	tmp = env_list;
 	while (tmp != NULL)
 	{
-		if (tmp->type == 1)
+		if (tmp->type == 1 && tmp->value != NULL && tmp->value[0] != '\0')
 		{
 			printf("%s=%s\n", tmp->content, tmp->value);
 		}
