@@ -185,6 +185,8 @@ void	affiche_ast(t_ast *node, int level);
 int		ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast);
 int		ft_strcmp(const char *s1, const char *s2);
 int		is_valid_identifier(char *str);
+void	sort_env_list(t_env *env_list);
+void	swap_env(t_env *a, t_env *b);
 //cd
 int		if_cd(char *str);
 void	ft_cd(char **str);
