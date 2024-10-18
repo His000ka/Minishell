@@ -14,7 +14,10 @@
 
 void	control_c(int sig)
 {
-	(void)(sig);
+	t_shelly	*shelly;
+
+	shelly = get_shelly();
+	sig = 128 + sig;
 	rl_on_new_line();
 	rl_redisplay();
 	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
@@ -27,8 +30,15 @@ void	control_d(void)
 	exit(131);
 }
 
+void control_s(int sig)
+{
+	(void)sig;
+	write(1, "\rMINISHELL> ", 12);
+}
+
 void	control(void)
 {
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, control_s);
 	signal(SIGINT, control_c);
 }
