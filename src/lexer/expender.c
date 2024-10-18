@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/07 11:02:36 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 11:39:03 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	char_expend(char c)
 
 int	expende_value(t_shelly *shelly, t_data_elem *data, char *path, char *value)
 {
+	char	*exit_code;
+
 	if (value)
 	{
 		if (expende_2(shelly, data, value) == 1)
@@ -76,13 +78,8 @@ int	expende_value(t_shelly *shelly, t_data_elem *data, char *path, char *value)
 	}
 	else if (ft_strcmp(path, "?") == 0)
 	{
-		if (!shelly->exit_status)
-		{
-			shelly->exit_status = ft_strdup("0");
-			if (!shelly->exit_status)
-				return (EXIT_FAILURE);
-		}
-		if (expende_2(shelly, data, shelly->exit_status) == 1)
+		exit_code = ft_itoa(shelly->exit_code);
+		if (expende_2(shelly, data, exit_code) == 1)
 			return (EXIT_FAILURE);
 	}
 	else

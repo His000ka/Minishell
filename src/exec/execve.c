@@ -72,7 +72,7 @@ char	*find_executable_in_path(char *cmd)
 	return (NULL);
 }
 
-int	exec_cmd_path(char *cmd, char **args, char **envp)
+int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 {
 	char	*path;
 	int		status;
@@ -88,14 +88,23 @@ int	exec_cmd_path(char *cmd, char **args, char **envp)
 	}
 	if (fork() == 0)
 	{
-		if (execve(path, args, envp) == -1)
+		if (execve(path, args, shelly->envp) == -1)
 		{
 			perror("execve");
 			exit(EXIT_FAILURE);
 		}
 	}
 	else
+	{
 		wait(&status);
+		if (WIFEXITED(status))
+		{
+			int exit_code = WEXITSTATUS(status);
+			shelly->exit_code = exit_code;
+		}
+		else
+			shelly->exit_code = 1;
+	}
 	free(path);
 	return (0);
 }
