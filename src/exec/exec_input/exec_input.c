@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 14:09:54 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 14:46:54 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 		ft_exec(shelly, node->right);
 	fd_in = open(search_value(node), O_RDONLY);
 	if (fd_in == -1)
-		return (msg_not_file(shelly, node->right));
+		return (msg_not_file(shelly, node->right->value[0]));
 	pid = fork();
 	if (pid == 0)
 	{

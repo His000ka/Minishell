@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 11:45:36 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:58:51 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	initialize_default_env(t_shelly *shelly)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		add_new_env_var(shelly, ft_strdup("PWD"), ft_strdup(cwd));
-	// add_new_env_var(shelly, ft_strdup("SHLVL"), ft_strdup("2"));
 	add_new_env_var(shelly, ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	update_envp(shelly);
 }

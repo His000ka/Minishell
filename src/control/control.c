@@ -30,7 +30,7 @@ void	control_d(void)
 	exit(131);
 }
 
-void control_s(int sig)
+void	control_s(int sig)
 {
 	t_shelly	*shelly;
 
@@ -41,7 +41,6 @@ void control_s(int sig)
 
 void	control(void)
 {
-	// signal(SIGQUIT, SIG_IGN);
 	signal(SIGQUIT, control_s);
 	signal(SIGINT, control_c);
 }

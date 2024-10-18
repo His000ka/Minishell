@@ -36,7 +36,7 @@ void	algo_minishell(t_shelly *shelly)
 
 t_shelly	*get_shelly(void)
 {
-	static t_shelly shelly;
+	static t_shelly	shelly;
 
 	return (&shelly);
 }

@@ -75,7 +75,6 @@ char	*find_executable_in_path(char *cmd)
 int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 {
 	char	*path;
-	int		status;
 
 	path = NULL;
 	if (is_absolute_or_relative(cmd))
@@ -89,14 +88,13 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (fork() == 0)
 	{
 		if (execve(path, args, shelly->envp) == -1)
-			exit(EXIT_FAILURE);
+		{
+			msg_not_file(shelly, path);
+			exit(127);
+		}
 	}
 	else
-	{
-		wait(&status);
-		if (WIFEXITED(status))
-			shelly->exit_code = WEXITSTATUS(status);
-	}
+		exit_code_execve(shelly);
 	free(path);
 	return (0);
 }
