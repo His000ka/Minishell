@@ -18,8 +18,9 @@ void	control_c(int sig)
 
 	shelly = get_shelly();
 	shelly->exit_code = 128 + sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
+	rl_redisplay();
+	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
+	rl_redisplay();
 }
 
 void	control_d(void)

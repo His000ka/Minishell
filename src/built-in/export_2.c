@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 14:28:03 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:48:12 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ void	ft_export(t_shelly *shelly, char **av)
 		affiche_export(shelly);
 	while (av[++i])
 	{
-		if (av[i][0] == '-' || ft_strcmp(av[i], "+=") == 0)
+		if (ft_strnstr(av[i], "-", ft_strlen(av[i])) != NULL
+			|| ft_strcmp(av[i], "+=") == 0
+			|| ft_isdigit(av[i][0]) == 1 || av[i][0] == '=')
 		{
 			printf("bash: export: `%s': not a valid identifier\n", av[i]);
-			return ;
+			return (shelly->exit_code = 1);
 		}
 	}
 	i = 0;
@@ -70,7 +72,5 @@ void	ft_export(t_shelly *shelly, char **av)
 			concat_export(shelly, av[i]);
 		else if (av[i][0] != '-' || ft_strcmp(av[i], "+=") != 0)
 			add_or_not(shelly, av[i]);
-		else
-			printf("bash: export: `%s': not a valid identifier\n", av[i]);
 	}
 }

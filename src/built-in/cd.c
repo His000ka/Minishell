@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 01:08:13 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 16:01:27 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ char	*get_oldpwd(void)
 	return (oldpwd);
 }
 
-void	ft_cd(char **str)
+void	ft_cd(t_shelly *shelly)
 {
 	char	*pwd;
 	char	*path;
 
 	pwd = getcwd(NULL, 0);
-	if (!str[1] || ft_strcmp(str[1], "~") == 0)
+	if (!shelly->ast->value[1] || ft_strcmp(shelly->ast->value[1], "~") == 0)
 		path = getenv("HOME");
-	else if (ft_strcmp(str[1], "-") == 0)
+	else if (ft_strcmp(shelly->ast->value[1], "-") == 0)
 	{
 		path = get_oldpwd();
 		if (!path)
@@ -51,9 +51,9 @@ void	ft_cd(char **str)
 		printf("%s\n", path);
 	}
 	else
-		path = str[1];
+		path = shelly->ast->value[1];
 	if (chdir(path) != 0)
-		perror("Problem with chdir");
+		msg_not_file(shelly, path);
 	free(pwd);
 }
 
