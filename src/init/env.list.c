@@ -61,7 +61,6 @@ void	increment_shlvl(t_shelly *shelly)
 			free(tmp->value);
 			new_value = ft_itoa(shlvl_value);
 			tmp->value = new_value;
-			printf("shlvl = %s\n", new_value);
 			return ;
 		}
 		tmp = tmp->next;
@@ -74,7 +73,6 @@ int	create_env_list(t_shelly *shelly, char **envp)
 	t_env	*new;
 	int		i;
 
-	printf("create env list\n");
 	i = 0;
 	while (envp[i])
 	{

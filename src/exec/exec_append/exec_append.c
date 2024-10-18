@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:09:37 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 12:07:18 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 14:03:35 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	exec_append(t_shelly *shelly, t_ast *node)
 		ft_exec(shelly, node->right);
 	fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_out == -1)
-	{
-		write(STDERR_FILENO, "ERROR OPEN\n", 11);
 		return ;
-	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -39,13 +36,7 @@ void	exec_append(t_shelly *shelly, t_ast *node)
 		exit(shelly->exit_code);
 	}
 	else if (pid > 0)
-	{
-		close(fd_out);
-		waitpid(pid, NULL, 0);
-	}
+		pid_pos(shelly, fd_out, pid);
 	else
-	{
-		write(STDERR_FILENO, "ERROR FORK\n", 11);
 		exit(EXIT_FAILURE);
-	}
 }

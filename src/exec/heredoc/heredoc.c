@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/14 10:45:36 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:57:14 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,11 @@ int	adapt_cmd(t_shelly *shelly)
 		current->prev->next = current->next;
 	if (current->next)
 		current->next->prev = current->prev;
-	free(current);
 	if (tmp->prev)
 		tmp->prev->next = tmp->next;
 	if (tmp->next)
 		tmp->next->prev = tmp->prev;
-	free(tmp);
-	free(shelly->ast);
+	ft_free_heredock(shelly, tmp, current);
 	if (ft_parser(shelly) == 0)
 	{
 		if (exec_heredoc(shelly, shelly->ast) == 0)

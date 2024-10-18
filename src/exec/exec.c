@@ -15,6 +15,18 @@
 
 #include "../../include/minishell.h"
 
+void	pid_pos(t_shelly *shelly, int fd_out, pid_t pid)
+{
+	int	status;
+
+	close(fd_out);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		shelly->exit_code = WEXITSTATUS(status);
+	else
+		shelly->exit_code = 1;
+}
+
 char	*search_value(t_ast *node)
 {
 	t_ast	*tmp;

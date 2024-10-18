@@ -65,7 +65,6 @@ int	add_elem(t_shelly *shelly, int count)
 	while (data.j < count)
 	{
 		data.size = info_elem(shelly, data.j, "size");
-		printf("data.size; %d\n", data.size);
 		shelly->str[data.j] = malloc(sizeof(char) * (data.size + 1));
 		if (!shelly->str[data.j])
 			return (EXIT_FAILURE);

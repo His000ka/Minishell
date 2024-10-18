@@ -89,21 +89,13 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (fork() == 0)
 	{
 		if (execve(path, args, shelly->envp) == -1)
-		{
-			perror("execve");
 			exit(EXIT_FAILURE);
-		}
 	}
 	else
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-		{
-			int exit_code = WEXITSTATUS(status);
-			shelly->exit_code = exit_code;
-		}
-		else
-			shelly->exit_code = 1;
+			shelly->exit_code = WEXITSTATUS(status);
 	}
 	free(path);
 	return (0);
