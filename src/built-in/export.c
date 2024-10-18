@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 01:07:16 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 14:25:08 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	add_or_not(t_shelly *shelly, char *str)
 							tmp->value) != 0))
 				{
 					tmp->value = ft_strdup(export_str->value);
+					if (!tmp->value)
+						return ;
 					tmp->type = 1;
 				}
 			}
@@ -82,11 +84,17 @@ void	update_existing_var(t_env *tmp, char *value)
 	if (tmp->value)
 	{
 		new_value = ft_strjoin(tmp->value, value);
+		if (!new_value)
+			return ;
 		free(tmp->value);
 		tmp->value = new_value;
 	}
 	else
+	{
 		tmp->value = ft_strdup(value);
+		if (!tmp->value)
+			return ;
+	}
 	tmp->type = 1;
 }
 
@@ -96,6 +104,8 @@ void	add_new_env_var(t_shelly *shelly, char *key, char *value)
 
 	new_var = create_env_node(key);
 	new_var->value = ft_strdup(value);
+	if (!new_var->value)
+		return ;
 	new_var->type = 1;
 	add_node_env(&shelly->env, new_var);
 }

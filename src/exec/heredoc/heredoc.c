@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/14 10:45:36 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:09:15 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ char	*search_delimiter(t_ast *node)
 
 	current = node;
 	if (node->right->node_type == CMD)
+	{
 		delimiter = ft_strdup(node->right->value[0]);
+	}	
 	else
 	{
 		while (current->right && current->right->left->node_type != CMD)

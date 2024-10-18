@@ -38,7 +38,7 @@ char	**extract_command(t_token *token)
 	i = 0;
 	while (token && is_cmd(token->type) == 0)
 	{
-		cmd[i++] = strdup(token->str);
+		cmd[i++] = ft_strdup(token->str);
 		token = token->next;
 	}
 	cmd[i] = NULL;

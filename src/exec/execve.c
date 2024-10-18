@@ -79,7 +79,11 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 
 	path = NULL;
 	if (is_absolute_or_relative(cmd))
+	{
 		path = ft_strdup(cmd);
+		if(!path)
+			return;
+	}
 	else
 	{
 		path = find_executable_in_path(cmd);
@@ -102,8 +106,6 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 			int exit_code = WEXITSTATUS(status);
 			shelly->exit_code = exit_code;
 		}
-		else
-			shelly->exit_code = 1;
 	}
 	free(path);
 	return (0);

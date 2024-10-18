@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:38:01 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/16 14:17:45 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:21:36 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	after_pipe(t_shelly *shelly)
 		free_ast(shelly->ast);
 		ft_free(shelly);
 		shelly->cmd = ft_strdup(tmp);
+		if (!shelly->cmd)
+			return ;
 		if (ft_lexer(shelly) == 0)
 		{
 			if (ft_parser(shelly) == 0)

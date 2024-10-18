@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 01:08:26 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 14:28:03 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,16 @@ void	concat_export(t_shelly *shelly, char *str)
 	plus_equal_pos = ft_strnstr(str, "+=", ft_strlen(str));
 	*plus_equal_pos = '\0';
 	key = ft_strdup(str);
+	if (!key)
+		return ;
 	value = ft_strdup(plus_equal_pos + 2);
+	if (!value)
+		return ;
 	tmp = shelly->env;
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(key, tmp->content) == 0)
-		{
-			update_existing_var(tmp, value);
-			free(key);
-			free(value);
-			return ;
-		}
+			return (update_existing_var(tmp, value), free(key), free(value));
 		tmp = tmp->next;
 	}
 	add_new_env_var(shelly, key, value);
