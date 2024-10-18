@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 11:58:59 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 12:03:03 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 12:06:52 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exec_trunc(t_shelly *shelly, t_ast *node)
 		close(fd_out);
 		if (node->left)
 			ft_exec(shelly, node->left);
-		exit(EXIT_SUCCESS);
+		exit(shelly->exit_code);
 	}
 	else if (pid > 0)
 	{

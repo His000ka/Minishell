@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/14 10:40:52 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:11:53 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	if (fd_in == -1)
 	{
 		msg_not_file(node->right);
+		shelly->exit_code = 1;
 		return ;
 	}
 	pid = fork();
@@ -38,7 +39,7 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 		close(fd_in);
 		if (node->left)
 			ft_exec(shelly, node->left);
-		exit(EXIT_SUCCESS);
+		exit(shelly->exit_code);
 	}
 	else if (pid > 0)
 	{
