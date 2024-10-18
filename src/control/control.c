@@ -17,7 +17,7 @@ void	control_c(int sig)
 	t_shelly	*shelly;
 
 	shelly = get_shelly();
-	sig = 128 + sig;
+	shelly->exit_code = 128 + sig;
 	rl_on_new_line();
 	rl_redisplay();
 	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
@@ -32,7 +32,10 @@ void	control_d(void)
 
 void control_s(int sig)
 {
-	(void)sig;
+	t_shelly	*shelly;
+
+	shelly = get_shelly();
+	shelly->exit_code = 128 + sig;
 	write(1, "\rMINISHELL> ", 12);
 }
 

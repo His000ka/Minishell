@@ -35,8 +35,7 @@ OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME) -L ~/.homebrew/opt/readline/lib -I ~/.homebrew/opt/readline/include -lreadline
-
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 

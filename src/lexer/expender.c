@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 11:39:03 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 12:29:30 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	expender(t_shelly *shelly, t_data_elem *data)
 	start = data->k + data->i + 1;
 	size = 0;
 	path = NULL;
+	
 	shelly->str[data->j][data->k] = '\0';
 	while (char_expend(shelly->cmd[start + size]) == 0
 		&& shelly->cmd[start + size] != '\0')

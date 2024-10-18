@@ -168,6 +168,8 @@ void	ft_free_token(t_token *t);
 void	free_ast(t_ast *node);
 //expender
 int		expender(t_shelly *shelly, t_data_elem *data);
+//expender
+int		check_heredoc(t_shelly *shelly, t_data_elem *data);
 //count_elem
 int		count_index(char *str, int flag);
 int		check_char(char c);
