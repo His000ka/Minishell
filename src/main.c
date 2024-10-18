@@ -34,30 +34,38 @@ void	algo_minishell(t_shelly *shelly)
 	}
 }
 
+t_shelly	*get_shelly(void)
+{
+	static t_shelly shelly;
+
+	return (&shelly);
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	t_shelly	shelly;
+	t_shelly	*shelly;
 
-	shelly.str = NULL;
-	shelly.env = NULL;
+	shelly = get_shelly();
+	shelly->str = NULL;
+	shelly->env = NULL;
 	(void)ac;
 	(void)av;
 	control();
-	create_env_list(&shelly, envp);
-	if (init_shelly(&shelly) == 0)
+	create_env_list(shelly, envp);
+	if (init_shelly(shelly) == 0)
 	{
-		shelly.loop = 0;
-		while (shelly.loop == 0)
+		shelly->loop = 0;
+		while (shelly->loop == 0)
 		{
-			shelly.cmd = readline("MINISHELL> ");
-			if (!shelly.cmd)
+			shelly->cmd = readline("MINISHELL> ");
+			if (!shelly->cmd)
 				return (control_d(), 1);
 			else
-				add_history(shelly.cmd);
-			algo_minishell(&shelly);
-			ft_free(&shelly);
+				add_history(shelly->cmd);
+			algo_minishell(shelly);
+			ft_free(shelly);
 		}
 	}
-	free_env(&shelly);
-	shelly.env = NULL;
+	free_env(shelly);
+	shelly->env = NULL;
 }

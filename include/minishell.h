@@ -93,6 +93,8 @@ typedef struct s_shelly
 	t_ast	*ast;
 }	t_shelly;
 
+// shelly
+t_shelly	*get_shelly(void);
 //algo_shelly
 void	algo_minishell(t_shelly *shelly);
 //utils
