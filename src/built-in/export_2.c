@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 17:48:12 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:53:19 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ void	concat_export(t_shelly *shelly, char *str)
 	free(value);
 }
 
+int	ft_export_2(t_shelly *shelly, char *av)
+{
+	if (ft_strnstr(av, "-", ft_strlen(av)) != NULL
+		|| ft_strcmp(av, "+=") == 0
+		|| ft_isdigit(av[0]) == 1 || av[0] == '=')
+	{
+		printf("bash: export: `%s': not a valid identifier\n", av);
+		shelly->exit_code = 1;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_export(t_shelly *shelly, char **av)
 {
 	int	i;
@@ -57,13 +70,8 @@ void	ft_export(t_shelly *shelly, char **av)
 		affiche_export(shelly);
 	while (av[++i])
 	{
-		if (ft_strnstr(av[i], "-", ft_strlen(av[i])) != NULL
-			|| ft_strcmp(av[i], "+=") == 0
-			|| ft_isdigit(av[i][0]) == 1 || av[i][0] == '=')
-		{
-			printf("bash: export: `%s': not a valid identifier\n", av[i]);
-			return (shelly->exit_code = 1);
-		}
+		if (ft_export_2(shelly, av[i]) == 1)
+			return ;
 	}
 	i = 0;
 	while (av[++i])
