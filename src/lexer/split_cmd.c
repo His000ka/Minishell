@@ -12,6 +12,30 @@
 
 #include "../../include/minishell.h"
 
+int	check_heredoc(t_shelly *shelly, t_data_elem *data)
+{
+	int	i;
+
+	i = data->k + data->i;
+	if (shelly->cmd[data->k + data->i] == '$')
+	{
+		if (shelly->cmd[i] == shelly->cmd[0])
+			return (0);
+		i--;
+		while (shelly->cmd[i] != shelly->cmd[0]
+			&& shelly->cmd[i] == ' ')
+			i--;
+		if (shelly->cmd[i] == '<' && shelly->cmd[i] != shelly->cmd[0])
+		{
+			i--;
+			if (shelly->cmd[i] == '<')
+				return (1);
+		}
+		return (0);
+	}
+	return (1);
+}
+
 int	manage_elem(t_shelly *shelly, t_data_elem *data)
 {
 	if (shelly->cmd[data->k + data->i] == 34
@@ -20,7 +44,7 @@ int	manage_elem(t_shelly *shelly, t_data_elem *data)
 		if (manage_quote(shelly, data) == 1)
 			return (EXIT_FAILURE);
 	}
-	else if (shelly->cmd[data->k + data->i] == '$')
+	else if (check_heredoc(shelly, data) == 0)
 	{
 		if (expender(shelly, data) == 1)
 			return (EXIT_FAILURE);

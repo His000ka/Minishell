@@ -61,7 +61,6 @@ void	increment_shlvl(t_shelly *shelly)
 			free(tmp->value);
 			new_value = ft_itoa(shlvl_value);
 			tmp->value = new_value;
-			printf("shlvl = %s\n", new_value);
 			return ;
 		}
 		tmp = tmp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:57:41 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/14 10:40:52 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:09:54 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,19 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 		ft_exec(shelly, node->right);
 	fd_in = open(search_value(node), O_RDONLY);
 	if (fd_in == -1)
-	{
-		msg_not_file(node->right);
-		return ;
-	}
+		return (msg_not_file(shelly, node->right));
 	pid = fork();
 	if (pid == 0)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-		{
-			write(STDERR_FILENO, "ERROR DUP2\n", 11);
 			exit(EXIT_FAILURE);
-		}
 		close(fd_in);
 		if (node->left)
 			ft_exec(shelly, node->left);
-		exit(EXIT_SUCCESS);
+		exit(shelly->exit_code);
 	}
 	else if (pid > 0)
-	{
-		close(fd_in);
-		waitpid(pid, NULL, 0);
-	}
+		pid_pos(shelly, fd_in, pid);
 	else
-	{
-		write(STDERR_FILENO, "ERROR FORK\n", 11);
 		exit(EXIT_FAILURE);
-	}
 }

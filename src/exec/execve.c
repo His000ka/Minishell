@@ -81,8 +81,8 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (is_absolute_or_relative(cmd))
 	{
 		path = ft_strdup(cmd);
-		if(!path)
-			return;
+		if (!path)
+			return ;
 	}
 	else
 	{
@@ -93,19 +93,13 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (fork() == 0)
 	{
 		if (execve(path, args, shelly->envp) == -1)
-		{
-			perror("execve");
 			exit(EXIT_FAILURE);
-		}
 	}
 	else
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-		{
-			int exit_code = WEXITSTATUS(status);
-			shelly->exit_code = exit_code;
-		}
+			shelly->exit_code = WEXITSTATUS(status);
 	}
 	free(path);
 	return (0);

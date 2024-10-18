@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:19 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/14 10:45:03 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:56:36 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+void	ft_free_heredock(t_shelly *shelly, t_token	*current, t_token	*tmp)
+{
+	free(current);
+	free(tmp);
+	free(shelly->ast);
+}
 
 int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
 {
