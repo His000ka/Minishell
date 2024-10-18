@@ -87,7 +87,7 @@ typedef struct s_shelly
 	int		loop;
 	char	*delimiter;
 	int		fd[2];
-	char	*exit_status;
+	int		exit_code;
 	t_env	*env;
 	t_token	*token;
 	t_ast	*ast;
@@ -108,11 +108,13 @@ int		ft_lexer(t_shelly *shelly);
 //parser
 int		ft_parser(t_shelly *shelly);
 int		is_cmd(int type);
+//check mult
+int		check_mult_token(t_token *token);
 //exec
 void	*ft_exec(t_shelly *shelly, t_ast *node);
 char	*search_value(t_ast *node);
 //execve
-int		exec_cmd_path(char *cmd, char **args, char **envp);
+int		exec_cmd_path(char *cmd, char **args, t_shelly *shelly);
 //ast
 t_ast	*create_ast(t_token *tokens);
 t_ast	*create_ast_node(char **value, int node_type);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_trunc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 11:58:59 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/10 20:15:21 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:03:03 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exec_trunc(t_shelly *shelly, t_ast *node)
 	int		fd_out;
 	pid_t	pid;
 	t_ast	*current;
+	int		status;
 
 	current = node;
 	while (current->right && current->right->node_type == TRUNC)
@@ -50,11 +51,17 @@ void	exec_trunc(t_shelly *shelly, t_ast *node)
 	else if (pid > 0)
 	{
 		close(fd_out);
-		waitpid(pid, NULL, 0);
-	}
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			int exit_code = WEXITSTATUS(status);
+			shelly->exit_code = exit_code;
+			printf("status %d\n", shelly->exit_code);
+		}
+		else
+			shelly->exit_code = 1;
+    }
 	else
-	{
-		perror("ERROR FORK");
 		exit(EXIT_FAILURE);
-	}
 }
+
