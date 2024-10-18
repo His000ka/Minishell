@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:21:36 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/15 15:22:03 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 15:25:55 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_mult_pipe(t_token *tmp)
 	{
 		tmp = tmp->next;
 		count++;
-		if (count == 4)
+		if (count == 3)
 			return (ft_error(SYNTAX_ERROR, '|', 2));
 	}
 	if (count > 1)

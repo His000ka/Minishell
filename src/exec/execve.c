@@ -80,11 +80,9 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (is_absolute_or_relative(cmd))
 		path = ft_strdup(cmd);
 	else
-	{
 		path = find_executable_in_path(cmd);
-		if (!path)
-			return (EXIT_FAILURE);
-	}
+	if (!path)
+		return (EXIT_FAILURE);
 	if (fork() == 0)
 	{
 		if (execve(path, args, shelly->envp) == -1)

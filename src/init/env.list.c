@@ -73,12 +73,11 @@ int	create_env_list(t_shelly *shelly, char **envp)
 	t_env	*new;
 	int		i;
 
-	i = 0;
-	while (envp[i])
+	i = -1;
+	while (envp[++i])
 	{
 		new = create_env_node(envp[i]);
 		add_node_env(&shelly->env, new);
-		i++;
 	}
 	increment_shlvl(shelly);
 	i = 0;
@@ -89,7 +88,11 @@ int	create_env_list(t_shelly *shelly, char **envp)
 		return (1);
 	i = -1;
 	while (envp[++i] != NULL)
+	{
 		shelly->envp[i] = ft_strdup(envp[i]);
+		if (!shelly->envp[i])
+			return (1);
+	}
 	shelly->envp[i] = NULL;
 	return (0);
 }

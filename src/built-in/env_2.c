@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 01:12:33 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 01:16:15 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 14:24:24 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ void	copy_env_to_envp(t_shelly *shelly)
 	while (tmp)
 	{
 		shelly->envp[i] = ft_strjoin(tmp->content, "=");
+		if (!shelly->envp[i])
+			return ;
 		shelly->envp[i] = ft_strjoin_free(shelly->envp[i], tmp->value);
+		if (!shelly->envp[i])
+			return ;
 		tmp = tmp->next;
 		i++;
 	}
