@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 16:01:27 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/19 17:57:47 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,63 +32,34 @@ char	*get_oldpwd(void)
 	return (oldpwd);
 }
 
-void	ft_cd(t_shelly *shelly)
+void	ft_cd(char **str)
 {
 	char	*pwd;
 	char	*path;
+	t_shelly	*shelly;
 
+	shelly = get_shelly();
 	pwd = getcwd(NULL, 0);
-	if (!shelly->ast->value[1] || ft_strcmp(shelly->ast->value[1], "~") == 0)
+	if (!str[1] || ft_strcmp(str[1], "~") == 0)
 		path = getenv("HOME");
-	else if (ft_strcmp(shelly->ast->value[1], "-") == 0)
+	else if (ft_strcmp(str[1], "-") == 0)
 	{
 		path = get_oldpwd();
 		if (!path)
 		{
-			free(pwd);
-			return ;
+			perror("bash: cd:  OLDPWD not set\n");
+			return(free(pwd));
 		}
 		printf("%s\n", path);
-	}
-	else
-		path = shelly->ast->value[1];
+	}else
+		path = str[1];
 	if (chdir(path) != 0)
-		msg_not_file(shelly, path);
+	{
+		printf("bash: cd: %s: No such file or directory\n", path);
+		shelly->exit_code = 1;
+	}
 	free(pwd);
 }
-
-// void	ft_cd(char **str)
-// {
-// 	char	*pwd;
-// 	char	*path;
-// 	char	*new_pwd;
-
-// 	pwd = getcwd(NULL, 0);
-// 	if (!str[1] || ft_strcmp(str[1], "~") == 0)
-// 		path = getenv("HOME");
-// 	else if (ft_strcmp(str[1], "-") == 0)
-// 	{
-// 		path = get_oldpwd();
-// 		if (!path)
-// 		{
-// 			free(pwd);
-// 			return;
-// 		}
-// 		printf("%s\n", path);
-// 	}else
-// 		path = str[1];
-// 	if (chdir(path) != 0)
-// 		perror("Problem with chdir");
-// 	new_pwd = getcwd(NULL, 0);
-// 	if (new_pwd)
-// 	{
-// 		printf("Directory changed to: %s\n", new_pwd);
-// 		free(new_pwd);
-// 	}
-// 	else
-// 		perror("Error retrieving new current directory");
-// 	free(pwd);
-// }
 
 // int	main(int argc, char **argv)
 // {

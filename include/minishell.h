@@ -193,7 +193,7 @@ void		sort_env_list(t_env *env_list);
 void		swap_env(t_env *a, t_env *b);
 //cd
 int			if_cd(char *str);
-void		ft_cd(t_shelly *shelly);
+void		ft_cd(char **str);
 char		*ft_strjoin_pwd(char const *s1, char const *s2);
 //echo
 int			if_echo(char *str);

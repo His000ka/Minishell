@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:01:25 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 17:44:11 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/19 17:34:09 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_builtins(t_shelly *shelly, char *cmd, t_ast *ast)
 {
 	if (if_cd(cmd))
-		return (ft_cd(shelly), EXIT_SUCCESS);
+		return (ft_cd(ast->value), EXIT_SUCCESS);
 	if (if_echo(cmd))
 		return (ft_echo(ast->value), EXIT_SUCCESS);
 	if (if_env(cmd))
