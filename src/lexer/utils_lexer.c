@@ -12,43 +12,57 @@
 
 #include "../../include/minishell.h"
 
-int	double_quote(t_shelly *shelly, t_data_elem *data)
+char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data, char *res)
 {
 	data->i++;
-	while (shelly->cmd[data->k + data->i] != 34)
+	data->k = 0;
+	printf("test c : %c\n", val[data->i]);
+	while (val[data->i] != 34)
 	{
-		if (shelly->cmd[data->k + data->i] == '$')
+		if (val[data->i] == '$')
 		{
 			if (expender(shelly, data) == 1)
-				return (EXIT_FAILURE);
+				return (NULL);
 		}
 		else
 		{
-			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
-			data->k++;
+			res[data->i - 1] = val[data->i];
+			data->i++;
 		}
 	}
-	return (EXIT_SUCCESS);
+	res[data->i - 1] = val[data->i + 1];
+	printf("fin ici %d\n", data->i);
+	return (res);
 }
 
-int	manage_quote(t_shelly *shelly, t_data_elem *data)
+char	*manage_quote(t_shelly *shelly, t_data_elem *data, char *val)
 {
-	if (shelly->cmd[data->k + data->i] == 34)
-	{
-		if (double_quote(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	if (shelly->cmd[data->k + data->i] == 39)
+	char	*res;
+	int		i;
+
+	printf("je passe ici %s et data.i %d\n", &val[data->i], data->i);
+	data->size = ft_strlen(val) - 1;
+	printf("SIZE: %d\n", data->size);
+	res = malloc(sizeof(char) * data->size + 1);
+	if (!res)
+		return (NULL);
+	i = -1;
+	while (++i < data->i)
+		res[i] = val[i];
+	if (val[data->i] == 34)
+		return (double_quote(shelly, val, data, res));
+	if (val[data->i] == 39)
 	{
 		data->i++;
-		while (shelly->cmd[data->k + data->i] != 39)
+		while (val[data->k + data->i] != 39)
 		{
-			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
+			res[data->k] = val[data->k + data->i];
 			data->k++;
 		}
 	}
-	data->i++;
-	return(EXIT_SUCCESS);
+	res[data->k] = '\0';
+	data->i += data->k;
+	return (res);
 }
 
 int	check_quote(t_shelly *shelly)
@@ -76,16 +90,4 @@ int	check_quote(t_shelly *shelly)
 		}
 	}
 	return (0);
-}
-
-int	check_cmd(t_shelly *shelly)
-{
-	int	check;
-
-	check = 0;
-	check += check_quote(shelly);
-	// check += check_last_elem(shelly);
-	// check += check_order(shelly, check);
-	// printf("check_cmd: %d\n", check);
-	return (check);
 }

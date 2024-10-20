@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 10:40:20 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 19:32:41 by pitroin          ###   ########.fr       */
+/*   Created: 2024/09/10 10:40:20 by fimazouz			       #+#    #+#     */
+/*   Updated: 2024/10/18 01:03:45 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,45 @@ char	*ft_strjoin_pwd(char const *s1, char const *s2)
 	return (p);
 }
 
+void	swap_env(t_env *a, t_env *b)
+{
+	char	*temp_content;
+	char	*temp_value;
+	int		temp_type;
 
+	temp_content = a->content;
+	temp_value = a->value;
+	temp_type = a->type;
+	a->content = b->content;
+	a->value = b->value;
+	a->type = b->type;
+	b->content = temp_content;
+	b->value = temp_value;
+	b->type = temp_type;
+}
+
+void	sort_env_list(t_env *env_list)
+{
+	t_env	*current;
+	t_env	*next;
+	int		sorted;
+
+	if (!env_list)
+		return ;
+	sorted = 0;
+	while (!sorted)
+	{
+		sorted = 1;
+		current = env_list;
+		while (current->next != NULL)
+		{
+			next = current->next;
+			if (ft_strcmp(current->content, next->content) > 0)
+			{
+				swap_env(current, next);
+				sorted = 0;
+			}
+			current = current->next;
+		}
+	}
+}

@@ -6,7 +6,7 @@
 #    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/09/10 13:14:09 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/10/10 12:32:33 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,26 +24,28 @@ READLINE_DIR = /usr/local
 INCLUDES += -I $(READLINE_DIR)/include
 LIBS = -L $(READLINE_DIR)/lib -lreadline
 
+# Object directory
+OBJ_DIR = obj
+
 # Source and object files
 SRCS = $(shell find src -name '*.c')
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 
 # Rules
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
-
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: src/%.c
-	@mkdir -p $(dir $@)
+	@mkdir -p $(OBJ_DIR) $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean

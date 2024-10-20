@@ -11,3 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	exit_code_execve(t_shelly *shelly)
+{
+	int	status;
+
+	wait(&status);
+	if (WIFEXITED(status))
+		shelly->exit_code = WEXITSTATUS(status);
+}

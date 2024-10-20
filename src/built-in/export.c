@@ -3,126 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:20:34 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/02 20:44:38 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/18 15:24:02 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	if_export(char *str)
+void	affiche_export(t_shelly *shelly)
 {
-	if (ft_strncmp(str, "export", 6) == 0)
-		return (1);
-	return (0);
+	t_env	*tmp;
+
+	sort_env_list(shelly->env);
+	tmp = shelly->env;
+	while (tmp != NULL)
+	{
+		if (tmp->type == 1)
+			printf("declare -x %s=\"%s\"\n", tmp->content, tmp->value);
+		else if (tmp->type == 0)
+			printf("declare -x %s\n", tmp->content);
+		tmp = tmp->next;
+	}
 }
 
-
-// Helper function to count the number of environment variables
-int	env_count(t_env *list_env)
+void	add_node_export(t_env *list, t_env *new)
 {
-    int count = 0;
-    while (list_env)
-    {
-        count++;
-        list_env = list_env->next;
-    }
-    return (count);
+	t_env	*tmp;
+
+	if (!new)
+		return ;
+	if (list == NULL)
+		list = new;
+	else
+	{
+		tmp = list;
+		while (list->next)
+			list = list->next;
+		list->next = new;
+		list = tmp;
+	}
 }
 
-// Custom bubble sort using while loops
-void sort_env_array(t_env **env_array, int count)
+void	add_or_not(t_shelly *shelly, char *str)
 {
-    int i = 0;
-    int j;
-    t_env *temp;
-    int swapped;
+	t_env	*export_str;
+	t_env	*tmp;
 
-    // Sorting with a while loop
-    while (i < count - 1)
-    {
-        j = 0;
-        swapped = 0; // To track if any swap happened
-
-        while (j < count - i - 1)
-        {
-            if (ft_strncmp(env_array[j]->content, env_array[j + 1]->content, ft_strlen(env_array[j]->content) + 1) > 0)
-            {
-                temp = env_array[j];
-                env_array[j] = env_array[j + 1];
-                env_array[j + 1] = temp;
-                swapped = 1;
-            }
-            j++;
-        }
-
-        if (swapped == 0) // If no swap happened, array is already sorted
-            break;
-
-        i++;
-    }
+	export_str = create_env_node(str);
+	tmp = shelly->env;
+	while (tmp != NULL)
+	{
+		if (export_str->content && tmp->content
+			&& ft_strcmp(export_str->content, tmp->content) == 0)
+		{
+			if (export_str->value)
+			{
+				if (!tmp->value || (tmp->value && ft_strcmp(export_str->value,
+							tmp->value) != 0))
+				{
+					tmp->value = ft_strdup(export_str->value);
+					tmp->type = 1;
+				}
+			}
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (tmp == NULL)
+		add_node_env(&shelly->env, export_str);
 }
 
-// Function to export environment variables in sorted order
-void	ft_export(t_env *list_env)
+void	update_existing_var(t_env *tmp, char *value)
 {
-    int     count = env_count(list_env);
-    t_env   **env_array;
-    int     i = 0;
+	char	*new_value;
 
-    // Allocate an array to store pointers to environment variables
-    env_array = (t_env **)malloc(sizeof(t_env *) * count);
-    if (!env_array)
-        return ;
-
-    // Fill the array with pointers to environment variables
-    while (list_env)
-    {
-        env_array[i++] = list_env;
-        list_env = list_env->next;
-    }
-
-    // Sort the environment variables using bubble sort with while loops
-    sort_env_array(env_array, count);
-
-    // Print the sorted environment variables
-    i = 0;
-    while (i < count)
-    {
-        if (env_array[i]->value != NULL)
-        {
-            if (env_array[i]->value[0] == '\0')
-                printf("declare -x %s=\"\"\n", env_array[i]->content);  // Empty string case
-            else
-                printf("declare -x %s=\"%s\"\n", env_array[i]->content, env_array[i]->value);  // Variable with value
-        }
-        else
-        {
-            printf("declare -x %s\n", env_array[i]->content);  // Variable without value
-        }
-        i++;
-    }
-
-    // Free the allocated memory
-    free(env_array);
+	if (tmp->value)
+	{
+		new_value = ft_strjoin(tmp->value, value);
+		if (!new_value)
+			return ;
+		free(tmp->value);
+		tmp->value = new_value;
+	}
+	else
+	{
+		tmp->value = ft_strdup(value);
+		if (!tmp->value)
+			return ;
+	}
+	tmp->type = 1;
 }
 
+void	add_new_env_var(t_shelly *shelly, char *key, char *value)
+{
+	t_env	*new_var;
 
-// int main(int ac, char **av, char **envp) {
-
-//  t_shelly shelly;
-
-//     (void)ac;
-//     (void)av;
-
-//     // Initialize the environment list
-//     create_env_list(&shelly, envp);
-
-//     // Check if the command is 'export'
-//     if (if_export(av[0]) == 1)
-//         ft_export(shelly.env);
-
-//     return 0;
-// }
+	new_var = create_env_node(key);
+	new_var->value = ft_strdup(value);
+	if (!new_var->value)
+		return ;
+	new_var->type = 1;
+	add_node_env(&shelly->env, new_var);
+}

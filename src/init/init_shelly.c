@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   init_shelly.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 10:45:25 by pitroin           #+#    #+#             */
-/*   Updated: 2024/09/05 11:51:42 by pitroin          ###   ########.fr       */
+/*   Created: 2024/10/08 20:00:50 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/10/08 20:00:50 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int init_shelly(t_shelly *shelly)
+int	init_shelly(t_shelly *shelly)
 {
-    shelly->str = NULL;
-    shelly->token = NULL;
-    shelly->cmd = NULL;
-    shelly->ast = NULL;
+	shelly->str = NULL;
+	shelly->token = NULL;
+	shelly->cmd = NULL;
+	shelly->ast = NULL;
 	shelly->delimiter = NULL;
-	shelly->exit_status = ft_strdup("0");
-	if (!shelly->exit_status)
-		return (1);
-    return (0);
+	shelly->exit_code = 0;
+	return (0);
 }

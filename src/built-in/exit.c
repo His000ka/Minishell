@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/04 11:54:07 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 12:49:42 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int	is_numeric(char *str)
 
 int	ft_exit(char **str)
 {
-	int	is_num;
+	int			is_num;
+	t_shelly	*shelly;
 
+	shelly = get_shelly();
 	if (str[1] == NULL)
 	{
 		printf("exit\n");
@@ -56,9 +58,8 @@ int	ft_exit(char **str)
 		printf("exit\n");
 		printf("bash: exit: too many arguments\n");
 		is_num = 1;
-		return (1);
+		return (shelly->exit_code = 1, 1);
 	}
 	printf("exit\n");
 	exit(is_num % 256);
 }
-

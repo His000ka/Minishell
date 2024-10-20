@@ -12,15 +12,39 @@
 
 #include "../../include/minishell.h"
 
+int	check_heredoc(t_shelly *shelly, t_data_elem *data)
+{
+	int	i;
+
+	i = data->k + data->i;
+	if (shelly->cmd[data->k + data->i] == '$')
+	{
+		if (shelly->cmd[i] == shelly->cmd[0])
+			return (0);
+		i--;
+		while (shelly->cmd[i] != shelly->cmd[0]
+			&& shelly->cmd[i] == ' ')
+			i--;
+		if (shelly->cmd[i] == '<' && shelly->cmd[i] != shelly->cmd[0])
+		{
+			i--;
+			if (shelly->cmd[i] == '<')
+				return (1);
+		}
+		return (0);
+	}
+	return (1);
+}
+
 int	manage_elem(t_shelly *shelly, t_data_elem *data)
 {
-	if (shelly->cmd[data->k + data->i] == 34
-		|| shelly->cmd[data->k + data->i] == 39)
-	{
-		if (manage_quote(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	else if (shelly->cmd[data->k + data->i] == '$')
+	// if (shelly->cmd[data->k + data->i] == 34
+	// 	|| shelly->cmd[data->k + data->i] == 39)
+	// {
+		// if (manage_quote(shelly, data) == 1)
+	// 		return (EXIT_FAILURE);
+	// }
+	if (check_heredoc(shelly, data) == 0)
 	{
 		if (expender(shelly, data) == 1)
 			return (EXIT_FAILURE);
@@ -41,15 +65,17 @@ int	add_elem(t_shelly *shelly, int count)
 	while (data.j < count)
 	{
 		data.size = info_elem(shelly, data.j, "size");
+		printf("data.size: %d\n", data.size);
 		shelly->str[data.j] = malloc(sizeof(char) * (data.size + 1));
 		if (!shelly->str[data.j])
 			return (EXIT_FAILURE);
 		data.i = info_elem(shelly, data.j, "index");
+		printf("data.index: %d\n", data.i);
 		data.k = 0;
 		while (data.k < data.size && shelly->cmd[data.k + data.i] != '\0')
 		{
 			if (manage_elem(shelly, &data) == 1)
-				return(EXIT_FAILURE);
+				return (EXIT_FAILURE);
 		}
 		shelly->str[data.j][data.k] = '\0';
 		data.j++;
@@ -64,6 +90,7 @@ int	split_command(t_shelly *shelly)
 
 	count = 0;
 	count += count_elem(shelly, count);
+	printf("count: %d\n", count);
 	if (count == 0)
 		return (EXIT_FAILURE);
 	shelly->str = malloc(sizeof(char *) * (count + 1));

@@ -45,6 +45,41 @@ t_token	*create_node(void)
 	return (new_node);
 }
 
+char	*token_str(t_shelly *shelly, char *val)
+{
+	t_data_elem	data;
+	char		*res;
+
+	data.i = 0;
+	data.j = 0;
+	if (ft_strchr(val, '$') == NULL && ft_strchr(val, '\'') == NULL
+		&& ft_strchr(val, '\"') == NULL)
+		return (ft_strdup(val));
+	while (val[data.i] != '\0')
+	{
+		if (val[data.i] == 34 || val[data.i] == 39)
+		{
+			res = manage_quote(shelly, &data, val);
+			printf("val[data.i]; %c\n", val[data.i]);
+			if (!res)
+				return (NULL);
+			data.j++;
+		}
+		if (val[data.i] == '$')
+		{
+			data.j++;
+			expender(shelly, &data);
+		}
+		// if (val[data.i] != '\0')
+		// {
+		// 	res[data.i - 1] = val[data.i];
+		// }
+		data.i++;
+	}
+	// res[data.i] = '\0';
+	return (res);
+}
+
 int	create_token(t_shelly *shelly, char *val)
 {
 	t_token	*new_token;
@@ -55,7 +90,7 @@ int	create_token(t_shelly *shelly, char *val)
 	new_token = create_node();
 	if (!new_token)
 		return (1);
-	new_token->str = ft_strdup(val);
+	new_token->str = token_str(shelly, val);
 	new_token->type = type_token(val);
 	if (!new_token->str)
 		return (1);
@@ -87,6 +122,7 @@ int	ft_lexer(t_shelly *shelly)
 		return (EXIT_FAILURE);
 	while (shelly->str[++i] != NULL)
 	{
+		printf("create token: %s\n", shelly->str[i]);
 		if (create_token(shelly, shelly->str[i]) == 1)
 			return (EXIT_FAILURE);
 	}

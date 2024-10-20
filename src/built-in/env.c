@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/09/17 18:30:46 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/18 15:05:55 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,37 @@ int	if_env(char *str)
 	return (0);
 }
 
-void	ft_env(t_env *env_list)
+char	*ft_strjoin_free(char *s1, char const *s2)
 {
-	if (env_list == NULL)
-	{
-		printf("Error: Environment list is empty or null\n");
-		return ;
-	}
-	while(env_list != NULL)
-	{
-		if(env_list->type == 1)
-			printf("%s=%s\n", env_list->content, env_list->value);
-		env_list = env_list->next;
-	}
+	char	*result;
+
+	result = ft_strjoin(s1, s2);
+	if (s1)
+		free(s1);
+	return (result);
 }
 
-// int main(int ac, char **av, char **envp) {
+void	initialize_default_env(t_shelly *shelly)
+{
+	char	cwd[1024];
 
-// t_env	*env_list;
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		add_new_env_var(shelly, ft_strdup("PWD"), ft_strdup(cwd));
+	add_new_env_var(shelly, ft_strdup("_"), ft_strdup("/usr/bin/env"));
+	update_envp(shelly);
+}
 
-// 	(void)ac;
-// 	(void)av;
-// 	env_list = NULL;
-// 	env_list = create_env_list(&env_list, envp);
+void	ft_env(t_shelly *shelly)
+{
+	t_env	*tmp;
 
-// 	//print_env_list(env_list);
-
-// 	if(if_env(av) == 1)
-// 		ft_env(env_list);
-//     return 0;
-// }
+	if (shelly->env == NULL)
+		initialize_default_env(shelly);
+	tmp = shelly->env;
+	while (tmp != NULL)
+	{
+		if (tmp->type == 1 && tmp->value != NULL && tmp->value[0] != '\0')
+			printf("%s=%s\n", tmp->content, tmp->value);
+		tmp = tmp->next;
+	}
+}

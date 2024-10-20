@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/09/05 11:48:27 by pitroin           #+#    #+#             */
 /*   Updated: 2024/09/05 11:49:42 by pitroin          ###   ########.fr       */
 /*                                                                            */
@@ -19,7 +22,6 @@ void	free_command(char **cmd)
 	i = 0;
 	if (cmd)
 	{
-		// printf("free: %s\n", cmd[i]);
 		while (cmd[i] != NULL)
 			free(cmd[i++]);
 		free(cmd);
@@ -49,7 +51,7 @@ void	free_env(t_shelly *shelly)
 	i = 0;
 	if (shelly->envp)
 	{
-		while (shelly->envp[i]!= NULL)
+		while (shelly->envp[i] != NULL)
 			free(shelly->envp[i++]);
 		free(shelly->envp);
 	}

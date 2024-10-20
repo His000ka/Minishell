@@ -3,43 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 22:30:27 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/09/23 17:44:00 by pitroin          ###   ########.fr       */
+/*   Created: 2024/10/16 14:24:57 by fimazouz          #+#    #+#             */
+/*   Updated: 2024/10/16 14:24:57 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
-void control_c(int sig)
+void	control_c(int sig)
 {
-	(void)(sig);
+	t_shelly	*shelly;
 
-	rl_on_new_line();
+	shelly = get_shelly();
+	shelly->exit_code = 128 + sig;
 	rl_redisplay();
-	write(STDOUT_FILENO, "\nminishell> ", 12);
+	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
 	rl_redisplay();
 }
 
-void	control_d()
+void	control_d(void)
 {
 	printf("exit\n");
-	exit(1);
+	exit(131);
 }
 
-void	control_backslash(int sig)
+void	control_s(int sig)
 {
-	(void)sig;
+	t_shelly	*shelly;
+
+	shelly = get_shelly();
+	shelly->exit_code = 128 + sig;
+	write(STDOUT_FILENO, "\r", 1);
+	rl_on_new_line();
 }
 
-void	control()
+void	control(void)
 {
+	signal(SIGQUIT, control_s);
 	signal(SIGINT, control_c);
-	signal(SIGQUIT, SIG_IGN);
 }

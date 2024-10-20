@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/09/03 12:02:29 by pitroin           #+#    #+#             */
 /*   Updated: 2024/09/05 11:50:00 by pitroin          ###   ########.fr       */
 /*                                                                            */
@@ -20,9 +23,11 @@ void	algo_minishell(t_shelly *shelly)
 	check = ft_lexer(shelly);
 	if (check == 0)
 	{
+		affiche_token(shelly);
 		check = ft_parser(shelly);
 		if (check == 0)
 		{
+			affiche_ast(shelly->ast, 0);
 			check = exec_heredoc(shelly, shelly->ast);
 			if (check == 0)
 				ft_exec(shelly, shelly->ast);
@@ -31,31 +36,38 @@ void	algo_minishell(t_shelly *shelly)
 	}
 }
 
+t_shelly	*get_shelly(void)
+{
+	static t_shelly	shelly;
+
+	return (&shelly);
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	t_shelly	shelly;
+	t_shelly	*shelly;
 
-	shelly.str = NULL;
-	shelly.env = NULL;
+	shelly = get_shelly();
+	shelly->str = NULL;
+	shelly->env = NULL;
 	(void)ac;
 	(void)av;
 	control();
-	create_env_list(&shelly, envp);
-	if (init_shelly(&shelly) == 0)
+	create_env_list(shelly, envp);
+	if (init_shelly(shelly) == 0)
 	{
-		shelly.loop = 0;
-		while (shelly.loop == 0)
+		shelly->loop = 0;
+		while (shelly->loop == 0)
 		{
-			shelly.cmd = readline("MINISHELL> ");
-			if (!shelly.cmd)
-				return (ft_error("Error launching shell", 0, 0));
+			shelly->cmd = readline("MINISHELL> ");
+			if (!shelly->cmd)
+				return (control_d(), 1);
 			else
-				add_history(shelly.cmd);
-			algo_minishell(&shelly);
-			ft_free(&shelly);
+				add_history(shelly->cmd);
+			algo_minishell(shelly);
+			ft_free(shelly);
 		}
 	}
-	
-	free_env(&shelly);
-	shelly.env = NULL;
+	free_env(shelly);
+	shelly->env = NULL;
 }
