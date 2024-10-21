@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/18 15:15:07 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/21 20:32:01 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,26 @@ char	*search_delimiter(t_ast *node)
 
 void	read_heredoc(t_shelly *shelly)
 {
-	char	*input;
+	char		*input;
+	char		*expend;
+	t_data_elem	data;
 
 	while (1)
 	{
+		data.i = 0;
 		input = readline("Heredoc>");
 		if (ft_strcmp(input, shelly->delimiter) == 0)
 		{
 			free(input);
 			break ;
 		}
-		if (input)
+		expend = expender(shelly, &data, input);
+		if (expend)
 		{
-			write(shelly->fd[1], input, ft_strlen(input));
+			write(shelly->fd[1], expend, ft_strlen(expend));
 			write(shelly->fd[1], "\n", 1);
 		}
+		free(expend);
 		free(input);
 	}
 }

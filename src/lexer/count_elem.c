@@ -98,5 +98,6 @@ int	count_elem(t_shelly *shelly, int count)
 			|| (check_char(shelly->cmd[1]) == 2
 				&& ft_ischar(shelly->cmd[2]) == 1)))
 		count++;
+	printf("count2:%d\n", count);
 	return (count_elem_2(shelly, count));
 }

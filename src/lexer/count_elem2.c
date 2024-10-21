@@ -68,7 +68,7 @@ int	is_pipe(char *str, int flag)
 	int	i;
 
 	i = 0;
-	if (str[i] == '|' && str[i + 1] == '\0')
+	if (str[i] == '|')
 	{
 		if (flag == 1)
 			return (1);
