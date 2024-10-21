@@ -65,12 +65,10 @@ int	add_elem(t_shelly *shelly, int count)
 	while (data.j < count)
 	{
 		data.size = info_elem(shelly, data.j, "size");
-		printf("data.size: %d\n", data.size);
 		shelly->str[data.j] = malloc(sizeof(char) * (data.size + 1));
 		if (!shelly->str[data.j])
 			return (EXIT_FAILURE);
 		data.i = info_elem(shelly, data.j, "index");
-		printf("data.index: %d\n", data.i);
 		data.k = 0;
 		while (data.k < data.size && shelly->cmd[data.k + data.i] != '\0')
 		{
@@ -90,7 +88,6 @@ int	split_command(t_shelly *shelly)
 
 	count = 0;
 	count += count_elem(shelly, count);
-	printf("count: %d\n", count);
 	if (count == 0)
 		return (EXIT_FAILURE);
 	shelly->str = malloc(sizeof(char *) * (count + 1));

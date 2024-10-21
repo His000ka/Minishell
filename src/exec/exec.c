@@ -55,6 +55,8 @@ char	*get_env_value(t_env *env, const char *key)
 void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
 	shelly->exit_code = 0;
+	if (ft_strcmp(node->value[0], "") == 0)
+		return (msg_cmd_not_found(node));
 	if (ft_builtins(shelly, node->value[0], node) == 0)
 		return ;
 	if (exec_cmd_path(node->value[0], node->value, shelly) == 0)

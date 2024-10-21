@@ -45,10 +45,26 @@ t_token	*create_node(void)
 	return (new_node);
 }
 
+char	*not_special_token(t_data_elem *data, char *val)
+{
+	char		*tmp;
+
+	data->size = 0;
+	while (val[data->i + data->size] != '$' && val[data->i + data->size] != '\''
+		&& val[data->i + data->size] != '\"' && val[data->i + data->size] != '\0')
+		data->size++;
+	tmp = ft_strndup(&val[data->i], data->size);
+	data->i += data->size;
+	return (tmp);
+}
+
 char	*token_str(t_shelly *shelly, char *val)
 {
 	t_data_elem	data;
-	char		*res;
+	char		*tmp1 = NULL;
+	char		*tmp2 = NULL;
+	char		*res = NULL;
+	char		*res2 = NULL;
 
 	data.i = 0;
 	data.j = 0;
@@ -57,26 +73,38 @@ char	*token_str(t_shelly *shelly, char *val)
 		return (ft_strdup(val));
 	while (val[data.i] != '\0')
 	{
+		tmp1 = not_special_token(&data, val);
+		if (!tmp1)
+			tmp1 = ft_strdup("");
 		if (val[data.i] == 34 || val[data.i] == 39)
-		{
-			res = manage_quote(shelly, &data, val);
-			printf("val[data.i]; %c\n", val[data.i]);
-			if (!res)
-				return (NULL);
-			data.j++;
-		}
-		if (val[data.i] == '$')
-		{
-			data.j++;
+			tmp2 = manage_quote(shelly, &data, val);
+		else if (val[data.i] == '$')
 			expender(shelly, &data);
+		if (res)
+		{
+			res2 = ft_strdup(res);
+			free(res);
+			if (!tmp2)
+				res = ft_strjoin(res2, tmp1);
+			else
+			{
+				res = ft_strjoin(ft_strjoin(res2, tmp1), tmp2);
+				free(tmp2);
+				tmp2 = NULL;
+			}
+			free(res2);
 		}
-		// if (val[data.i] != '\0')
-		// {
-		// 	res[data.i - 1] = val[data.i];
-		// }
-		data.i++;
+		else
+		{
+			res = ft_strjoin(tmp1, tmp2);
+			free(tmp2);
+			tmp2 = NULL;
+		}
+		if (tmp1)
+			free(tmp1);
+		if (val[data.i] != '\0')
+			data.i++;
 	}
-	// res[data.i] = '\0';
 	return (res);
 }
 
@@ -122,7 +150,6 @@ int	ft_lexer(t_shelly *shelly)
 		return (EXIT_FAILURE);
 	while (shelly->str[++i] != NULL)
 	{
-		printf("create token: %s\n", shelly->str[i]);
 		if (create_token(shelly, shelly->str[i]) == 1)
 			return (EXIT_FAILURE);
 	}

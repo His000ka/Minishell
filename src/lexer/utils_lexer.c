@@ -15,40 +15,48 @@
 char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data, char *res)
 {
 	data->i++;
-	data->k = 0;
-	printf("test c : %c\n", val[data->i]);
-	while (val[data->i] != 34)
+	while (val[data->k + data->i] != 34)
 	{
-		if (val[data->i] == '$')
+		if (val[data->k + data->i] == '$')
 		{
 			if (expender(shelly, data) == 1)
 				return (NULL);
 		}
 		else
 		{
-			res[data->i - 1] = val[data->i];
-			data->i++;
+			res[data->k] = val[data->k + data->i];
+			data->k++;
 		}
 	}
-	res[data->i - 1] = val[data->i + 1];
-	printf("fin ici %d\n", data->i);
+	res[data->k] = '\0';
+	data->i += data->k;
 	return (res);
+}
+
+int	calc_size_quote(t_data_elem *data, char *val)
+{
+	data->size = 1;
+	if (val[data->i] == 39)
+	{
+		while (val[data->i + data->size] != 39)
+			data->size++;
+	}
+	if (val[data->i] == 34)
+	{
+		while (val[data->i + data->size] != 34)
+			data->size++;
+	}
+	return (data->size);
 }
 
 char	*manage_quote(t_shelly *shelly, t_data_elem *data, char *val)
 {
 	char	*res;
-	int		i;
 
-	printf("je passe ici %s et data.i %d\n", &val[data->i], data->i);
-	data->size = ft_strlen(val) - 1;
-	printf("SIZE: %d\n", data->size);
-	res = malloc(sizeof(char) * data->size + 1);
+	res = malloc(sizeof(char) * calc_size_quote(data, val));
 	if (!res)
 		return (NULL);
-	i = -1;
-	while (++i < data->i)
-		res[i] = val[i];
+	data->k = 0;
 	if (val[data->i] == 34)
 		return (double_quote(shelly, val, data, res));
 	if (val[data->i] == 39)
