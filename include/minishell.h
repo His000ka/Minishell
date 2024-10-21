@@ -169,7 +169,7 @@ void		free_env(t_shelly *shelly);
 void		ft_free(t_shelly *shelly);
 void		free_ast(t_ast *node);
 //expender
-int			expender(t_shelly *shelly, t_data_elem *data);
+char		*expender(t_shelly *shelly, t_data_elem *data, char *val);
 //count_elem
 int			count_index(char *str, int flag);
 int			check_char(char c);

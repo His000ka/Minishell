@@ -44,12 +44,12 @@ int	manage_elem(t_shelly *shelly, t_data_elem *data)
 		// if (manage_quote(shelly, data) == 1)
 	// 		return (EXIT_FAILURE);
 	// }
-	if (check_heredoc(shelly, data) == 0)
-	{
-		if (expender(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	else
+	// if (check_heredoc(shelly, data) == 0)
+	// {
+	// 	if (expender(shelly, data) == 1)
+	// 		return (EXIT_FAILURE);
+	// }
+	// else
 	{
 		shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
 		data->k++;

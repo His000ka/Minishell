@@ -79,7 +79,7 @@ char	*token_str(t_shelly *shelly, char *val)
 		if (val[data.i] == 34 || val[data.i] == 39)
 			tmp2 = manage_quote(shelly, &data, val);
 		else if (val[data.i] == '$')
-			expender(shelly, &data);
+			tmp2 = expender(shelly, &data, val);
 		if (res)
 		{
 			res2 = ft_strdup(res);
@@ -102,6 +102,7 @@ char	*token_str(t_shelly *shelly, char *val)
 		}
 		if (tmp1)
 			free(tmp1);
+		printf("res: %s et data.i: %d\n", res, data.i);
 		if (val[data.i] != '\0')
 			data.i++;
 	}
@@ -150,6 +151,7 @@ int	ft_lexer(t_shelly *shelly)
 		return (EXIT_FAILURE);
 	while (shelly->str[++i] != NULL)
 	{
+		printf("CREATE TOKEN\n");
 		if (create_token(shelly, shelly->str[i]) == 1)
 			return (EXIT_FAILURE);
 	}

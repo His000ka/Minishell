@@ -12,24 +12,41 @@
 
 #include "../../include/minishell.h"
 
-char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data, char *res)
+char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data)
 {
+	char	*expend = NULL;
+	char	*tmp;
+	char	*tmp2;
+	char	*res = NULL;
+
 	data->i++;
-	while (val[data->k + data->i] != 34)
+	while (val[data->i] != 34)
 	{
-		if (val[data->k + data->i] == '$')
+		data->size = 0;
+		while (val[data->i + data->size] != '$'
+			&& val[data->i + data->size] != 34)
+			data->size++;
+		tmp = ft_strndup(&val[data->i], data->size);
+		data->i += data->size;
+		if (val[data->i] == '$')
+			expend = expender(shelly, data, val);
+		else
+			expend = ft_strdup("");
+		if (res)
 		{
-			if (expender(shelly, data) == 1)
-				return (NULL);
+			tmp2 = ft_strjoin(tmp, expend);
+			free(tmp);
+			free(expend);
+			tmp = ft_strjoin(res, tmp2);
+			res = ft_strdup(tmp);
+			free(tmp);
+			free(tmp2);
 		}
 		else
-		{
-			res[data->k] = val[data->k + data->i];
-			data->k++;
-		}
+			res = ft_strjoin(tmp, expend);
 	}
-	res[data->k] = '\0';
-	data->i += data->k;
+	if (!res)
+		return (ft_strdup(""));
 	return (res);
 }
 
@@ -53,22 +70,17 @@ char	*manage_quote(t_shelly *shelly, t_data_elem *data, char *val)
 {
 	char	*res;
 
-	res = malloc(sizeof(char) * calc_size_quote(data, val));
-	if (!res)
-		return (NULL);
 	data->k = 0;
+	res = NULL;
 	if (val[data->i] == 34)
-		return (double_quote(shelly, val, data, res));
+		return (double_quote(shelly, val, data));
 	if (val[data->i] == 39)
 	{
 		data->i++;
 		while (val[data->k + data->i] != 39)
-		{
-			res[data->k] = val[data->k + data->i];
 			data->k++;
-		}
+		res = ft_strndup(&val[data->i], data->k);
 	}
-	res[data->k] = '\0';
 	data->i += data->k;
 	return (res);
 }
