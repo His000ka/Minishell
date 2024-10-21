@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:06:34 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/20 18:33:31 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:17:02 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int	size_elem(t_shelly *shelly, int i, int res)
 	else if (is_good_char(&shelly->cmd[res], 1) != 0)
 	{
 		s = is_good_char(&shelly->cmd[res], 3);
-		// if (shelly->cmd[s] == 34
-		// 	|| shelly->cmd[s] == 39)
-		// 	return (i - res);
 		return (i - res);
 	}
 	return (1);

@@ -107,6 +107,8 @@ void		msg_not_file(t_shelly *shelly, char *value);
 void		msg_cmd_not_found(t_ast *node);
 //lexer
 int			ft_lexer(t_shelly *shelly);
+//tokenstr
+char		*token_str(t_shelly *shelly, char *val);
 //parser
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);

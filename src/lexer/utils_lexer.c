@@ -12,14 +12,34 @@
 
 #include "../../include/minishell.h"
 
+char	*d_q_2(char *res, char *tmp, char *expend)
+{
+	char	*tmp2;
+
+	if (res)
+	{
+		tmp2 = ft_strjoin(tmp, expend);
+		free(tmp);
+		free(expend);
+		tmp = ft_strjoin(res, tmp2);
+		res = ft_strdup(tmp);
+		free(tmp);
+		free(tmp2);
+	}
+	else
+		res = ft_strjoin(tmp, expend);
+	return (res);
+}
+
 char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data)
 {
-	char	*expend = NULL;
+	char	*expend;
 	char	*tmp;
-	char	*tmp2;
-	char	*res = NULL;
+	char	*res;
 
 	data->i++;
+	res = NULL;
+	expend = NULL;
 	while (val[data->i] != 34)
 	{
 		data->size = 0;
@@ -32,38 +52,11 @@ char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data)
 			expend = expender(shelly, data, val);
 		else
 			expend = ft_strdup("");
-		if (res)
-		{
-			tmp2 = ft_strjoin(tmp, expend);
-			free(tmp);
-			free(expend);
-			tmp = ft_strjoin(res, tmp2);
-			res = ft_strdup(tmp);
-			free(tmp);
-			free(tmp2);
-		}
-		else
-			res = ft_strjoin(tmp, expend);
+		res = d_q_2(res, tmp, expend);
 	}
 	if (!res)
 		return (ft_strdup(""));
 	return (res);
-}
-
-int	calc_size_quote(t_data_elem *data, char *val)
-{
-	data->size = 1;
-	if (val[data->i] == 39)
-	{
-		while (val[data->i + data->size] != 39)
-			data->size++;
-	}
-	if (val[data->i] == 34)
-	{
-		while (val[data->i + data->size] != 34)
-			data->size++;
-	}
-	return (data->size);
 }
 
 char	*manage_quote(t_shelly *shelly, t_data_elem *data, char *val)
