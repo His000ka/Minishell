@@ -82,6 +82,8 @@ typedef struct s_token
 typedef struct s_shelly
 {
 	char	*cmd;
+	int		ctrlc;
+	int		ctrls;
 	char	**str;
 	char	**envp;
 	int		loop;
@@ -114,7 +116,7 @@ void		ft_free_tmp(char **tmp1, char **tmp2);
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);
 //check mult
-int			check_mult_token(t_token *token);
+int			check_mult_token(t_shelly *shelly, t_token *token);
 //exec
 void		pid_pos(t_shelly *shelly, int fd_out, pid_t pid);
 void		*ft_exec(t_shelly *shelly, t_ast *node);
@@ -122,6 +124,7 @@ char		*search_value(t_ast *node);
 //execve
 void		exit_code_execve(t_shelly *shelly);
 int			exec_cmd_path(char *cmd, char **args, t_shelly *shelly);
+char		*find_executable_in_path(t_shelly *shelly, char *cmd);
 //ast
 t_ast		*create_ast(t_token *tokens);
 t_ast		*create_ast_node(char **value, int node_type);
@@ -163,7 +166,7 @@ int			info_elem(t_shelly *shelly, int j, char *str);
 int			add_elem(t_shelly *shelly, int count);
 int			split_command(t_shelly *shelly);
 //init
-int			init_shelly(t_shelly *shelly);
+int			init_shelly(t_shelly *shelly, char **envp);
 //quote utils (lexer)
 int			check_quote(t_shelly *shelly);
 char		*manage_quote(t_shelly *shelly, t_data_elem *data, char *val);
@@ -212,6 +215,7 @@ void		update_envp(t_shelly *shelly);
 void		copy_env_to_envp(t_shelly *shelly);
 void		free_envp(char **envp);
 int			count_env_vars(t_env *env);
+char		*get_value_env(t_shelly *shelly, char *path);
 //exit
 int			if_exit(char **str);
 int			is_numeric(char *str);

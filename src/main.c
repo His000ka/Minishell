@@ -41,29 +41,39 @@ t_shelly	*get_shelly(void)
 	return (&shelly);
 }
 
+void	not_shelly_cmd(t_shelly *shelly)
+{
+	if (shelly->ctrlc == 0 || shelly->ctrls == 0)
+		return (control_d());
+	else
+	{
+		shelly->ctrlc = 0;
+		shelly->ctrls = 0;
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_shelly	*shelly;
 
 	shelly = get_shelly();
-	shelly->str = NULL;
-	shelly->env = NULL;
 	(void)ac;
 	(void)av;
 	control();
-	create_env_list(shelly, envp);
-	if (init_shelly(shelly) == 0)
+	if (init_shelly(shelly, envp) == 0)
 	{
 		shelly->loop = 0;
 		while (shelly->loop == 0)
 		{
 			shelly->cmd = readline("MINISHELL> ");
 			if (!shelly->cmd)
-				return (control_d(), 1);
+				not_shelly_cmd(shelly);
 			else
+			{
 				add_history(shelly->cmd);
-			algo_minishell(shelly);
-			ft_free(shelly);
+				algo_minishell(shelly);
+				ft_free(shelly);
+			}
 		}
 	}
 	free_env(shelly);

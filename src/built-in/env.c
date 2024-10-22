@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:24:30 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 15:05:55 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:31:12 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	ft_env(t_shelly *shelly)
 
 	if (shelly->env == NULL)
 		initialize_default_env(shelly);
+	if (get_value_env(shelly, "PATH") == NULL
+		|| ft_strcmp(get_value_env(shelly, "PATH"), getenv("PATH")))
+	{
+		msg_not_file(shelly, "env");
+		return ;
+	}
 	tmp = shelly->env;
 	while (tmp != NULL)
 	{

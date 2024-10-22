@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/22 12:12:46 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:56:06 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ char	*expend_heredoc(t_shelly *shelly, char *input)
 	if (ft_strchr(input, '$') == NULL)
 		return (ft_strdup(input));
 	res = ft_strdup("");
+	if (!res)
+		return (NULL);
 	while (input[data.i] != '\0')
 	{
 		if (input[data.i] == '$')
 			expend = ft_strjoin(res, expender(shelly, &data, input));
 		else
 			expend = ft_strjoin(res, before_expend(input, &data));
+		free(res);
 		res = ft_strdup(expend);
 		free(expend);
 		expend = NULL;

@@ -43,7 +43,7 @@ int	is_executable(char *path)
 	return (0);
 }
 
-char	*find_executable_in_path(char *cmd)
+char	*find_executable_in_path(t_shelly *shelly, char *cmd)
 {
 	char	*path_env;
 	char	*path_token;
@@ -51,7 +51,7 @@ char	*find_executable_in_path(char *cmd)
 	char	*path_copy;
 
 	full_path = NULL;
-	path_env = getenv("PATH");
+	path_env = get_value_env(shelly, "PATH");
 	if (!path_env)
 		return (NULL);
 	path_copy = ft_strdup(path_env);
@@ -80,7 +80,7 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (is_absolute_or_relative(cmd))
 		path = ft_strdup(cmd);
 	else
-		path = find_executable_in_path(cmd);
+		path = find_executable_in_path(shelly, cmd);
 	if (!path)
 		return (EXIT_FAILURE);
 	if (fork() == 0)
