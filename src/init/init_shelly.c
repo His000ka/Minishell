@@ -17,6 +17,7 @@ int	init_shelly(t_shelly *shelly, char **envp)
 	shelly->str = NULL;
 	if (create_env_list(shelly, envp) == 1)
 		return (1);
+	shelly->oldpwd_count = 0;
 	shelly->token = NULL;
 	shelly->cmd = NULL;
 	shelly->ast = NULL;

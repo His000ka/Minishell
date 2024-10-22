@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/22 12:05:45 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:44:25 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ int	if_cd(char *str)
 
 char	*get_oldpwd(void)
 {
-	char	*oldpwd;
+	char		*oldpwd;
+	t_shelly	*shelly;
 
+	shelly = get_shelly();
 	oldpwd = getenv("OLDPWD");
-	if (!oldpwd)
+	if (!oldpwd || shelly->oldpwd_count == 0)
 	{
-		printf("OLDPWD not set\n");
+		printf("bash: cd: OLDPWD not set\n");
+		shelly->oldpwd_count = 1;
 		return (NULL);
 	}
 	return (oldpwd);
