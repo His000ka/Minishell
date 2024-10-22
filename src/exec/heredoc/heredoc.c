@@ -6,24 +6,11 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/18 15:15:07 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 11:30:09 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-int	search_heredoc(t_shelly *shelly, t_ast *node)
-{
-	if (node->node_type == CMD)
-		return (0);
-	if (node->node_type == PIPE || node->node_type == TRUNC
-		|| node->node_type == APPEND || node->node_type == INPUT)
-		return (search_heredoc(shelly, node->right) || search_heredoc(shelly,
-				node->left));
-	if (node->node_type == HEREDOC)
-		return (exec_heredoc(shelly, node));
-	return (0);
-}
 
 char	*search_delimiter(t_ast *node)
 {
@@ -44,9 +31,47 @@ char	*search_delimiter(t_ast *node)
 	return (delimiter);
 }
 
+char	*before_expend(char *input, t_data_elem *data)
+{
+	char	*tmp;
+
+	data->size = 0;
+	while (input[data->size] != '$' && input[data->size] != '\0')
+		data->size++;
+	tmp = ft_strndup(input, data->size);
+	data->i += data->size;
+	if (!tmp)
+		return (NULL);
+	return (tmp);
+}
+
+char	*expend_heredoc(t_shelly *shelly, char *input)
+{
+	char		*expend;
+	char		*res;
+	t_data_elem	data;
+
+	data.i = 0;
+	if (ft_strchr(input, '$') == NULL)
+		return (ft_strdup(input));
+	res = ft_strdup("");
+	while (input[data.i] != '\0')
+	{
+		if (input[data.i] == '$')
+			expend = ft_strjoin(res, expender(shelly, &data, input));
+		else
+			expend = ft_strjoin(res, before_expend(input, &data));
+		res = ft_strdup(expend);
+		free(expend);
+		expend = NULL;
+	}
+	return (res);
+}
+
 void	read_heredoc(t_shelly *shelly)
 {
-	char	*input;
+	char		*input;
+	char		*expend;
 
 	while (1)
 	{
@@ -56,10 +81,12 @@ void	read_heredoc(t_shelly *shelly)
 			free(input);
 			break ;
 		}
-		if (input)
+		expend = expend_heredoc(shelly, input);
+		if (expend)
 		{
-			write(shelly->fd[1], input, ft_strlen(input));
+			write(shelly->fd[1], expend, ft_strlen(expend));
 			write(shelly->fd[1], "\n", 1);
+			free(expend);
 		}
 		free(input);
 	}

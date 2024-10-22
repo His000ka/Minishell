@@ -12,43 +12,70 @@
 
 #include "../../include/minishell.h"
 
-int	double_quote(t_shelly *shelly, t_data_elem *data)
+char	*d_q_2(char *res, char *tmp, char *expend)
 {
-	data->i++;
-	while (shelly->cmd[data->k + data->i] != 34)
+	char	*tmp2;
+
+	if (res)
 	{
-		if (shelly->cmd[data->k + data->i] == '$')
-		{
-			if (expender(shelly, data) == 1)
-				return (EXIT_FAILURE);
-		}
-		else
-		{
-			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
-			data->k++;
-		}
+		tmp2 = ft_strjoin(tmp, expend);
+		free(tmp);
+		free(expend);
+		tmp = ft_strjoin(res, tmp2);
+		res = ft_strdup(tmp);
+		free(tmp);
+		free(tmp2);
 	}
-	return (EXIT_SUCCESS);
+	else
+		res = ft_strjoin(tmp, expend);
+	return (res);
 }
 
-int	manage_quote(t_shelly *shelly, t_data_elem *data)
+char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data)
 {
-	if (shelly->cmd[data->k + data->i] == 34)
+	char	*expend;
+	char	*tmp;
+	char	*res;
+
+	data->i++;
+	res = NULL;
+	expend = NULL;
+	while (val[data->i] != 34)
 	{
-		if (double_quote(shelly, data) == 1)
-			return (EXIT_FAILURE);
+		data->size = 0;
+		while (val[data->i + data->size] != '$'
+			&& val[data->i + data->size] != 34)
+			data->size++;
+		tmp = ft_strndup(&val[data->i], data->size);
+		data->i += data->size;
+		if (val[data->i] == '$')
+			expend = expender(shelly, data, val);
+		else
+			expend = ft_strdup("");
+		res = d_q_2(res, tmp, expend);
 	}
-	if (shelly->cmd[data->k + data->i] == 39)
+	if (!res)
+		return (ft_strdup(""));
+	return (res);
+}
+
+char	*manage_quote(t_shelly *shelly, t_data_elem *data, char *val)
+{
+	char	*res;
+
+	data->k = 0;
+	res = NULL;
+	if (val[data->i] == 34)
+		return (double_quote(shelly, val, data));
+	if (val[data->i] == 39)
 	{
 		data->i++;
-		while (shelly->cmd[data->k + data->i] != 39)
-		{
-			shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
+		while (val[data->k + data->i] != 39)
 			data->k++;
-		}
+		res = ft_strndup(&val[data->i], data->k);
 	}
-	data->i++;
-	return (EXIT_SUCCESS);
+	data->i += data->k;
+	return (res);
 }
 
 int	check_quote(t_shelly *shelly)
@@ -76,4 +103,11 @@ int	check_quote(t_shelly *shelly)
 		}
 	}
 	return (0);
+}
+void	ft_free_tmp(char **tmp1, char **tmp2)
+{
+	if (*tmp1)
+		free(*tmp1);
+	free(*tmp2);
+	*tmp2 = NULL;
 }

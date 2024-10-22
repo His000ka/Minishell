@@ -6,58 +6,11 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 13:47:46 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:01:02 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	expende_2(t_shelly *shelly, t_data_elem *data, char *value)
-{
-	char	*test;
-	int		i;
-
-	i = -1;
-	test = ft_strdup(shelly->str[data->j]);
-	if (!test)
-		return (EXIT_FAILURE);
-	free(shelly->str[data->j]);
-	data->size += ft_strlen(value);
-	shelly->str[data->j] = malloc(sizeof(char) * (data->size + 1));
-	if (!shelly->str[data->j])
-		return (EXIT_FAILURE);
-	while (++i < data->k)
-		shelly->str[data->j][i] = test[i];
-	while (*value)
-	{
-		shelly->str[data->j][data->k] = *value;
-		data->k++;
-		value++;
-	}
-	shelly->str[data->j][data->k] = '\0';
-	free(test);
-	return (EXIT_SUCCESS);
-}
-
-int	expend_not_path(t_shelly *shelly, t_data_elem *data)
-{
-	char	*test;
-	int		i;
-
-	i = -1;
-	test = ft_strdup(shelly->str[data->j]);
-	if (!test)
-		return (EXIT_FAILURE);
-	free(shelly->str[data->j]);
-	shelly->str[data->j] = malloc(sizeof(char) * (data->size) + 1);
-	if (!shelly->str[data->j])
-		return (EXIT_FAILURE);
-	while (++i < data->k && test[i] != '\0')
-		shelly->str[data->j][i] = test[i];
-	shelly->str[data->j][data->k] = '\0';
-	free(test);
-	return (EXIT_SUCCESS);
-}
 
 int	char_expend(char c)
 {
@@ -67,50 +20,47 @@ int	char_expend(char c)
 	return (0);
 }
 
-int	expende_value(t_shelly *shelly, t_data_elem *data, char *path, char *value)
+char	*expende_value(char *value)
 {
-	char	*exit_code;
+	char	*res;
 
 	if (value)
-	{
-		if (expende_2(shelly, data, value) == 1)
-			return (EXIT_FAILURE);
-	}
-	else if (ft_strcmp(path, "?") == 0)
-	{
-		exit_code = ft_itoa(shelly->exit_code);
-		if (expende_2(shelly, data, exit_code) == 1)
-			return (EXIT_FAILURE);
-	}
+		res = ft_strdup(value);
 	else
-	{
-		if (expend_not_path(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+		res = ft_strdup("");
+	if (!res)
+		return (NULL);
+	return (res);
 }
 
-int	expender(t_shelly *shelly, t_data_elem *data)
+char	*expend_exit_code(t_shelly *shelly, t_data_elem *data)
+{
+	data->i++;
+	return (ft_strdup(ft_itoa(shelly->exit_code)));
+}
+
+char	*expender(t_shelly *shelly, t_data_elem *data, char *val)
 {
 	char	*value;
 	char	*path;
-	int		size;
-	int		start;
+	char	*res;
 
-	start = data->k + data->i + 1;
-	size = 0;
+	data->size = 0;
+	data->i++;
 	path = NULL;
-	shelly->str[data->j][data->k] = '\0';
-	while (char_expend(shelly->cmd[start + size]) == 0
-		&& shelly->cmd[start + size] != '\0')
-		size++;
-	path = ft_strndup(&shelly->cmd[start], size);
+	if (ft_strcmp(val, "$") == 0)
+		return (ft_strdup(val));
+	while (char_expend(val[data->i + data->size]) == 0
+		&& val[data->i + data->size] != '\0')
+		data->size++;
+	path = ft_strndup(&val[data->i], data->size);
 	if (!path)
-		return (EXIT_FAILURE);
+		return (NULL);
+	if (ft_strncmp(path, "?", 1) == 0)
+		return (expend_exit_code(shelly, data));
 	value = getenv(path);
-	data->size = data->size - ft_strlen(path) - 1;
-	expende_value(shelly, data, path, value);
+	res = expende_value(value);
 	free(path);
-	data->i = start + size - data->k;
-	return (EXIT_SUCCESS);
+	data->i += data->size;
+	return (res);
 }

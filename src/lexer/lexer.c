@@ -55,7 +55,7 @@ int	create_token(t_shelly *shelly, char *val)
 	new_token = create_node();
 	if (!new_token)
 		return (1);
-	new_token->str = ft_strdup(val);
+	new_token->str = token_str(shelly, val);
 	new_token->type = type_token(val);
 	if (!new_token->str)
 		return (1);

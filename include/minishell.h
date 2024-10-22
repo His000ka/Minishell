@@ -107,6 +107,9 @@ void		msg_not_file(t_shelly *shelly, char *value);
 void		msg_cmd_not_found(t_ast *node);
 //lexer
 int			ft_lexer(t_shelly *shelly);
+//tokenstr
+char		*token_str(t_shelly *shelly, char *val);
+void		ft_free_tmp(char **tmp1, char **tmp2);
 //parser
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);
@@ -161,7 +164,7 @@ int			split_command(t_shelly *shelly);
 int			init_shelly(t_shelly *shelly);
 //quote utils (lexer)
 int			check_quote(t_shelly *shelly);
-int			manage_quote(t_shelly *shelly, t_data_elem *data);
+char		*manage_quote(t_shelly *shelly, t_data_elem *data, char *val);
 //info_elem (lexer)
 int			info_elem(t_shelly *shelly, int j, char *str);
 //free
@@ -169,7 +172,7 @@ void		free_env(t_shelly *shelly);
 void		ft_free(t_shelly *shelly);
 void		free_ast(t_ast *node);
 //expender
-int			expender(t_shelly *shelly, t_data_elem *data);
+char		*expender(t_shelly *shelly, t_data_elem *data, char *val);
 //count_elem
 int			count_index(char *str, int flag);
 int			check_char(char c);

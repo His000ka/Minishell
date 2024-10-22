@@ -36,27 +36,6 @@ int	check_heredoc(t_shelly *shelly, t_data_elem *data)
 	return (1);
 }
 
-int	manage_elem(t_shelly *shelly, t_data_elem *data)
-{
-	if (shelly->cmd[data->k + data->i] == 34
-		|| shelly->cmd[data->k + data->i] == 39)
-	{
-		if (manage_quote(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	else if (check_heredoc(shelly, data) == 0)
-	{
-		if (expender(shelly, data) == 1)
-			return (EXIT_FAILURE);
-	}
-	else
-	{
-		shelly->str[data->j][data->k] = shelly->cmd[data->k + data->i];
-		data->k++;
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	add_elem(t_shelly *shelly, int count)
 {
 	t_data_elem	data;
@@ -72,8 +51,8 @@ int	add_elem(t_shelly *shelly, int count)
 		data.k = 0;
 		while (data.k < data.size && shelly->cmd[data.k + data.i] != '\0')
 		{
-			if (manage_elem(shelly, &data) == 1)
-				return (EXIT_FAILURE);
+			shelly->str[data.j][data.k] = shelly->cmd[data.k + data.i];
+			data.k++;
 		}
 		shelly->str[data.j][data.k] = '\0';
 		data.j++;
