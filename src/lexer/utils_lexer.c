@@ -104,6 +104,7 @@ int	check_quote(t_shelly *shelly)
 	}
 	return (0);
 }
+
 void	ft_free_tmp(char **tmp1, char **tmp2)
 {
 	if (*tmp1)

@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/19 17:57:47 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:05:45 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*get_oldpwd(void)
 
 void	ft_cd(char **str)
 {
-	char	*pwd;
-	char	*path;
+	char		*pwd;
+	char		*path;
 	t_shelly	*shelly;
 
 	shelly = get_shelly();
@@ -46,12 +46,10 @@ void	ft_cd(char **str)
 	{
 		path = get_oldpwd();
 		if (!path)
-		{
-			perror("bash: cd:  OLDPWD not set\n");
-			return(free(pwd));
-		}
+			return (free(pwd));
 		printf("%s\n", path);
-	}else
+	}
+	else
 		path = str[1];
 	if (chdir(path) != 0)
 	{

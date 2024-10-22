@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:19 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 13:56:36 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 12:12:54 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+char	*search_delimiter(t_ast *node)
+{
+	t_ast	*current;
+	char	*delimiter;
+
+	current = node;
+	if (node->right->node_type == CMD)
+		delimiter = ft_strdup(node->right->value[0]);
+	else
+	{
+		while (current->right && current->right->left->node_type != CMD)
+			current = current->right;
+		delimiter = ft_strdup(node->right->left->value[0]);
+	}
+	if (!delimiter)
+		return (NULL);
+	return (delimiter);
+}
 
 void	ft_free_heredock(t_shelly *shelly, t_token	*current, t_token	*tmp)
 {

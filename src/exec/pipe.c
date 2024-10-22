@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:38:01 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/21 23:59:12 by firdawssema      ###   ########.fr       */
+/*   Updated: 2024/10/22 12:11:19 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,21 @@ void	exec_pipe(t_shelly *shelly, t_ast *node)
 	int		pipe_fd[2];
 	pid_t	pid1;
 	pid_t	pid2;
-	int		status1;
-	int		status2;
 
 	if (!node->right)
 		return (after_pipe(shelly));
 	if (pipe(pipe_fd) == -1)
 		perror("Pipe error");
-	if ((pid1 = fork()) == -1)
+	pid1 = fork();
+	if (pid1 == -1)
 		perror("Fork error (left process)");
 	if (pid1 == 0)
 		child_process_left(shelly, node, pipe_fd);
-	if ((pid2 = fork()) == -1)
+	pid2 = fork();
+	if (pid2 == -1)
 		perror("Fork error (right process)");
 	if (pid2 == 0)
 		child_process_right(shelly, node, pipe_fd);
 	close_pipes(pipe_fd);
-	waitpid(pid1, &status1, 0);
-	waitpid(pid2, &status2, 0);
-	if (WIFEXITED(status2))
-		shelly->exit_code = WEXITSTATUS(status2);
-	else
-		shelly->exit_code = 1;
+	status_pipe(pid1, pid2, shelly);
 }

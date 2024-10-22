@@ -141,6 +141,7 @@ int			search_heredoc(t_shelly *shelly, t_ast *node);
 void		exec_fork_heredoc(t_shelly *shelly, t_ast *node);
 int			adapt_cmd(t_shelly *shelly);
 void		ft_free_heredock(t_shelly *shelly, t_token *current, t_token *tmp);
+char		*search_delimiter(t_ast *node);
 //exec trunc
 void		exec_trunc(t_shelly *shelly, t_ast *node);
 //exec append
@@ -154,6 +155,7 @@ void		handle_fork_error(void);
 void		child_process_left(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
 void		child_process_right(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
 void		exec_pipe(t_shelly *shelly, t_ast *node);
+void		status_pipe(pid_t pid1, pid_t pid2, t_shelly *shelly);
 //split_cmd
 int			size_elem(t_shelly *shelly, int i, int res);
 int			browse_elem(t_shelly *shelly, int i, int res);

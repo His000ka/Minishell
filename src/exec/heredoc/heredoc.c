@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/22 11:30:09 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 12:12:46 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-char	*search_delimiter(t_ast *node)
-{
-	t_ast	*current;
-	char	*delimiter;
-
-	current = node;
-	if (node->right->node_type == CMD)
-		delimiter = ft_strdup(node->right->value[0]);
-	else
-	{
-		while (current->right && current->right->left->node_type != CMD)
-			current = current->right;
-		delimiter = ft_strdup(node->right->left->value[0]);
-	}
-	if (!delimiter)
-		return (NULL);
-	return (delimiter);
-}
 
 char	*before_expend(char *input, t_data_elem *data)
 {
