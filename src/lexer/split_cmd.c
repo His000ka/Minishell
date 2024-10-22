@@ -67,7 +67,6 @@ int	split_command(t_shelly *shelly)
 
 	count = 0;
 	count += count_elem(shelly, count);
-	printf("count: %d\n", count);
 	if (count == 0)
 		return (EXIT_FAILURE);
 	shelly->str = malloc(sizeof(char *) * (count + 1));

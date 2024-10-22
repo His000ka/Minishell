@@ -23,11 +23,9 @@ void	algo_minishell(t_shelly *shelly)
 	check = ft_lexer(shelly);
 	if (check == 0)
 	{
-		affiche_token(shelly);
 		check = ft_parser(shelly);
 		if (check == 0)
 		{
-			affiche_ast(shelly->ast, 0);
 			check = exec_heredoc(shelly, shelly->ast);
 			if (check == 0)
 				ft_exec(shelly, shelly->ast);

@@ -109,6 +109,7 @@ void		msg_cmd_not_found(t_ast *node);
 int			ft_lexer(t_shelly *shelly);
 //tokenstr
 char		*token_str(t_shelly *shelly, char *val);
+void		ft_free_tmp(char **tmp1, char **tmp2);
 //parser
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);
