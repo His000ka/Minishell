@@ -57,7 +57,7 @@ char	*find_executable_in_path(t_shelly *shelly, char *cmd)
 	path_copy = ft_strdup(path_env);
 	if (!path_copy)
 		return (NULL);
-	path_token = strtok(path_copy, ":");
+	path_token = ft_strtok(path_copy, ":");
 	while (path_token != NULL)
 	{
 		full_path = path_concat(path_token, cmd);
@@ -66,7 +66,7 @@ char	*find_executable_in_path(t_shelly *shelly, char *cmd)
 		if (is_executable(full_path))
 			return (free(path_copy), full_path);
 		free(full_path);
-		path_token = strtok(NULL, ":");
+		path_token = ft_strtok(NULL, ":");
 	}
 	free(path_copy);
 	return (NULL);

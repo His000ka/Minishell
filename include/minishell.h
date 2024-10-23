@@ -105,6 +105,8 @@ int			ft_error(char *str, char var, int nb);
 char		*ft_strndup(const char *s, int n);
 char		*ft_strsearch(char *s, int c, int flag);
 char		*ft_strcpy(char *dest, char *src);
+char		*ft_strtok(char *str, const char *delim);
+void		recup_value_1(t_ast *node);
 //msg_error
 void		msg_not_file(t_shelly *shelly, char *value);
 void		msg_cmd_not_found(t_ast *node);

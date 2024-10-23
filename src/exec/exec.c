@@ -56,7 +56,10 @@ void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
 	shelly->exit_code = 0;
 	if (ft_strcmp(node->value[0], "") == 0)
+	{
+		shelly->exit_code = 127;
 		return (msg_cmd_not_found(node));
+	}
 	if (ft_builtins(shelly, node->value[0], node) == 0)
 		return ;
 	if (exec_cmd_path(node->value[0], node->value, shelly) == 0)

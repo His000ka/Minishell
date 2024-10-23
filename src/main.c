@@ -23,6 +23,7 @@ void	algo_minishell(t_shelly *shelly)
 	check = ft_lexer(shelly);
 	if (check == 0)
 	{
+		affiche_token(shelly);
 		check = ft_parser(shelly);
 		if (check == 0)
 		{
