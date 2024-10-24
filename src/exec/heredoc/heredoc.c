@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/23 10:29:29 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:09:26 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	adapt_cmd(t_shelly *shelly)
 	if (tmp->next)
 		tmp->next->prev = tmp->prev;
 	ft_free_heredock(shelly, tmp, current);
-	affiche_token(shelly);
+	//affiche_token(shelly);
 	if (ft_parser(shelly) == 0)
 	{
 		if (exec_heredoc(shelly, shelly->ast) == 0)

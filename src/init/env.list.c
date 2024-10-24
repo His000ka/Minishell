@@ -57,7 +57,7 @@ void	increment_shlvl(t_shelly *shelly)
 	{
 		if (ft_strcmp(tmp->content, "SHLVL") == 0)
 		{
-			shlvl_value = ft_atoi(tmp->value) + 1;
+			shlvl_value = (int)ft_atoi(tmp->value) + 1;
 			free(tmp->value);
 			new_value = ft_itoa(shlvl_value);
 			tmp->value = new_value;

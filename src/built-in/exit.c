@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:29:33 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/18 12:49:42 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:23:51 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	is_numeric(char *str)
 
 int	ft_exit(char **str)
 {
-	int			is_num;
-	t_shelly	*shelly;
+	unsigned long long			is_num;
+	t_shelly					*shelly;
 
 	shelly = get_shelly();
 	if (str[1] == NULL)
@@ -61,5 +61,5 @@ int	ft_exit(char **str)
 		return (shelly->exit_code = 1, 1);
 	}
 	printf("exit\n");
-	exit(is_num % 256);
+	exit((int)is_num % 256);
 }

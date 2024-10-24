@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:19 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/23 13:00:22 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:09:18 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	not_cmd_left(t_shelly *shelly)
 		shelly->token = shelly->token->next;
 	else
 		return ;
-	affiche_token(shelly);
+	//affiche_token(shelly);
 	free_ast(shelly->ast);
 	if (ft_parser(shelly) == 0)
 	{

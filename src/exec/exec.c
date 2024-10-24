@@ -62,10 +62,15 @@ void	exec_cmd(t_shelly *shelly, t_ast *node)
 	}
 	if (ft_builtins(shelly, node->value[0], node) == 0)
 		return ;
+	shelly->process_running = 1;
 	if (exec_cmd_path(node->value[0], node->value, shelly) == 0)
+	{
+		shelly->process_running = 0;
 		return ;
+	}
 	shelly->exit_code = 127;
 	msg_cmd_not_found(node);
+	shelly->process_running = 0;
 }
 
 void	*ft_exec(t_shelly *shelly, t_ast *node)

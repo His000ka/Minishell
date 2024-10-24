@@ -85,6 +85,7 @@ typedef struct s_shelly
 	int		ctrlc;
 	int		ctrls;
 	int		oldpwd_count;
+	int		process_running;
 	char	**str;
 	char	**envp;
 	int		loop;
