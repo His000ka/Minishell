@@ -42,17 +42,6 @@ t_shelly	*get_shelly(void)
 	return (&shelly);
 }
 
-void	not_shelly_cmd(t_shelly *shelly)
-{
-	if (shelly->ctrlc == 0 || shelly->ctrls == 0)
-		return (control_d());
-	else
-	{
-		shelly->ctrlc = 0;
-		shelly->ctrls = 0;
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_shelly	*shelly;
@@ -68,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			shelly->cmd = readline("MINISHELL> ");
 			if (!shelly->cmd)
-				not_shelly_cmd(shelly);
+				return(control_d(), 1);
 			else
 			{
 				add_history(shelly->cmd);

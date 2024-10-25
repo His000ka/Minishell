@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:57:31 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/18 17:53:19 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/25 21:04:00 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	concat_export(t_shelly *shelly, char *str)
 
 int	ft_export_2(t_shelly *shelly, char *av)
 {
+	if(av[0] == '_' && av[1] == '=')
+		return (1);
 	if (ft_strnstr(av, "-", ft_strlen(av)) != NULL
 		|| ft_strcmp(av, "+=") == 0
 		|| ft_isdigit(av[0]) == 1 || av[0] == '=')

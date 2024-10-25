@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/22 14:44:25 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/25 21:41:19 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,20 @@ char	*get_oldpwd(void)
 {
 	char		*oldpwd;
 	t_shelly	*shelly;
+	t_env		*current;
 
 	shelly = get_shelly();
-	oldpwd = getenv("OLDPWD");
+	oldpwd = NULL;
+	current = shelly->env;
+	while (current)
+	{
+		if (ft_strcmp(current->content, "OLDPWD") == 0)
+		{
+			oldpwd = current->value;
+			break ;
+		}
+		current = current->next;
+	}
 	if (!oldpwd || shelly->oldpwd_count == 0)
 	{
 		printf("bash: cd: OLDPWD not set\n");
@@ -40,48 +51,42 @@ void	ft_cd(char **str)
 	char		*pwd;
 	char		*path;
 	t_shelly	*shelly;
+	t_env		*current;
+	char		*old;
 
 	shelly = get_shelly();
-	pwd = getcwd(NULL, 0);
+	old = getcwd(NULL, 0);
+	pwd = NULL;
+	current = shelly->env;
+
 	if (!str[1] || ft_strcmp(str[1], "~") == 0)
 		path = getenv("HOME");
 	else if (ft_strcmp(str[1], "-") == 0)
 	{
 		path = get_oldpwd();
 		if (!path)
-			return (free(pwd));
+			return (free(old));
 		printf("%s\n", path);
 	}
 	else
 		path = str[1];
 	if (chdir(path) != 0)
 	{
-		printf("bash: cd: %s: No such file or directory\n", path);
+		printf("bash: cd: %s: No such file or directory\n", str[1]);
 		shelly->exit_code = 1;
+		free(old);
+		return ;
 	}
+	pwd = getcwd(NULL, 0);
+	shelly->oldpwd_count = 1;
+	while (current)
+	{
+		if (ft_strcmp(current->content, "OLDPWD") == 0)
+			current->value = ft_strdup(old);
+		else if (ft_strcmp(current->content, "PWD") == 0)
+			current->value = ft_strdup(pwd);
+		current = current->next;
+	}
+	free(old);
 	free(pwd);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc < 2)
-// 	{
-// 		printf("Usage: %s [directory]\n", argv[0]);
-// 		return (1);
-// 	}
-
-// 	// Print current working directory before change
-// 	char *cwd = getcwd(NULL, 0);
-// 	printf("Current Directory: %s\n", cwd);
-// 	free(cwd);
-
-// 	// Call the cd function with the provided directory
-// 	ft_cd(argv);
-
-// 	// Print current working directory after change
-// 	cwd = getcwd(NULL, 0);
-// 	printf("New Directory: %s\n", cwd);
-// 	free(cwd);
-
-// 	return (0);
-// }

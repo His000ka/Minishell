@@ -18,9 +18,9 @@ PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
 LIBFT = $(LIBFT_DIR)/libft.a
 
-READLINE_DIR = /usr/local
+READLINE_DIR = /Users/fimazouz/.homebrew/opt/readline
 INCLUDES += -I $(READLINE_DIR)/include
-LIBS = -L $(READLINE_DIR)/lib -lreadline
+LIBS = -L $(READLINE_DIR)/lib -I $(READLINE_DIR)/include -lreadline
 
 OBJ_DIR = obj
 
