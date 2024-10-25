@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_mult.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:21:36 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/18 15:25:55 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 12:39:14 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	check_mult_l(t_token *tmp)
 	return (0);
 }
 
-int	check_mult_token(t_token *token)
+int	check_mult_token(t_shelly *shelly, t_token *token)
 {
 	int		check;
 	t_token	*tmp;
@@ -77,7 +77,10 @@ int	check_mult_token(t_token *token)
 		if (tmp->type == CMD && tmp->str[0] == '<')
 			check += check_mult_l(tmp);
 		if (check != 0)
+		{
+			shelly->exit_code = 258;
 			return (check);
+		}
 		tmp = tmp->next;
 	}
 	return (0);

@@ -56,7 +56,10 @@ void	exec_cmd(t_shelly *shelly, t_ast *node)
 {
 	shelly->exit_code = 0;
 	if (ft_strcmp(node->value[0], "") == 0)
+	{
+		shelly->exit_code = 127;
 		return (msg_cmd_not_found(node));
+	}
 	if (ft_builtins(shelly, node->value[0], node) == 0)
 		return ;
 	if (exec_cmd_path(node->value[0], node->value, shelly) == 0)
@@ -69,13 +72,13 @@ void	*ft_exec(t_shelly *shelly, t_ast *node)
 {
 	if (node->node_type == CMD)
 		exec_cmd(shelly, node);
-	else if (node->node_type == APPEND)
+	if (node->node_type == APPEND)
 		exec_append(shelly, node);
-	else if (node->node_type == TRUNC)
+	if (node->node_type == TRUNC)
 		exec_trunc(shelly, node);
-	else if (node->node_type == INPUT)
+	if (node->node_type == INPUT)
 		exec_input(shelly, node);
-	else if (node->node_type == PIPE)
+	if (node->node_type == PIPE)
 		exec_pipe(shelly, node);
 	return (NULL);
 }

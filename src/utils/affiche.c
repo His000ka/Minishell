@@ -6,11 +6,11 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 15:34:22 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/20 15:36:15 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/23 10:19:39 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	affiche_ast(t_ast *node, int level)
 {

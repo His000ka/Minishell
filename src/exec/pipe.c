@@ -6,7 +6,7 @@
 /*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 18:38:01 by firdawssema       #+#    #+#             */
-/*   Updated: 2024/10/19 18:13:13 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:11:19 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,23 @@ void	child_process_left(t_shelly *shelly, t_ast *node, int pipe_fd[2])
 	dup2(pipe_fd[1], STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	if (node->left)
-		ft_exec(shelly, node->left);
-	exit(EXIT_SUCCESS);
+	ft_exec(shelly, node->left);
+	exit(shelly->exit_code);
 }
 
 void	child_process_right(t_shelly *shelly, t_ast *node, int pipe_fd[2])
 {
 	dup2(pipe_fd[0], STDIN_FILENO);
-	close(pipe_fd[1]);
 	close(pipe_fd[0]);
-	if (node->right)
-		ft_exec(shelly, node->right);
-	exit(EXIT_SUCCESS);
+	close(pipe_fd[1]);
+	ft_exec(shelly, node->right);
+	exit(shelly->exit_code);
+}
+
+void	close_pipes(int pipe_fd[2])
+{
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 }
 
 void	exec_pipe(t_shelly *shelly, t_ast *node)
@@ -68,19 +72,17 @@ void	exec_pipe(t_shelly *shelly, t_ast *node)
 	if (!node->right)
 		return (after_pipe(shelly));
 	if (pipe(pipe_fd) == -1)
-		handle_pipe_error();
+		perror("Pipe error");
 	pid1 = fork();
 	if (pid1 == -1)
-		handle_fork_error();
+		perror("Fork error (left process)");
 	if (pid1 == 0)
 		child_process_left(shelly, node, pipe_fd);
 	pid2 = fork();
 	if (pid2 == -1)
-		handle_fork_error();
+		perror("Fork error (right process)");
 	if (pid2 == 0)
 		child_process_right(shelly, node, pipe_fd);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	close_pipes(pipe_fd);
+	status_pipe(pid1, pid2, shelly);
 }

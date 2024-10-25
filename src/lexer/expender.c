@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expender.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
+/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:58:08 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/21 18:01:02 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:19:43 by fimazouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ char	*expend_exit_code(t_shelly *shelly, t_data_elem *data)
 	return (ft_strdup(ft_itoa(shelly->exit_code)));
 }
 
+char	*get_value_env(t_shelly *shelly, char *path)
+{
+	t_env	*current;
+
+	current = shelly->env;
+	while (current)
+	{
+		if (ft_strcmp(current->content, path) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 char	*expender(t_shelly *shelly, t_data_elem *data, char *val)
 {
 	char	*value;
@@ -58,7 +72,7 @@ char	*expender(t_shelly *shelly, t_data_elem *data, char *val)
 		return (NULL);
 	if (ft_strncmp(path, "?", 1) == 0)
 		return (expend_exit_code(shelly, data));
-	value = getenv(path);
+	value = get_value_env(shelly, path);
 	res = expende_value(value);
 	free(path);
 	data->i += data->size;

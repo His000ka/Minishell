@@ -6,30 +6,11 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:10:52 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/22 11:30:09 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/23 10:29:29 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-char	*search_delimiter(t_ast *node)
-{
-	t_ast	*current;
-	char	*delimiter;
-
-	current = node;
-	if (node->right->node_type == CMD)
-		delimiter = ft_strdup(node->right->value[0]);
-	else
-	{
-		while (current->right && current->right->left->node_type != CMD)
-			current = current->right;
-		delimiter = ft_strdup(node->right->left->value[0]);
-	}
-	if (!delimiter)
-		return (NULL);
-	return (delimiter);
-}
 
 char	*before_expend(char *input, t_data_elem *data)
 {
@@ -55,12 +36,15 @@ char	*expend_heredoc(t_shelly *shelly, char *input)
 	if (ft_strchr(input, '$') == NULL)
 		return (ft_strdup(input));
 	res = ft_strdup("");
+	if (!res)
+		return (NULL);
 	while (input[data.i] != '\0')
 	{
 		if (input[data.i] == '$')
 			expend = ft_strjoin(res, expender(shelly, &data, input));
 		else
 			expend = ft_strjoin(res, before_expend(input, &data));
+		free(res);
 		res = ft_strdup(expend);
 		free(expend);
 		expend = NULL;
@@ -112,6 +96,7 @@ int	adapt_cmd(t_shelly *shelly)
 	if (tmp->next)
 		tmp->next->prev = tmp->prev;
 	ft_free_heredock(shelly, tmp, current);
+	affiche_token(shelly);
 	if (ft_parser(shelly) == 0)
 	{
 		if (exec_heredoc(shelly, shelly->ast) == 0)

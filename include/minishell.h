@@ -82,6 +82,9 @@ typedef struct s_token
 typedef struct s_shelly
 {
 	char	*cmd;
+	int		ctrlc;
+	int		ctrls;
+	int		oldpwd_count;
 	char	**str;
 	char	**envp;
 	int		loop;
@@ -102,6 +105,8 @@ int			ft_error(char *str, char var, int nb);
 char		*ft_strndup(const char *s, int n);
 char		*ft_strsearch(char *s, int c, int flag);
 char		*ft_strcpy(char *dest, char *src);
+char		*ft_strtok(char *str, const char *delim);
+void		recup_value_1(t_ast *node);
 //msg_error
 void		msg_not_file(t_shelly *shelly, char *value);
 void		msg_cmd_not_found(t_ast *node);
@@ -114,7 +119,7 @@ void		ft_free_tmp(char **tmp1, char **tmp2);
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);
 //check mult
-int			check_mult_token(t_token *token);
+int			check_mult_token(t_shelly *shelly, t_token *token);
 //exec
 void		pid_pos(t_shelly *shelly, int fd_out, pid_t pid);
 void		*ft_exec(t_shelly *shelly, t_ast *node);
@@ -122,6 +127,7 @@ char		*search_value(t_ast *node);
 //execve
 void		exit_code_execve(t_shelly *shelly);
 int			exec_cmd_path(char *cmd, char **args, t_shelly *shelly);
+char		*find_executable_in_path(t_shelly *shelly, char *cmd);
 //ast
 t_ast		*create_ast(t_token *tokens);
 t_ast		*create_ast_node(char **value, int node_type);
@@ -141,11 +147,13 @@ int			search_heredoc(t_shelly *shelly, t_ast *node);
 void		exec_fork_heredoc(t_shelly *shelly, t_ast *node);
 int			adapt_cmd(t_shelly *shelly);
 void		ft_free_heredock(t_shelly *shelly, t_token *current, t_token *tmp);
+char		*search_delimiter(t_ast *node);
 //exec trunc
 void		exec_trunc(t_shelly *shelly, t_ast *node);
 //exec append
 void		exec_append(t_shelly *shelly, t_ast *node);
 //exec input
+void		input_last_form(t_shelly *shelly, t_ast *node);
 void		exec_input(t_shelly *shelly, t_ast *node);
 //pipe
 void		exec_pipe(t_shelly *shelly, t_ast *node);
@@ -154,6 +162,7 @@ void		handle_fork_error(void);
 void		child_process_left(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
 void		child_process_right(t_shelly *shelly, t_ast *node, int pipe_fd[2]);
 void		exec_pipe(t_shelly *shelly, t_ast *node);
+void		status_pipe(pid_t pid1, pid_t pid2, t_shelly *shelly);
 //split_cmd
 int			size_elem(t_shelly *shelly, int i, int res);
 int			browse_elem(t_shelly *shelly, int i, int res);
@@ -161,7 +170,7 @@ int			info_elem(t_shelly *shelly, int j, char *str);
 int			add_elem(t_shelly *shelly, int count);
 int			split_command(t_shelly *shelly);
 //init
-int			init_shelly(t_shelly *shelly);
+int			init_shelly(t_shelly *shelly, char **envp);
 //quote utils (lexer)
 int			check_quote(t_shelly *shelly);
 char		*manage_quote(t_shelly *shelly, t_data_elem *data, char *val);
@@ -210,6 +219,7 @@ void		update_envp(t_shelly *shelly);
 void		copy_env_to_envp(t_shelly *shelly);
 void		free_envp(char **envp);
 int			count_env_vars(t_env *env);
+char		*get_value_env(t_shelly *shelly, char *path);
 //exit
 int			if_exit(char **str);
 int			is_numeric(char *str);

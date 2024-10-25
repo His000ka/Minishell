@@ -42,7 +42,10 @@ int	check_token(t_shelly *shelly)
 			check = check_redirect(tmp);
 		tmp = tmp->next;
 		if (check != 0)
+		{
+			shelly->exit_code = 258;
 			return (check);
+		}
 	}
 	return (check);
 }
@@ -51,7 +54,7 @@ int	ft_parser(t_shelly *shelly)
 {
 	if (check_token(shelly) > 0)
 		return (1);
-	if (check_mult_token(shelly->token) > 0)
+	if (check_mult_token(shelly, shelly->token) > 0)
 		return (1);
 	shelly->ast = create_ast(shelly->token);
 	if (!shelly->ast)
