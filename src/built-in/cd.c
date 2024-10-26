@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:23:53 by fimazouz          #+#    #+#             */
-/*   Updated: 2024/10/25 21:41:19 by fimazouz         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:12:42 by firdawssema      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,14 @@ void	ft_cd(char **str)
 	while (current)
 	{
 		if (ft_strcmp(current->content, "OLDPWD") == 0)
-			current->value = ft_strdup(old);
-		else if (ft_strcmp(current->content, "PWD") == 0)
-			current->value = ft_strdup(pwd);
+		{
+			if(old)
+				current->value = ft_strdup(old);
+		}else if (ft_strcmp(current->content, "PWD") == 0)
+		{
+			if(pwd)
+				current->value = ft_strdup(pwd);	
+		}
 		current = current->next;
 	}
 	free(old);

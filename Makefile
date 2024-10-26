@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
+#    By: firdawssemazouz <firdawssemazouz@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/22 14:32:33 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/10/26 17:25:27 by firdawssema      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
