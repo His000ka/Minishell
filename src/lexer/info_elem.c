@@ -14,16 +14,10 @@
 
 int	size_elem(t_shelly *shelly, int i, int res)
 {
-	int	s;
-
-	s = 0;
 	if (is_quote(&shelly->cmd[res], 1) != 0)
 		return (i - res);
 	else if (is_good_char(&shelly->cmd[res], 1) != 0)
-	{
-		s = is_good_char(&shelly->cmd[res], 3);
 		return (i - res);
-	}
 	return (1);
 }
 
