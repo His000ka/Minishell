@@ -25,5 +25,7 @@ int	init_shelly(t_shelly *shelly, char **envp)
 	shelly->exit_code = 0;
 	shelly->ctrlc = 0;
 	shelly->ctrls = 0;
+	shelly->fd_in = -1;
+	shelly->fd_out = -1;
 	return (0);
 }

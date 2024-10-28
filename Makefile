@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fimazouz <fimazouz@student.42.fr>          +#+  +:+       +#+         #
+#    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/22 14:32:33 by fimazouz         ###   ########.fr        #
+#    Updated: 2024/10/25 17:33:41 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
 LIBFT = $(LIBFT_DIR)/libft.a
 
-READLINE_DIR = /Users/fimazouz/.homebrew/opt/readline
+READLINE_DIR = /usr/local
 INCLUDES += -I $(READLINE_DIR)/include
-LIBS = -L $(READLINE_DIR)/lib -I $(READLINE_DIR)/include -lreadline
+LIBS = -L $(READLINE_DIR)/lib -lreadline
 
 OBJ_DIR = obj
 

@@ -88,6 +88,8 @@ typedef struct s_shelly
 	int		process_running;
 	char	**str;
 	char	**envp;
+	int		fd_in;
+	int		fd_out;
 	int		loop;
 	char	*delimiter;
 	int		fd[2];
@@ -151,6 +153,7 @@ void		ft_free_heredock(t_shelly *shelly, t_token *current, t_token *tmp);
 char		*search_delimiter(t_ast *node);
 //exec trunc
 void		exec_trunc(t_shelly *shelly, t_ast *node);
+void		exec_trunc_2(t_shelly *shelly, t_ast *node, t_ast *node_in);
 //exec append
 void		exec_append(t_shelly *shelly, t_ast *node);
 //exec input
