@@ -23,7 +23,7 @@ void	control_c(int sig)
 	(void)sig;
 	shelly = get_shelly();
 	if (shelly->process_running == 1)
-		shelly->exit_code = 131;
+		shelly->exit_code = 130;
 	else
 	{
 		shelly->exit_code = 1;	
@@ -47,7 +47,10 @@ void	control_s(int sig)
 	(void)sig;
 	shelly = get_shelly();
 	if (shelly->process_running == 1)
+	{
 		shelly->exit_code = 131;
+		printf("Quit: 3\n");
+	}
 	else
 		shelly->exit_code = 0;
 	rl_redisplay();
