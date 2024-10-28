@@ -156,8 +156,10 @@ void		exec_trunc(t_shelly *shelly, t_ast *node);
 void		exec_trunc_2(t_shelly *shelly, t_ast *node, t_ast *node_in);
 //exec append
 void		exec_append(t_shelly *shelly, t_ast *node);
+void		exec_append_v2(t_shelly *shelly, t_ast *node, t_ast *node_in);
 //exec input
 void		exec_input(t_shelly *shelly, t_ast *node);
+t_ast		*search_node_exec(t_ast *node);
 //pipe
 void		exec_pipe(t_shelly *shelly, t_ast *node);
 void		handle_pipe_error(void);

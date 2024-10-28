@@ -12,31 +12,89 @@
 
 #include "../../../include/minishell.h"
 
+t_ast	*mult_append(t_shelly *shelly, t_ast *node, t_ast *node_in)
+{
+	t_ast	*current;
+
+	current = node;
+	while (current->right && (current->right->node_type == TRUNC
+			|| current->right->node_type == APPEND))
+	{
+		if (current->right->node_type == TRUNC)
+			shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
+					| O_TRUNC, 0644);
+		else
+			shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
+					| O_APPEND, 0644);
+		if (shelly->fd_out == -1)
+			return (NULL);
+		close(shelly->fd_out);
+		current = current->right;
+	}
+	if (current->node_type == TRUNC)
+	{
+		exec_trunc_2(shelly, current, node_in);
+		return (NULL);
+	}
+	return (current);
+}
+
 void	exec_append(t_shelly *shelly, t_ast *node)
 {
-	int		fd_out;
 	pid_t	pid;
+	t_ast	*current;
 
-	if (node->right->node_type != CMD)
-		ft_exec(shelly, node->right);
-	fd_out = open(search_value(node), O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd_out == -1)
+	current = mult_append(shelly, node, node->left);
+	if (!current)
+		return ;
+	shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
+			| O_APPEND, 0644);
+	if (shelly->fd_out == -1)
 		return ;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (dup2(fd_out, STDOUT_FILENO) == -1)
-		{
-			write(STDERR_FILENO, "ERROR DUP2\n", 11);
+		if (dup2(shelly->fd_out, STDOUT_FILENO) == -1)
 			exit(EXIT_FAILURE);
-		}
-		close(fd_out);
+		close(shelly->fd_out);
 		if (node->left)
 			ft_exec(shelly, node->left);
 		exit(shelly->exit_code);
 	}
 	else if (pid > 0)
-		pid_pos(shelly, fd_out, pid);
+		pid_pos(shelly, shelly->fd_out, pid);
+	else
+		exit(EXIT_FAILURE);
+}
+
+void	exec_append_v2(t_shelly *shelly, t_ast *node, t_ast *node_in)
+{
+	pid_t	pid;
+	t_ast	*current;
+
+	current = mult_append(shelly, node, node_in);
+	if (!current)
+		return ;
+	shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
+			| O_APPEND, 0644);
+	if (shelly->fd_out == -1)
+		return ;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (dup2(shelly->fd_out, STDOUT_FILENO) == -1)
+			exit(EXIT_FAILURE);
+		close(shelly->fd_out);
+		if (node_in)
+		{
+			ft_exec(shelly, node_in);
+			close(shelly->fd_in);
+			shelly->fd_in = -1;
+		}
+		exit(shelly->exit_code);
+	}
+	else if (pid > 0)
+		pid_pos(shelly, shelly->fd_out, pid);
 	else
 		exit(EXIT_FAILURE);
 }

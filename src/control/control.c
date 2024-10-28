@@ -15,22 +15,15 @@
 
 #include "../../include/minishell.h"
 
-
 void	control_c(int sig)
 {
 	t_shelly	*shelly;
 
-	(void)sig;
 	shelly = get_shelly();
-	if (shelly->process_running == 1)
-		shelly->exit_code = 130;
-	else
-	{
-		shelly->exit_code = 1;	
-		rl_on_new_line();
-	}
-	printf("\n");
-	rl_replace_line("", 0);
+	shelly->ctrlc = 1;
+	shelly->exit_code = 128 + sig;
+	rl_redisplay();
+	write(STDOUT_FILENO, "\nMINISHELL> ", 12);
 	rl_redisplay();
 }
 

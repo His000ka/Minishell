@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/28 09:48:13 by marvin           ###   ########.fr        #
+#    Updated: 2024/10/28 15:08:19 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS = \
 	src/exec/pipe_2.c \
 	src/exec/utils.c \
 	src/exec/exec_append/exec_append.c \
+	src/exec/exec_input/utils_input.c \
 	src/exec/exec_input/exec_input.c \
 	src/exec/exec_trunc/exec_trunc.c \
 	src/exec/heredoc/heredoc.c \
