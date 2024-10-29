@@ -121,6 +121,10 @@ void		ft_free_tmp(char **tmp1, char **tmp2);
 //parser
 int			ft_parser(t_shelly *shelly);
 int			is_cmd(int type);
+//node exec
+t_ast		*search_node_exec(t_ast *node);
+char		**fill_cmd_cmd(t_ast *node, char **cmd, int *index);
+char		**fill_cmd(t_ast *node, char **cmd, int *index);
 //check mult
 int			check_mult_token(t_shelly *shelly, t_token *token);
 //exec
@@ -151,6 +155,10 @@ void		exec_fork_heredoc(t_shelly *shelly, t_ast *node);
 int			adapt_cmd(t_shelly *shelly);
 void		ft_free_heredock(t_shelly *shelly, t_token *current, t_token *tmp);
 char		*search_delimiter(t_ast *node);
+//utils heredoc
+int			size_cmd_exec_heredoc(t_ast *node);
+char		**adapt_cmd_exec_heredoc(t_ast *node, int size);
+t_ast	*create_node_heredoc(int node_type, char **copy);
 //exec trunc
 void		exec_trunc(t_shelly *shelly, t_ast *node);
 void		exec_trunc_2(t_shelly *shelly, t_ast *node, t_ast *node_in);
@@ -160,6 +168,7 @@ void		exec_append_v2(t_shelly *shelly, t_ast *node, t_ast *node_in);
 //exec input
 void		exec_input(t_shelly *shelly, t_ast *node);
 t_ast		*search_node_exec(t_ast *node);
+t_ast		*create_node_exec(int node_type, char **copy);
 //pipe
 void		exec_pipe(t_shelly *shelly, t_ast *node);
 void		handle_pipe_error(void);

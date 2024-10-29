@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_input.c                                      :+:      :+:    :+:   */
+/*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 15:06:58 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/29 18:46:48 by pitroin          ###   ########.fr       */
+/*   Created: 2024/10/29 17:26:50 by pitroin           #+#    #+#             */
+/*   Updated: 2024/10/29 18:53:06 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_ast	*create_node_exec(int node_type, char **copy)
+t_ast	*create_node_heredoc(int node_type, char **copy)
 {
 	t_ast	*node;
 	int		size;
@@ -26,7 +26,7 @@ t_ast	*create_node_exec(int node_type, char **copy)
 		size++;
 	node->value = malloc(sizeof(char *) * (size + 1));
 	if (!node->value)
-		return (free(node), NULL);
+		return (NULL);
 	i = -1;
 	while (copy[++i])
 		node->value[i] = ft_strdup(copy[i]);
@@ -37,65 +37,66 @@ t_ast	*create_node_exec(int node_type, char **copy)
 	return (node);
 }
 
-int	count_values(char **values)
+int	count_values_heredoc(char **values)
 {
-	int	count = 0;
+	int	count;
+
+	count = 0;
+	if (!values)
+		return (0);
 	while (values[count])
 		count++;
 	return (count);
 }
 
-int	size_cmd_exec(t_ast *node)
+int	size_node_left(t_ast *node)
 {
 	int	size;
 
 	size = 0;
 	if (node->left && node->left->node_type == CMD)
-		size += count_values(node->left->value);
-	while (node->right && node->right->node_type == INPUT)
+		size += count_values_heredoc(node->left->value);
+	else if (node->left)
 	{
-		node = node->right;
-		size += count_values(&node->left->value[1]);
+		while (node->left && node->left->node_type != CMD)
+		{
+			if (node->left->right)
+				size += count_values_heredoc(node->left->right->value);
+			node = node->left;
+		}
+		if (node->left && node->left->node_type == CMD)
+			size += count_values_heredoc(node->left->value);
 	}
-	if (node->right && node->right->node_type == CMD)
-		size += count_values(&node->right->value[1]);
-	else if (node->right && node->right->left)
-		size += count_values(&node->right->left->value[1]);
 	return (size);
 }
 
-char	**fill_cmd(t_ast *node, char **cmd, int *index)
+int	size_cmd_exec_heredoc(t_ast *node)
 {
-	int	j;
+	int		size;
 
-	j = 0;
-	if (node->node_type == CMD)
+	size = 0;
+	if (node->left)
+		size += size_node_left(node);
+	while (node->right && node->right->node_type == INPUT)
 	{
-		while (node->value[++j])
-			cmd[(*index)++] = ft_strdup(node->value[j]);
+		node = node->right;
+		if (node->left->value && node->left->value[1])
+			size += count_values_heredoc(&node->left->value[1]);
 	}
-	return (cmd);
+	if (node->right && node->right->node_type == CMD)
+		size += count_values_heredoc(&node->right->value[1]);
+	else if (node->right && node->right->left)
+	{
+		if (node->right->left->value && node->right->left->value[1])
+			size += count_values_heredoc(&node->right->left->value[1]);
+	}
+	return (size);
 }
 
-char	**fill_cmd_cmd(t_ast *node, char **cmd, int *index)
-{
-	int	j;
-
-	j = 0;
-	if (node->node_type == CMD)
-	{
-		while (node->value[j])
-		{
-			cmd[(*index)++] = ft_strdup(node->value[j]);
-			j++;
-		}
-	}
-	return (cmd);
-}
-
-char	**adapt_cmd_exec(t_ast *node, int size)
+char	**adapt_cmd_exec_heredoc(t_ast *node, int size)
 {
 	char	**cmd;
+	t_ast	*tmp;
 	int		i;
 
 	i = 0;
@@ -104,6 +105,17 @@ char	**adapt_cmd_exec(t_ast *node, int size)
 		return (NULL);
 	if (node->left && node->left->node_type == CMD)
 		cmd = fill_cmd_cmd(node->left, cmd, &i);
+	else if (node->left)
+	{
+		tmp = node;
+		while (tmp->left && tmp->left->node_type != CMD)
+		{
+			cmd = fill_cmd(tmp->left->right, cmd, &i);
+			tmp = node->left;
+		}
+		if (tmp->left && tmp->left->node_type == CMD)
+			cmd = fill_cmd_cmd(tmp->left, cmd, &i);
+	}
 	while (node->right && node->right->node_type == INPUT)
 	{
 		node = node->right;
@@ -115,20 +127,4 @@ char	**adapt_cmd_exec(t_ast *node, int size)
 		cmd = fill_cmd(node->right->left,cmd, &i);
 	cmd[i] = NULL;
 	return (cmd);
-}
-
-t_ast	*search_node_exec(t_ast *node)
-{
-	t_ast	*tmp;
-	char	**cmd;
-	int		size;
-
-	tmp = node;
-	size = size_cmd_exec(tmp);
-	if (size == 0)
-		return (NULL);
-	cmd = adapt_cmd_exec(tmp, size);
-	if (!cmd)
-		return (NULL);
-	return (create_node_exec(CMD, cmd));
 }

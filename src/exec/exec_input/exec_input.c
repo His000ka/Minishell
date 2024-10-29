@@ -38,8 +38,8 @@ t_ast	*search_file(t_shelly *shelly, t_ast *node)
 void	exec_input(t_shelly *shelly, t_ast *node)
 {
 	pid_t	pid;
-	t_ast	*node_exec;
 	t_ast	*node_current;
+	t_ast	*node_exec;
 
 	node_current = search_file(shelly, node);
 	node_exec = search_node_exec(node);
@@ -50,11 +50,11 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 	{
 		if (dup2(shelly->fd_in, STDIN_FILENO) == -1)
 			exit(EXIT_FAILURE);
-		if (node_exec && node_current->node_type == TRUNC)
+		if (node_current->node_type == TRUNC)
 			exec_trunc_2(shelly, node_current, node_exec);
-		else if (node_exec && node_current->node_type == APPEND)
+		else if (node_current->node_type == APPEND)
 			exec_append_v2(shelly, node_current, node_exec);
-		else if (node_exec)
+		else
 			ft_exec(shelly, node_exec);
 		exit(shelly->exit_code);
 	}
@@ -62,6 +62,5 @@ void	exec_input(t_shelly *shelly, t_ast *node)
 		pid_pos(shelly, shelly->fd_in, pid);
 	else
 		exit(EXIT_FAILURE);
-	if (!node->left)
-		free_ast(node_exec);
+	free_ast(node_exec);
 }

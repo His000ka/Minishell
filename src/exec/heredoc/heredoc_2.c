@@ -22,9 +22,14 @@ char	*search_delimiter(t_ast *node)
 		delimiter = ft_strdup(node->right->value[0]);
 	else
 	{
-		while (current->right && current->right->left->node_type != CMD)
-			current = current->right;
-		delimiter = ft_strdup(node->right->left->value[0]);
+		if (current->right->left->node_type == PIPE)
+			delimiter = ft_strdup(node->right->left->left->value[0]);
+		else
+		{
+			while (current->right && current->right->left->node_type != CMD)
+				current = current->right;
+			delimiter = ft_strdup(node->right->left->value[0]);
+		}
 	}
 	if (!delimiter)
 		return (NULL);
@@ -40,70 +45,94 @@ void	ft_free_heredock(t_shelly *shelly, t_token	*current, t_token	*tmp)
 	free(shelly->ast);
 }
 
-void	not_cmd_left(t_shelly *shelly)
+t_ast	*search_node_exec_heredoc(t_ast *node)
 {
-	if (shelly->token->next)
-		shelly->token = shelly->token->next;
-	else
-		return ;
-	if (shelly->token->next)
-		shelly->token = shelly->token->next;
-	else
-		return ;
-	if (shelly->token->type == PIPE && shelly->token->next)
-		shelly->token = shelly->token->next;
-	else
-		return ;
-	//affiche_token(shelly);
-	free_ast(shelly->ast);
-	if (ft_parser(shelly) == 0)
-	{
-		if (exec_heredoc(shelly, shelly->ast) == 0)
-			ft_exec(shelly, shelly->ast);
-	}
+	t_ast	*tmp;
+	char	**cmd;
+	int		size;
+
+	tmp = node;
+	size = size_cmd_exec_heredoc(tmp);
+	if (size == 0)
+		return (NULL);
+	cmd = adapt_cmd_exec_heredoc(tmp, size);
+	if (!cmd)
+		return (NULL);
+	return (create_node_heredoc(CMD, cmd));
 }
 
-void	exec_fork_heredoc_v2(t_shelly *shelly, t_ast *node)
+
+void	exec_fork_heredoc_3(t_shelly *shelly, t_ast *node, t_ast *node_exec)
 {
 	pid_t	pid;
-	int		fd_in;
 
-	fd_in = shelly->fd[0];
+	shelly->fd_in = shelly->fd[0];
 	pid = fork();
-	recup_value_1(node);
 	if (pid == 0)
 	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
+		if (dup2(shelly->fd_in, STDIN_FILENO) == -1)
 			exit(EXIT_FAILURE);
-		close(fd_in);
-		if (node->value)
-			ft_exec(shelly, node);
+		close(shelly->fd_in);
+		if (node->right->node_type == TRUNC)
+			return (exec_trunc_2(shelly, node->right, node_exec));
+		else if (node->right->node_type == APPEND)
+			return (exec_append_v2(shelly, node->right, node_exec));
+		else
+			ft_exec(shelly, node_exec);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 	{
-		close(fd_in);
+		close(shelly->fd_in);
 		waitpid(pid, NULL, 0);
 	}
 	else
 		write(STDERR_FILENO, "ERROR FORK\n", 11);
 }
 
+int	adapt_cmd_2(t_shelly *shelly)
+{
+	t_token	*current;
+
+	current = shelly->token;
+	current = current->next;
+	if (current->str)
+		free(current->str);
+	if (current->next && current->next->type == PIPE
+		&& current->next->next && current->next->type == HEREDOC)
+		shelly->token = current->next->next;
+	else
+	shelly->token = current->next;
+	ft_free_heredock(shelly, NULL, current);
+	if (ft_parser(shelly) == 0)
+	{
+		if (exec_heredoc(shelly, shelly->ast) == 0)
+			ft_exec(shelly, shelly->ast);
+	}
+	return (0);
+}
+
 int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
 {
+	t_ast	*node_exec;
+
+	node_exec = NULL;
 	if (pipe(shelly->fd) < 0)
 		return (ft_error("pipe", 0, 0));
+	node_exec = search_node_exec_heredoc(node);
+	shelly->delimiter = search_delimiter(node);
+	if (!shelly->delimiter)
+		return (1);
 	read_heredoc(shelly);
 	free(shelly->delimiter);
 	close(shelly->fd[1]);
-	if (node->right->node_type == CMD && !node->right->value[1])
-		exec_fork_heredoc(shelly, node);
-	else if (!node->left && node->right->node_type == CMD && node->right->value[1] && !node->right->value[2])
-		exec_fork_heredoc_v2(shelly, node->right);
-	else if (!node->left || node->right->right->node_type == PIPE)
-		not_cmd_left(shelly);
-	else
-		adapt_cmd(shelly);
+	if (node->left && node->right->node_type == HEREDOC)
+		return (adapt_cmd(shelly));
+	else if (node->right->node_type == HEREDOC)
+		return (adapt_cmd_2(shelly));
+	if (!node_exec)
+		return (1);
+	exec_fork_heredoc_3(shelly, node, node_exec);
 	return (0);
 }
 

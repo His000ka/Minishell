@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_input.c                                      :+:      :+:    :+:   */
+/*   node_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 15:06:58 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/29 18:46:48 by pitroin          ###   ########.fr       */
+/*   Created: 2024/10/29 12:38:59 by pitroin           #+#    #+#             */
+/*   Updated: 2024/10/29 12:39:24 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*create_node_exec(int node_type, char **copy)
 		size++;
 	node->value = malloc(sizeof(char *) * (size + 1));
 	if (!node->value)
-		return (free(node), NULL);
+		return (NULL);
 	i = -1;
 	while (copy[++i])
 		node->value[i] = ft_strdup(copy[i]);
@@ -37,82 +37,76 @@ t_ast	*create_node_exec(int node_type, char **copy)
 	return (node);
 }
 
-int	count_values(char **values)
-{
-	int	count = 0;
-	while (values[count])
-		count++;
-	return (count);
-}
-
 int	size_cmd_exec(t_ast *node)
 {
 	int	size;
+	int	i;
 
 	size = 0;
 	if (node->left && node->left->node_type == CMD)
-		size += count_values(node->left->value);
+	{
+		while (node->left->value[size])
+			size++;
+	}
 	while (node->right && node->right->node_type == INPUT)
 	{
 		node = node->right;
-		size += count_values(&node->left->value[1]);
+		i = 1;
+		while (node->left->value[i++])
+			size++;
 	}
-	if (node->right && node->right->node_type == CMD)
-		size += count_values(&node->right->value[1]);
-	else if (node->right && node->right->left)
-		size += count_values(&node->right->left->value[1]);
+	if (node->right->node_type == CMD)
+	{
+		i = 1;
+		while (node->right->value[i++])
+			size++;
+	}
+	else
+	{
+		i = 1;
+		while (node->right->left->value[i++])
+			size++;
+	}
 	return (size);
-}
-
-char	**fill_cmd(t_ast *node, char **cmd, int *index)
-{
-	int	j;
-
-	j = 0;
-	if (node->node_type == CMD)
-	{
-		while (node->value[++j])
-			cmd[(*index)++] = ft_strdup(node->value[j]);
-	}
-	return (cmd);
-}
-
-char	**fill_cmd_cmd(t_ast *node, char **cmd, int *index)
-{
-	int	j;
-
-	j = 0;
-	if (node->node_type == CMD)
-	{
-		while (node->value[j])
-		{
-			cmd[(*index)++] = ft_strdup(node->value[j]);
-			j++;
-		}
-	}
-	return (cmd);
 }
 
 char	**adapt_cmd_exec(t_ast *node, int size)
 {
-	char	**cmd;
 	int		i;
+	int		j;
+	char	**cmd;
 
-	i = 0;
 	cmd = malloc(sizeof(char *) * (size + 1));
 	if (!cmd)
 		return (NULL);
+	i = 0;
 	if (node->left && node->left->node_type == CMD)
-		cmd = fill_cmd_cmd(node->left, cmd, &i);
+	{
+		while (node->left->value[i])
+		{
+			cmd[i] = ft_strdup(node->left->value[i]);
+			i++;
+		}
+	}	
 	while (node->right && node->right->node_type == INPUT)
 	{
 		node = node->right;
-		cmd = fill_cmd(node->left, cmd, &i);
+		j = 0;
+		while (node->left->value[++j])
+			cmd[i++] = ft_strdup(node->left->value[j]);
 	}
 	if (node->right->node_type == CMD)
-		cmd = fill_cmd(node->right, cmd, &i);
+	{
+		j = 0;
+		while (node->right->value[++j])
+			cmd[i++] = ft_strdup(node->right->value[j]);
+	}
 	else
-		cmd = fill_cmd(node->right->left,cmd, &i);
+	{
+		j = 0;
+		while (node->right->left->value[++j])
+			cmd[i++] = ft_strdup(node->right->left->value[j]);
+	}
 	cmd[i] = NULL;
 	return (cmd);
 }
@@ -128,7 +122,7 @@ t_ast	*search_node_exec(t_ast *node)
 	if (size == 0)
 		return (NULL);
 	cmd = adapt_cmd_exec(tmp, size);
-	if (!cmd)
+	if (cmd == NULL)
 		return (NULL);
 	return (create_node_exec(CMD, cmd));
 }
