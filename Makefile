@@ -6,7 +6,7 @@
 #    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/29 19:10:18 by pitroin          ###   ########.fr        #
+#    Updated: 2024/10/29 19:15:44 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ PRINTF_DIR = printf
 INCLUDES = -I $(LIBFT_DIR) -I src
 LIBFT = $(LIBFT_DIR)/libft.a
 
-READLINE_DIR = /usr/local
+READLINE_DIR = /Users/pitroin/.homebrew/opt/readline
 INCLUDES += -I $(READLINE_DIR)/include
 LIBS = -L $(READLINE_DIR)/lib -lreadline
 

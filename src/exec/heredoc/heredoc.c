@@ -41,7 +41,7 @@ char	*expend_heredoc(t_shelly *shelly, char *input)
 	while (input[data.i] != '\0')
 	{
 		if (input[data.i] == '$')
-			expend = ft_strjoin(res, expender(shelly, &data, input));
+			expend = ft_strjoin(res, expender(shelly, &data, input, 1));
 		else
 			expend = ft_strjoin(res, before_expend(input, &data));
 		free(res);

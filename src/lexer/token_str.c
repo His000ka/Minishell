@@ -48,7 +48,7 @@ char	*token_str_2(char *val, t_data_elem *data, t_shelly *shelly)
 	if (val[data->i] == 34 || val[data->i] == 39)
 		tmp2 = manage_quote(shelly, data, val);
 	else if (val[data->i] == '$')
-		tmp2 = expender(shelly, data, val);
+		tmp2 = expender(shelly, data, val, 1);
 	return (tmp2);
 }
 

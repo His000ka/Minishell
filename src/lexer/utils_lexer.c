@@ -49,7 +49,7 @@ char	*double_quote(t_shelly *shelly, char *val, t_data_elem *data)
 		tmp = ft_strndup(&val[data->i], data->size);
 		data->i += data->size;
 		if (val[data->i] == '$')
-			expend = expender(shelly, data, val);
+			expend = expender(shelly, data, val, 0);
 		else
 			expend = ft_strdup("");
 		res = d_q_2(res, tmp, expend);

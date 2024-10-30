@@ -33,9 +33,10 @@ char	*expende_value(char *value)
 	return (res);
 }
 
-char	*expend_exit_code(t_shelly *shelly, t_data_elem *data)
+char	*expend_exit_code(t_shelly *shelly, t_data_elem *data, int f)
 {
-	data->i++;
+	if (f == 0)
+		data->i++;
 	return (ft_strdup(ft_itoa(shelly->exit_code)));
 }
 
@@ -53,17 +54,18 @@ char	*get_value_env(t_shelly *shelly, char *path)
 	return (NULL);
 }
 
-char	*expender(t_shelly *shelly, t_data_elem *data, char *val)
+char	*expender(t_shelly *shelly, t_data_elem *data, char *val, int f)
 {
 	char	*value;
 	char	*path;
 	char	*res;
 
 	data->size = 0;
-	data->i++;
 	path = NULL;
-	if (ft_strcmp(val, "$") == 0)
-		return (ft_strdup(val));
+	data->i++;
+	if (val[data->i - 1] == '$' && (char_expend(val[data->i]) == 1
+			|| val[data->i] == '\0'))
+		return (ft_strndup(&val[data->i - 1], 1));
 	while (char_expend(val[data->i + data->size]) == 0
 		&& val[data->i + data->size] != '\0')
 		data->size++;
@@ -71,7 +73,7 @@ char	*expender(t_shelly *shelly, t_data_elem *data, char *val)
 	if (!path)
 		return (NULL);
 	if (ft_strncmp(path, "?", 1) == 0)
-		return (expend_exit_code(shelly, data));
+		return (expend_exit_code(shelly, data, f));
 	value = get_value_env(shelly, path);
 	res = expende_value(value);
 	free(path);
