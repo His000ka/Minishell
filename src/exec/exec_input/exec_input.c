@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+#include <errno.h>
 
 t_ast	*search_file(t_shelly *shelly, t_ast *node)
 {
@@ -20,7 +21,7 @@ t_ast	*search_file(t_shelly *shelly, t_ast *node)
 			close(shelly->fd_in);
 		shelly->fd_in = open(search_value(node), O_RDONLY);
 		if (shelly->fd_in == -1)
-			return (msg_not_file(shelly, search_value(node)), NULL);
+			return (msg_permission(shelly, search_value(node)) , NULL);
 		return (node);
 	}
 	while (node->right && node->node_type == INPUT)
@@ -29,7 +30,7 @@ t_ast	*search_file(t_shelly *shelly, t_ast *node)
 			close(shelly->fd_in);
 		shelly->fd_in = open(search_value(node), O_RDONLY);
 		if (shelly->fd_in == -1)
-			return (msg_not_file(shelly, search_value(node)), NULL);
+			return (msg_permission(shelly, search_value(node)) , NULL);
 		node = node->right;
 	}
 	return (node);

@@ -12,6 +12,30 @@
 
 #include "../../include/minishell.h"
 
+void	msg_is_or_not_dir(t_shelly *shelly, char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) == 0)
+	{
+		if (S_ISDIR(path_stat.st_mode))
+			printf("bash: %s: is a directory\n", path);
+	}
+	else
+		msg_not_file(shelly, path);
+}
+
+void	msg_permission(t_shelly *shelly, char *value)
+{
+	if (!value)
+		return ;
+	if (errno == EACCES)
+		printf("bash: %s: Permission denied\n", value);
+	else
+		msg_not_file(shelly, value);
+	shelly->exit_code = 1;
+}
+
 void	msg_not_file(t_shelly *shelly, char *value)
 {
 	if (value == NULL)

@@ -26,6 +26,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 //token
 # define INPUT		1	//"<"
@@ -113,6 +116,8 @@ void		recup_value_1(t_ast *node);
 //msg_error
 void		msg_not_file(t_shelly *shelly, char *value);
 void		msg_cmd_not_found(t_ast *node);
+void		msg_permission(t_shelly *shelly, char *value);
+void		msg_is_or_not_dir(t_shelly *shelly, char *path);
 //lexer
 int			ft_lexer(t_shelly *shelly);
 //tokenstr

@@ -86,10 +86,7 @@ int	exec_cmd_path(char *cmd, char **args, t_shelly *shelly)
 	if (fork() == 0)
 	{
 		if (execve(path, args, shelly->envp) == -1)
-		{
-			msg_not_file(shelly, path);
-			exit(127);
-		}
+			msg_is_or_not_dir(shelly, path);
 	}
 	else
 		exit_code_execve(shelly);
