@@ -98,10 +98,8 @@ int	adapt_cmd_2(t_shelly *shelly)
 	current = current->next;
 	if (current->str)
 		free(current->str);
-	if (current->next && current->next->type == PIPE
-		&& current->next->next && current->next->type == HEREDOC)
-		shelly->token = current->next->next;
-	else
+	while (current->next && current->next->type != HEREDOC)
+		current = current->next;
 	shelly->token = current->next;
 	ft_free_heredock(shelly, NULL, current);
 	if (ft_parser(shelly) == 0)

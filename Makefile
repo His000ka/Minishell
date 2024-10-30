@@ -6,7 +6,7 @@
 #    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/29 19:15:44 by pitroin          ###   ########.fr        #
+#    Updated: 2024/10/30 13:39:41 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS = \
 	src/exec/heredoc/heredoc.c \
 	src/exec/heredoc/heredoc_2.c \
 	src/exec/heredoc/utils_exec.c \
+	src/exec/heredoc/adapt_token.c \
 	src/init/env.list.c \
 	src/init/init_shelly.c \
 	src/lexer/count_elem.c \

@@ -52,34 +52,6 @@ char	*expend_heredoc(t_shelly *shelly, char *input)
 	return (res);
 }
 
-int	adapt_cmd(t_shelly *shelly)
-{
-	t_token	*current;
-	t_token	*tmp;
-
-	current = shelly->token;
-	while (current && current->type != HEREDOC)
-		current = current->next;
-	if (!current)
-		return (0);
-	tmp = current->next;
-	if (current->prev)
-		current->prev->next = current->next;
-	if (current->next)
-		current->next->prev = current->prev;
-	if (tmp->prev)
-		tmp->prev->next = tmp->next;
-	if (tmp->next)
-		tmp->next->prev = tmp->prev;
-	ft_free_heredock(shelly, tmp, current);
-	if (ft_parser(shelly) == 0)
-	{
-		if (exec_heredoc(shelly, shelly->ast) == 0)
-			ft_exec(shelly, shelly->ast);
-	}
-	return (0);
-}
-
 void	read_heredoc(t_shelly *shelly)
 {
 	char		*input;
