@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:37:12 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/30 13:42:29 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:51:51 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ static t_token	*process_heredoc(t_token *current)
 int	adapt_cmd(t_shelly *shelly)
 {
 	t_token	*current;
+	t_token	*tmp;
 
 	current = shelly->token;
 	while (current && current->type != HEREDOC)
 		current = current->next;
 	if (!current || !current->next)
 		return (0);
-	t_token	*tmp = process_heredoc(current);
+	tmp = process_heredoc(current);
 	ft_free_heredock(shelly, tmp, current);
 	if (ft_parser(shelly) == 0 && exec_heredoc(shelly, shelly->ast) == 0)
 		ft_exec(shelly, shelly->ast);

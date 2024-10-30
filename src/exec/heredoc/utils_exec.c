@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:26:50 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/29 18:53:06 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:58:51 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,40 +91,4 @@ int	size_cmd_exec_heredoc(t_ast *node)
 			size += count_values_heredoc(&node->right->left->value[1]);
 	}
 	return (size);
-}
-
-char	**adapt_cmd_exec_heredoc(t_ast *node, int size)
-{
-	char	**cmd;
-	t_ast	*tmp;
-	int		i;
-
-	i = 0;
-	cmd = malloc(sizeof(char *) * (size + 1));
-	if (!cmd)
-		return (NULL);
-	if (node->left && node->left->node_type == CMD)
-		cmd = fill_cmd_cmd(node->left, cmd, &i);
-	else if (node->left)
-	{
-		tmp = node;
-		while (tmp->left && tmp->left->node_type != CMD)
-		{
-			cmd = fill_cmd(tmp->left->right, cmd, &i);
-			tmp = node->left;
-		}
-		if (tmp->left && tmp->left->node_type == CMD)
-			cmd = fill_cmd_cmd(tmp->left, cmd, &i);
-	}
-	while (node->right && node->right->node_type == INPUT)
-	{
-		node = node->right;
-		cmd = fill_cmd(node->left, cmd, &i);
-	}
-	if (node->right->node_type == CMD)
-		cmd = fill_cmd(node->right, cmd, &i);
-	else
-		cmd = fill_cmd(node->right->left,cmd, &i);
-	cmd[i] = NULL;
-	return (cmd);
 }

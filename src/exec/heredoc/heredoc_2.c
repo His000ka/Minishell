@@ -61,7 +61,6 @@ t_ast	*search_node_exec_heredoc(t_ast *node)
 	return (create_node_heredoc(CMD, cmd));
 }
 
-
 void	exec_fork_heredoc_3(t_shelly *shelly, t_ast *node, t_ast *node_exec)
 {
 	pid_t	pid;
@@ -108,39 +107,4 @@ int	adapt_cmd_2(t_shelly *shelly)
 			ft_exec(shelly, shelly->ast);
 	}
 	return (0);
-}
-
-int	exec_heredoc_2(t_shelly *shelly, t_ast *node)
-{
-	t_ast	*node_exec;
-
-	node_exec = NULL;
-	if (pipe(shelly->fd) < 0)
-		return (ft_error("pipe", 0, 0));
-	node_exec = search_node_exec_heredoc(node);
-	shelly->delimiter = search_delimiter(node);
-	if (!shelly->delimiter)
-		return (1);
-	read_heredoc(shelly);
-	free(shelly->delimiter);
-	close(shelly->fd[1]);
-	if (node->left && node->right->node_type == HEREDOC)
-		return (adapt_cmd(shelly));
-	else if (node->right->node_type == HEREDOC)
-		return (adapt_cmd_2(shelly));
-	if (!node_exec)
-		return (1);
-	exec_fork_heredoc_3(shelly, node, node_exec);
-	return (0);
-}
-
-int	exec_heredoc(t_shelly *shelly, t_ast *node)
-{
-	if (node->node_type != HEREDOC)
-		return (0);
-	shelly->delimiter = search_delimiter(node);
-	if (!shelly->delimiter)
-		return (1);
-	exec_heredoc_2(shelly, node);
-	return (1);
 }

@@ -20,14 +20,10 @@ t_ast	*mult_append(t_shelly *shelly, t_ast *node, t_ast *node_in)
 	while (current->right && (current->right->node_type == TRUNC
 			|| current->right->node_type == APPEND))
 	{
-		if (current->right->node_type == TRUNC)
-			shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
-					| O_TRUNC, 0644);
-		else
-			shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
-					| O_APPEND, 0644);
+		shelly->fd_out = open(search_value(current), O_WRONLY | O_CREAT
+				| O_APPEND, 0644);
 		if (shelly->fd_out == -1)
-			return (msg_permission(shelly, search_value(node)) , NULL);
+			return (msg_permission(shelly, search_value(node)), NULL);
 		close(shelly->fd_out);
 		current = current->right;
 	}
@@ -86,11 +82,7 @@ void	exec_append_v2(t_shelly *shelly, t_ast *node, t_ast *node_in)
 			exit(EXIT_FAILURE);
 		close(shelly->fd_out);
 		if (node_in)
-		{
 			ft_exec(shelly, node_in);
-			close(shelly->fd_in);
-			shelly->fd_in = -1;
-		}
 		exit(shelly->exit_code);
 	}
 	else if (pid > 0)

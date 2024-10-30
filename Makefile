@@ -6,7 +6,7 @@
 #    By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 11:56:28 by pitroin           #+#    #+#              #
-#    Updated: 2024/10/30 13:39:41 by pitroin          ###   ########.fr        #
+#    Updated: 2024/10/30 16:56:49 by pitroin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,14 @@ SRCS = \
 	src/exec/utils.c \
 	src/exec/exec_append/exec_append.c \
 	src/exec/exec_input/utils_input.c \
+	src/exec/exec_input/utils_2.c \
 	src/exec/exec_input/exec_input.c \
 	src/exec/exec_trunc/exec_trunc.c \
 	src/exec/heredoc/heredoc.c \
 	src/exec/heredoc/heredoc_2.c \
 	src/exec/heredoc/utils_exec.c \
 	src/exec/heredoc/adapt_token.c \
+	src/exec/heredoc/adapte_cmd_exec.c \
 	src/init/env.list.c \
 	src/init/init_shelly.c \
 	src/lexer/count_elem.c \

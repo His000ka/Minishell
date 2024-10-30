@@ -6,7 +6,7 @@
 /*   By: pitroin <pitroin@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:06:58 by pitroin           #+#    #+#             */
-/*   Updated: 2024/10/29 18:46:48 by pitroin          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:09:51 by pitroin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ t_ast	*create_node_exec(int node_type, char **copy)
 
 int	count_values(char **values)
 {
-	int	count = 0;
+	int	count;
+
+	count = 0;
 	while (values[count])
 		count++;
 	return (count);
@@ -64,35 +66,6 @@ int	size_cmd_exec(t_ast *node)
 	return (size);
 }
 
-char	**fill_cmd(t_ast *node, char **cmd, int *index)
-{
-	int	j;
-
-	j = 0;
-	if (node->node_type == CMD)
-	{
-		while (node->value[++j])
-			cmd[(*index)++] = ft_strdup(node->value[j]);
-	}
-	return (cmd);
-}
-
-char	**fill_cmd_cmd(t_ast *node, char **cmd, int *index)
-{
-	int	j;
-
-	j = 0;
-	if (node->node_type == CMD)
-	{
-		while (node->value[j])
-		{
-			cmd[(*index)++] = ft_strdup(node->value[j]);
-			j++;
-		}
-	}
-	return (cmd);
-}
-
 char	**adapt_cmd_exec(t_ast *node, int size)
 {
 	char	**cmd;
@@ -112,7 +85,7 @@ char	**adapt_cmd_exec(t_ast *node, int size)
 	if (node->right->node_type == CMD)
 		cmd = fill_cmd(node->right, cmd, &i);
 	else
-		cmd = fill_cmd(node->right->left,cmd, &i);
+		cmd = fill_cmd(node->right->left, cmd, &i);
 	cmd[i] = NULL;
 	return (cmd);
 }

@@ -153,11 +153,13 @@ t_ast		*ast_priority(t_token *tokens, t_ast *root);
 //exec heredoc
 int			exec_heredoc(t_shelly *shelly, t_ast *node);
 int			exec_heredoc_2(t_shelly *shelly, t_ast *node);
+void		exec_fork_heredoc_3(t_shelly *shelly, t_ast *node, t_ast *node_exec);
 void		read_heredoc(t_shelly *shelly);
 char		*search_delimiter(t_ast *node);
-int			search_heredoc(t_shelly *shelly, t_ast *node);
-void		exec_fork_heredoc(t_shelly *shelly, t_ast *node);
+t_ast		*search_node_exec_heredoc(t_ast *node);
 int			adapt_cmd(t_shelly *shelly);
+int			adapt_cmd_2(t_shelly *shelly);
+char		**adapt_cmd_exec_heredoc(t_ast *node, int size);
 void		ft_free_heredock(t_shelly *shelly, t_token *current, t_token *tmp);
 char		*search_delimiter(t_ast *node);
 //utils heredoc
